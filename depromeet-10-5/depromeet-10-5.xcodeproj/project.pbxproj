@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,11 +13,12 @@
 		9637665E26EDD79E00E8E547 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637665C26EDD79E00E8E547 /* Main.storyboard */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
 		9637666326EDD79F00E8E547 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */; };
-		B02804FD849FA0CC1D3E7756 /* Pods_depromeet_10_5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8BE7F68EC5354DB1FE27670 /* Pods_depromeet_10_5.framework */; };
+		BC7DC6EF91BF40F103247557 /* Pods_depromeet_10_5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69281A54DA1C35EB4A461782 /* Pods_depromeet_10_5.framework */; };
+		E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = E8002DE426EDDE09000621CB /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		65CF7B0440BE8A62A327964B /* Pods-depromeet-10-5.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.release.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.release.xcconfig"; sourceTree = "<group>"; };
+		69281A54DA1C35EB4A461782 /* Pods_depromeet_10_5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_depromeet_10_5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -26,8 +27,9 @@
 		9637665F26EDD79F00E8E547 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9637666226EDD79F00E8E547 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9637666426EDD79F00E8E547 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A3C758DC75CF71F8B5C9746E /* Pods-depromeet-10-5.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.debug.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.debug.xcconfig"; sourceTree = "<group>"; };
-		C8BE7F68EC5354DB1FE27670 /* Pods_depromeet_10_5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_depromeet_10_5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4D21DD190AE45B46E5BE86D /* Pods-depromeet-10-5.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.debug.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.debug.xcconfig"; sourceTree = "<group>"; };
+		E8002DE426EDDE09000621CB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		F39F670DAA7F6942C97EF1F0 /* Pods-depromeet-10-5.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.release.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B02804FD849FA0CC1D3E7756 /* Pods_depromeet_10_5.framework in Frameworks */,
+				BC7DC6EF91BF40F103247557 /* Pods_depromeet_10_5.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,10 +47,11 @@
 		9637664A26EDD79E00E8E547 = {
 			isa = PBXGroup;
 			children = (
+				E8002DE426EDDE09000621CB /* .swiftlint.yml */,
 				9637665526EDD79E00E8E547 /* depromeet-10-5 */,
 				9637665426EDD79E00E8E547 /* Products */,
 				CFF307829791085719A6D9B3 /* Pods */,
-				EAF5E61674F99CB66620488A /* Frameworks */,
+				FA94CBA502F66CDA189544D9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,17 +80,16 @@
 		CFF307829791085719A6D9B3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A3C758DC75CF71F8B5C9746E /* Pods-depromeet-10-5.debug.xcconfig */,
-				65CF7B0440BE8A62A327964B /* Pods-depromeet-10-5.release.xcconfig */,
+				B4D21DD190AE45B46E5BE86D /* Pods-depromeet-10-5.debug.xcconfig */,
+				F39F670DAA7F6942C97EF1F0 /* Pods-depromeet-10-5.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		EAF5E61674F99CB66620488A /* Frameworks */ = {
+		FA94CBA502F66CDA189544D9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C8BE7F68EC5354DB1FE27670 /* Pods_depromeet_10_5.framework */,
+				69281A54DA1C35EB4A461782 /* Pods_depromeet_10_5.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -99,11 +101,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9637666726EDD79F00E8E547 /* Build configuration list for PBXNativeTarget "depromeet-10-5" */;
 			buildPhases = (
-				374C84F989CC39C1C9CDC404 /* [CP] Check Pods Manifest.lock */,
+				4365D2ADF83A9770B0837DB6 /* [CP] Check Pods Manifest.lock */,
 				9637664F26EDD79E00E8E547 /* Sources */,
 				9637665026EDD79E00E8E547 /* Frameworks */,
 				9637665126EDD79E00E8E547 /* Resources */,
-				91870B30198B24744287415E /* [CP] Embed Pods Frameworks */,
+				E8002DE326EDDDCD000621CB /* ShellScript */,
+				0787C06ED5DBE10B3FA1CD18 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -151,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */,
 				9637666326EDD79F00E8E547 /* LaunchScreen.storyboard in Resources */,
 				9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */,
 				9637665E26EDD79E00E8E547 /* Main.storyboard in Resources */,
@@ -160,7 +164,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		374C84F989CC39C1C9CDC404 /* [CP] Check Pods Manifest.lock */ = {
+		0787C06ED5DBE10B3FA1CD18 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4365D2ADF83A9770B0837DB6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -182,22 +203,22 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		91870B30198B24744287415E /* [CP] Embed Pods Frameworks */ = {
+		E8002DE326EDDDCD000621CB /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+			);
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -352,7 +373,7 @@
 		};
 		9637666826EDD79F00E8E547 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A3C758DC75CF71F8B5C9746E /* Pods-depromeet-10-5.debug.xcconfig */;
+			baseConfigurationReference = B4D21DD190AE45B46E5BE86D /* Pods-depromeet-10-5.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -372,7 +393,7 @@
 		};
 		9637666926EDD79F00E8E547 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65CF7B0440BE8A62A327964B /* Pods-depromeet-10-5.release.xcconfig */;
+			baseConfigurationReference = F39F670DAA7F6942C97EF1F0 /* Pods-depromeet-10-5.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

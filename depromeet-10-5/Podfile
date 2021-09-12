@@ -6,11 +6,11 @@ target 'depromeet-10-5' do
   use_frameworks!
 
   # Pods for depromeet-10-5
-    pod 'RxSwift'
-    pod 'RxCocoa'
-    pod 'Alamofire'
-    pod 'ObjectMapper'
-    pod 'SnapKit'
+    pod 'RxSwift', '6.2.0'
+    pod 'RxCocoa', '6.2.0'
+    pod 'Alamofire', '~> 5.4'
+    pod 'ObjectMapper', '~> 3.5'
+    pod 'SnapKit', '~> 5.0.0'
     pod 'SwiftLint'
 
 end
