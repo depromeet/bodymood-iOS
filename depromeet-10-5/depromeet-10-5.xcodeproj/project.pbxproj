@@ -66,15 +66,79 @@
 		9637665526EDD79E00E8E547 /* depromeet-10-5 */ = {
 			isa = PBXGroup;
 			children = (
-				9637665626EDD79E00E8E547 /* AppDelegate.swift */,
-				9637665826EDD79E00E8E547 /* SceneDelegate.swift */,
-				9637665A26EDD79E00E8E547 /* ViewController.swift */,
-				9637665C26EDD79E00E8E547 /* Main.storyboard */,
-				9637665F26EDD79F00E8E547 /* Assets.xcassets */,
-				9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */,
-				9637666426EDD79F00E8E547 /* Info.plist */,
+				967549B52700AA9A007E4E95 /* Delegate */,
+				967549AF2700A874007E4E95 /* Model */,
+				967549AE2700A86F007E4E95 /* Network */,
+				967549B22700A9EB007E4E95 /* Resource */,
+				967549B42700AA33007E4E95 /* Storyboard */,
+				967549B32700AA1F007E4E95 /* Supporting Files */,
+				967549AD2700A866007E4E95 /* View */,
+				967549B02700A879007E4E95 /* ViewModel */,
 			);
 			path = "depromeet-10-5";
+			sourceTree = "<group>";
+		};
+		967549AD2700A866007E4E95 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9637665A26EDD79E00E8E547 /* ViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		967549AE2700A86F007E4E95 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		967549AF2700A874007E4E95 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		967549B02700A879007E4E95 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		967549B22700A9EB007E4E95 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				9637665F26EDD79F00E8E547 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		967549B32700AA1F007E4E95 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9637666426EDD79F00E8E547 /* Info.plist */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		967549B42700AA33007E4E95 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				9637665C26EDD79E00E8E547 /* Main.storyboard */,
+				9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		967549B52700AA9A007E4E95 /* Delegate */ = {
+			isa = PBXGroup;
+			children = (
+				9637665626EDD79E00E8E547 /* AppDelegate.swift */,
+				9637665826EDD79E00E8E547 /* SceneDelegate.swift */,
+			);
+			path = Delegate;
 			sourceTree = "<group>";
 		};
 		CFF307829791085719A6D9B3 /* Pods */ = {
