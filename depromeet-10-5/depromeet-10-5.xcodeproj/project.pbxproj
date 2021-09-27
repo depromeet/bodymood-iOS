@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9610B3062702331400539F99 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9610B3052702331400539F99 /* Auth.storyboard */; };
+		9610B3082702379B00539F99 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9610B3072702379B00539F99 /* LoginViewController.swift */; };
 		9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665626EDD79E00E8E547 /* AppDelegate.swift */; };
 		9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665826EDD79E00E8E547 /* SceneDelegate.swift */; };
 		9637665B26EDD79E00E8E547 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665A26EDD79E00E8E547 /* ViewController.swift */; };
@@ -19,6 +21,8 @@
 
 /* Begin PBXFileReference section */
 		69281A54DA1C35EB4A461782 /* Pods_depromeet_10_5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_depromeet_10_5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9610B3052702331400539F99 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
+		9610B3072702379B00539F99 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,6 +51,7 @@
 		9637664A26EDD79E00E8E547 = {
 			isa = PBXGroup;
 			children = (
+				9637666426EDD79F00E8E547 /* Info.plist */,
 				E8002DE426EDDE09000621CB /* .swiftlint.yml */,
 				9637665526EDD79E00E8E547 /* depromeet-10-5 */,
 				9637665426EDD79E00E8E547 /* Products */,
@@ -82,6 +87,7 @@
 			isa = PBXGroup;
 			children = (
 				9637665A26EDD79E00E8E547 /* ViewController.swift */,
+				9610B3072702379B00539F99 /* LoginViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -118,7 +124,6 @@
 		967549B32700AA1F007E4E95 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9637666426EDD79F00E8E547 /* Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -128,6 +133,7 @@
 			children = (
 				9637665C26EDD79E00E8E547 /* Main.storyboard */,
 				9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */,
+				9610B3052702331400539F99 /* Auth.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -220,6 +226,7 @@
 			files = (
 				E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */,
 				9637666326EDD79F00E8E547 /* LaunchScreen.storyboard in Resources */,
+				9610B3062702331400539F99 /* Auth.storyboard in Resources */,
 				9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */,
 				9637665E26EDD79E00E8E547 /* Main.storyboard in Resources */,
 			);
@@ -291,6 +298,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
 				9637665B26EDD79E00E8E547 /* ViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */,
@@ -443,7 +451,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3CY8UX9N2S;
-				INFOPLIST_FILE = "depromeet-10-5/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -463,7 +471,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3CY8UX9N2S;
-				INFOPLIST_FILE = "depromeet-10-5/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

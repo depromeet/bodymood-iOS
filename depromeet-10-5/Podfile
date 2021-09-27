@@ -12,5 +12,6 @@ target 'depromeet-10-5' do
     pod 'ObjectMapper', '~> 3.5'
     pod 'SnapKit', '~> 5.0.0'
     pod 'SwiftLint'
+    pod 'KakaoSDK'
 
 end
