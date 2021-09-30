@@ -6,11 +6,13 @@
 //
 
 import UIKit
-import KakaoSDKAuth
-import KakaoSDKUser
-
 class LoginViewController: UIViewController {
 
+    lazy var authViewModel: AuthViewModel = {
+        let viewModel = AuthViewModel()
+        return viewModel
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -18,15 +20,6 @@ class LoginViewController: UIViewController {
     }
 
     @IBAction func kakaoLoginDidTap(_ sender: Any) {
-        if UserApi.isKakaoTalkLoginAvailable() {
-            UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
-                if let error = error {
-                    print(error)
-                } else {
-                   print("loginWithKakaotalk() success")
-                    _ = oauthToken
-                }
-            }
-        }
+        authViewModel.fetchKakaoLogin()
     }
 }

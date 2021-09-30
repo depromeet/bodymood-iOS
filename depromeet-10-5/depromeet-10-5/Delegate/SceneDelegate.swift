@@ -12,13 +12,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let _ = (scene as? UIWindowScene) else { return }
-    
+
         // Change an intial view (if you need to change, remove codes below)
         let storyboard = UIStoryboard(name: "Auth", bundle: nil)
         let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC")
-        
+
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
     }

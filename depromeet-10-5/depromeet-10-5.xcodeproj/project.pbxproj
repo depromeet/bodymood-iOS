@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9610B3062702331400539F99 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9610B3052702331400539F99 /* Auth.storyboard */; };
 		9610B3082702379B00539F99 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9610B3072702379B00539F99 /* LoginViewController.swift */; };
+		9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B30F27060AB7007CB5BA /* LogConfig.swift */; };
+		9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B31127060B4A007CB5BA /* AuthViewModel.swift */; };
 		9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665626EDD79E00E8E547 /* AppDelegate.swift */; };
 		9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665826EDD79E00E8E547 /* SceneDelegate.swift */; };
 		9637665B26EDD79E00E8E547 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665A26EDD79E00E8E547 /* ViewController.swift */; };
@@ -23,6 +25,8 @@
 		69281A54DA1C35EB4A461782 /* Pods_depromeet_10_5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_depromeet_10_5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9610B3052702331400539F99 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		9610B3072702379B00539F99 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		9624B30F27060AB7007CB5BA /* LogConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfig.swift; sourceTree = "<group>"; };
+		9624B31127060B4A007CB5BA /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 		967549B02700A879007E4E95 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				9624B31127060B4A007CB5BA /* AuthViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -117,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				9637665F26EDD79F00E8E547 /* Assets.xcassets */,
+				9624B30F27060AB7007CB5BA /* LogConfig.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -299,6 +305,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
+				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
+				9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */,
 				9637665B26EDD79E00E8E547 /* ViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */,
