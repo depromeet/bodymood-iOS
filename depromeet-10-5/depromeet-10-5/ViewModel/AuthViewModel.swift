@@ -9,9 +9,7 @@ import Foundation
 import KakaoSDKAuth
 import KakaoSDKUser
 
-
 class AuthViewModel {
-    
     func fetchKakaoLogin() {
         if UserApi.isKakaoTalkLoginAvailable() {
             UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
