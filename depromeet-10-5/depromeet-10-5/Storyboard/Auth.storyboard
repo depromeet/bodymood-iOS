@@ -23,7 +23,16 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="카카오톡으로 로그인"/>
                                 <connections>
-                                    <action selector="kakaoLoginDidTap:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="QUX-U4-aKr"/>
+                                    <action selector="kakaoLoginButtonDidTap:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="myi-5q-Oyg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLt-lA-PMk">
+                                <rect key="frame" x="145" y="477" width="125" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="카카오톡 로그아웃"/>
+                                <connections>
+                                    <action selector="kakaoLogoutButtonDidTap:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="0Bk-5W-v7y"/>
                                 </connections>
                             </button>
                         </subviews>
