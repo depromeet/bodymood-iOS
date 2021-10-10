@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
     }()
 
     var accessToken: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.

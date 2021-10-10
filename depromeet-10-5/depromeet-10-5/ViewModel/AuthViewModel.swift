@@ -16,7 +16,6 @@ class AuthViewModel {
         return Future { promise in
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
-                    Log.debug("======== fetch kakao login =========")
                     if let error = error {
                         promise(.failure(error))
                     } else {
