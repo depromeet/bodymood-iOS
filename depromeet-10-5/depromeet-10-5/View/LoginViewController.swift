@@ -12,22 +12,40 @@ import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
 
-class LoginViewController: UIViewController {
-
+class LoginViewController: UIViewController, AuthCoordinating {
+    
+    var coordinator: AuthCoordinatorProtocol?
+    
     lazy var authViewModel: AuthViewModel = {
         let viewModel = AuthViewModel()
         return viewModel
     }()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+    
     var subscription: Set<AnyCancellable> = []
 
     private var kakaoLoginSubscriber: AnyCancellable?
     private var accessToken: String?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .red
+        title = "Login"
+        
+        let button: UIButton = {
+            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 220, height: 55))
+            view.addSubview(button)
+            button.center = view.center
+            button.backgroundColor = .systemGreen
+            button.setTitleColor(.white, for: .normal)
+            button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+            return button
+        }()
+    }
 
+    @objc func buttonDidTap() {
+        coordinator?.eventOccured(with: .buttonDidTap)
+    }
+    
     @IBAction func kakaoLoginButtonDidTap(_ sender: Any) {
         let kakaoLoginFuture = authViewModel.loginAvailable()
 
