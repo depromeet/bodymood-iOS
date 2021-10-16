@@ -17,6 +17,10 @@
 		9637665E26EDD79E00E8E547 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637665C26EDD79E00E8E547 /* Main.storyboard */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
 		9637666326EDD79F00E8E547 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */; };
+		9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAE82713319C001BE018 /* KakaoLoginRequest.swift */; };
+		9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */; };
+		9641DAEE2713334E001BE018 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAED2713334E001BE018 /* AuthService.swift */; };
+		9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEF271333EB001BE018 /* HTTPConsts.swift */; };
 		BC7DC6EF91BF40F103247557 /* Pods_depromeet_10_5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 69281A54DA1C35EB4A461782 /* Pods_depromeet_10_5.framework */; };
 		E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = E8002DE426EDDE09000621CB /* .swiftlint.yml */; };
 /* End PBXBuildFile section */
@@ -35,6 +39,10 @@
 		9637665F26EDD79F00E8E547 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9637666226EDD79F00E8E547 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9637666426EDD79F00E8E547 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9641DAE82713319C001BE018 /* KakaoLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequest.swift; sourceTree = "<group>"; };
+		9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginResponse.swift; sourceTree = "<group>"; };
+		9641DAED2713334E001BE018 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		9641DAEF271333EB001BE018 /* HTTPConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConsts.swift; sourceTree = "<group>"; };
 		B4D21DD190AE45B46E5BE86D /* Pods-depromeet-10-5.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.debug.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.debug.xcconfig"; sourceTree = "<group>"; };
 		E8002DE426EDDE09000621CB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F39F670DAA7F6942C97EF1F0 /* Pods-depromeet-10-5.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.release.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.release.xcconfig"; sourceTree = "<group>"; };
@@ -87,6 +95,15 @@
 			path = "depromeet-10-5";
 			sourceTree = "<group>";
 		};
+		9641DAE727133188001BE018 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				9641DAE82713319C001BE018 /* KakaoLoginRequest.swift */,
+				9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 		967549AD2700A866007E4E95 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -99,6 +116,7 @@
 		967549AE2700A86F007E4E95 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				9641DAED2713334E001BE018 /* AuthService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -106,6 +124,7 @@
 		967549AF2700A874007E4E95 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9641DAE727133188001BE018 /* Auth */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -123,6 +142,7 @@
 			children = (
 				9637665F26EDD79F00E8E547 /* Assets.xcassets */,
 				9624B30F27060AB7007CB5BA /* LogConfig.swift */,
+				9641DAEF271333EB001BE018 /* HTTPConsts.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -305,9 +325,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
+				9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */,
+				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
+				9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */,
 				9637665B26EDD79E00E8E547 /* ViewController.swift in Sources */,
+				9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */,
 			);

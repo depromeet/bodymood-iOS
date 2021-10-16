@@ -19,23 +19,29 @@ class LoginViewController: UIViewController {
         return viewModel
     }()
 
-    var accessToken: String?
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    var subscription: Set<AnyCancellable> = []
+
+    private var kakaoLoginSubscriber: AnyCancellable?
+    private var accessToken: String?
 
     @IBAction func kakaoLoginButtonDidTap(_ sender: Any) {
-        let kakaoLoginFuture = authViewModel.fetchKakaoLogin()
+        let kakaoLoginFuture = authViewModel.loginAvailable()
 
-        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
-            _ = kakaoLoginFuture.sink {
-                Log.debug($0)
-            } receiveValue: {
-                Log.debug($0.accessToken)
-            }
-        }
+        _ = kakaoLoginFuture.sink( receiveCompletion: { completion in
+            switch completion {
+                case .finished:
+                self.authViewModel.kakaoAuth(accessToken: self.accessToken ?? "")
+                case .failure(let error):
+                    Log.debug(error)
+                }
+            }, receiveValue: {
+                Log.debug("====\($0.accessToken)====")
+                self.accessToken = $0.accessToken
+            }).store(in: &subscription)
     }
 
     @IBAction func kakaoLogoutButtonDidTap(_ sender: Any) {
