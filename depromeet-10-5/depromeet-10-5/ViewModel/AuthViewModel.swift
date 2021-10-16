@@ -25,7 +25,7 @@ class AuthViewModel {
     deinit {
         Log.debug("viewModel \(Self.self) deallocated")
     }
-    
+
 
     func loginAvailable() -> Future<OAuthToken, Error> {
         return Future { promise in
@@ -40,39 +40,22 @@ class AuthViewModel {
             }
         }
     }
-    
+
     /// Server에 Access Token 보내기
     func kakaoAuth(accessToken: String) {
-        
+    
         subscription = authService?.kakaoAuth(accessToken: accessToken).sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
                 Log.debug("success kakaoAuth View Model")
-            
+        
             case .failure(let error):
                 Log.error(error)
             }
         }, receiveValue: { response in
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                Log.debug("=== acess token \(response.data.accessToken)=====")
+                Log.debug("=== acess token \(response.data?.accessToken ?? "")=====")
             }
         })
-    
-        
-//        Log.debug("=====kakaoAuth: \(accessToken)")
-//        authService?.kakaoAuth(accessToken: accessToken)
-//            .receive(on: DispatchQueue.main)
-//            .sink(receiveCompletion: { completion in
-//                switch completion {
-//                case .finished:
-//                    Log.debug("finished kakao login")
-//                case .failure(let error):
-//                    Log.debug("Error: \(error.localizedDescription)")
-//                }
-//            }, receiveValue: { object in
-//                DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-//                    Log.debug("received value \(object.message), \(object.code) , \(object.data?.socialId ?? "")")
-//                }
-//            }).store(in: &subscriptions)
     }
 }

@@ -9,11 +9,11 @@ import Foundation
 
 struct KakaoLoginResponse: Decodable {
     let code: String
-    let data: AuthResponse
+    let data: AuthResponse?
     let message: String
 }
 
 struct AuthResponse: Decodable {
-    let accessToken: String
-    let refreshToken: String
+    let accessToken: String?
+    let refreshToken: String?
 }
