@@ -28,7 +28,6 @@ class LoginViewController: UIViewController, AuthCoordinating {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
         title = "Login"
         
         let button: UIButton = {
@@ -43,16 +42,17 @@ class LoginViewController: UIViewController, AuthCoordinating {
     }
 
     @objc func buttonDidTap() {
-        coordinator?.eventOccured(with: .buttonDidTap)
-    }
-    
-    @IBAction func kakaoLoginButtonDidTap(_ sender: Any) {
         let kakaoLoginFuture = authViewModel.loginAvailable()
 
         _ = kakaoLoginFuture.sink( receiveCompletion: { completion in
             switch completion {
                 case .finished:
                 self.authViewModel.kakaoAuth(accessToken: self.accessToken ?? "")
+                
+                if(UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "") {
+                    self.coordinator?.eventOccured(with: .buttonDidTap)
+                }
+                
                 case .failure(let error):
                     Log.debug(error)
                 }
@@ -60,6 +60,11 @@ class LoginViewController: UIViewController, AuthCoordinating {
                 Log.debug("====\($0.accessToken)====")
                 self.accessToken = $0.accessToken
             }).store(in: &subscription)
+       
+    }
+    
+    @IBAction func kakaoLoginButtonDidTap(_ sender: Any) {
+        
     }
 
     @IBAction func kakaoLogoutButtonDidTap(_ sender: Any) {

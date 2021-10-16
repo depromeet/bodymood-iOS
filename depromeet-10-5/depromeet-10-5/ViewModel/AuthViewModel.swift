@@ -54,7 +54,8 @@ class AuthViewModel {
             }
         }, receiveValue: { response in
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                Log.debug("=== acess token \(response.data?.accessToken ?? "")=====")
+                UserDefaults.standard.setValue(response.data?.accessToken ?? "", forKey: UserDefaultKey.accessToken)
+                UserDefaults.standard.setValue(response.data?.refreshToken ?? "", forKey: UserDefaultKey.accessToken)
             }
         })
     }
