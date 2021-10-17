@@ -29,7 +29,7 @@ class AlbumCollectionViewCell: UICollectionViewCell {
 	}
 
 	func update(with asset: PHAsset) {
-		imageView.fetchImageAsset(asset, frameSize: bounds.size)
+		requestID = imageView.fetchImageAsset(asset, frameSize: bounds.size)
 	}
 
 	override func prepareForReuse() {

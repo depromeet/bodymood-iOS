@@ -17,7 +17,9 @@ extension UIImageView {
 			}
 
 			let resultHandler: (UIImage?, [AnyHashable: Any]?) -> Void = { image, _ in
-				self.image = image
+				DispatchQueue.main.async {
+					self.image = image
+				}
 			}
 
 			return PHImageManager.default().requestImage(
