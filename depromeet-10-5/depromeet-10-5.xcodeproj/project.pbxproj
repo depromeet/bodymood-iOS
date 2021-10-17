@@ -23,6 +23,14 @@
 		9641DAEE2713334E001BE018 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAED2713334E001BE018 /* AuthService.swift */; };
 		9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEF271333EB001BE018 /* HTTPConsts.swift */; };
 		E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = E8002DE426EDDE09000621CB /* .swiftlint.yml */; };
+		E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */; };
+		E86EC939271AD2B500A7DD54 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */; };
+		E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */; };
+		E86EC93D271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93C271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift */; };
+		E86EC940271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93F271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift */; };
+		E86EC942271B32E700A7DD54 /* ImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC941271B32E700A7DD54 /* ImageResource.swift */; };
+		E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC943271B465300A7DD54 /* Combine+UIControl.swift */; };
+		E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +54,14 @@
 		9641DAEF271333EB001BE018 /* HTTPConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConsts.swift; sourceTree = "<group>"; };
 		D7BC365CD3E3383551B38498 /* Pods_depromeet_10_5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_depromeet_10_5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8002DE426EDDE09000621CB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+UIBarButtonItem.swift"; sourceTree = "<group>"; };
+		E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
+		E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewModel.swift; sourceTree = "<group>"; };
+		E86EC93C271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
+		E86EC93F271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+fetchImageAsset.swift"; sourceTree = "<group>"; };
+		E86EC941271B32E700A7DD54 /* ImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResource.swift; sourceTree = "<group>"; };
+		E86EC943271B465300A7DD54 /* Combine+UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+UIControl.swift"; sourceTree = "<group>"; };
+		E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +107,7 @@
 		9637665526EDD79E00E8E547 /* depromeet-10-5 */ = {
 			isa = PBXGroup;
 			children = (
+				E86EC93E271B1FC800A7DD54 /* Extentions */,
 				967549B52700AA9A007E4E95 /* Delegate */,
 				967549AF2700A874007E4E95 /* Model */,
 				967549AE2700A86F007E4E95 /* Network */,
@@ -99,6 +116,7 @@
 				967549B32700AA1F007E4E95 /* Supporting Files */,
 				967549AD2700A866007E4E95 /* View */,
 				967549B02700A879007E4E95 /* ViewModel */,
+				E86EC945271B640200A7DD54 /* UseCase */,
 			);
 			path = "depromeet-10-5";
 			sourceTree = "<group>";
@@ -117,6 +135,8 @@
 			children = (
 				9637665A26EDD79E00E8E547 /* ViewController.swift */,
 				9610B3072702379B00539F99 /* LoginViewController.swift */,
+				E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */,
+				E86EC93C271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -141,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				9624B31127060B4A007CB5BA /* AuthViewModel.swift */,
+				E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -151,6 +172,7 @@
 				9637665F26EDD79F00E8E547 /* Assets.xcassets */,
 				9624B30F27060AB7007CB5BA /* LogConfig.swift */,
 				9641DAEF271333EB001BE018 /* HTTPConsts.swift */,
+				E86EC941271B32E700A7DD54 /* ImageResource.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -188,6 +210,24 @@
 				815C56450EE98D41841E0C7B /* Pods-depromeet-10-5.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E86EC93E271B1FC800A7DD54 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				E86EC93F271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift */,
+				E86EC943271B465300A7DD54 /* Combine+UIControl.swift */,
+				E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
+		E86EC945271B640200A7DD54 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */,
+			);
+			path = UseCase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,16 +364,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E86EC940271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift in Sources */,
+				E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */,
+				E86EC93D271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift in Sources */,
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
+				E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */,
 				9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */,
+				E86EC942271B32E700A7DD54 /* ImageResource.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
+				E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */,
 				9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */,
 				9637665B26EDD79E00E8E547 /* ViewController.swift in Sources */,
 				9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */,
+				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */,
+				E86EC939271AD2B500A7DD54 /* AlbumViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,13 +530,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3CY8UX9N2S;
+				DEVELOPMENT_TEAM = RC5265XPLQ;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "yeahsilver.depromeet-10-5";
+				PRODUCT_BUNDLE_IDENTIFIER = "yeahsilver.depromeet-105";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -502,13 +550,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3CY8UX9N2S;
+				DEVELOPMENT_TEAM = RC5265XPLQ;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "yeahsilver.depromeet-10-5";
+				PRODUCT_BUNDLE_IDENTIFIER = "yeahsilver.depromeet-105";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

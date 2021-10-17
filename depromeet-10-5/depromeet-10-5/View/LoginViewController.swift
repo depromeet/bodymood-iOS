@@ -53,4 +53,13 @@ class LoginViewController: UIViewController {
             }
         })
     }
+	
+	
+	// TODO: 제거할 것
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+			presentAlbumVC(on: self)
+		}
+	}
 }
