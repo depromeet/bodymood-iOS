@@ -25,11 +25,11 @@ class LoginViewController: UIViewController, AuthCoordinating {
 
     private var kakaoLoginSubscriber: AnyCancellable?
     private var accessToken: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Login"
-        
+
         let button: UIButton = {
             let button = UIButton(frame: CGRect(x: 0, y: 0, width: 220, height: 55))
             view.addSubview(button)
@@ -60,21 +60,7 @@ class LoginViewController: UIViewController, AuthCoordinating {
                 Log.debug("====\($0.accessToken)====")
                 self.accessToken = $0.accessToken
             }).store(in: &subscription)
-       
-    }
-    
-    @IBAction func kakaoLoginButtonDidTap(_ sender: Any) {
-        
-    }
 
-    @IBAction func kakaoLogoutButtonDidTap(_ sender: Any) {
-        UserApi.shared.logout(completion: { error in
-            if let error = error {
-                Log.error(error)
-            } else {
-                Log.debug("log out success")
-            }
-        })
     }
 	
 	
