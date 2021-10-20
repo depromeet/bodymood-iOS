@@ -23,7 +23,7 @@
 		9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEF271333EB001BE018 /* HTTPConsts.swift */; };
 		96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBB6271B0ED6008013CA /* CameraViewController.swift */; };
 		96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */; };
-		96F0BBC0271B1704008013CA /* AuthCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBF271B1704008013CA /* AuthCoordinatorProtocol.swift */; };
+		96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBF271B1704008013CA /* Coordinator.swift */; };
 		96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBC1271B3001008013CA /* UserDefaultKey.swift */; };
 		E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = E8002DE426EDDE09000621CB /* .swiftlint.yml */; };
 		E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */; };
@@ -56,7 +56,7 @@
 		9641DAEF271333EB001BE018 /* HTTPConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConsts.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
-		96F0BBBF271B1704008013CA /* AuthCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinatorProtocol.swift; sourceTree = "<group>"; };
+		96F0BBBF271B1704008013CA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		96F0BBC1271B3001008013CA /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
 		D7BC365CD3E3383551B38498 /* Pods_depromeet_10_5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_depromeet_10_5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8002DE426EDDE09000621CB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -214,18 +214,10 @@
 		96F0BBAF271AF939008013CA /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				96F0BBB8271B120C008013CA /* Auth */,
+				96F0BBBF271B1704008013CA /* Coordinator.swift */,
+				96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */,
 			);
 			path = Coordinator;
-			sourceTree = "<group>";
-		};
-		96F0BBB8271B120C008013CA /* Auth */ = {
-			isa = PBXGroup;
-			children = (
-				96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */,
-				96F0BBBF271B1704008013CA /* AuthCoordinatorProtocol.swift */,
-			);
-			path = Auth;
 			sourceTree = "<group>";
 		};
 		CFF307829791085719A6D9B3 /* Pods */ = {
@@ -404,6 +396,7 @@
 				9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */,
 				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
 				96F0BBC0271B1704008013CA /* AuthCoordinatorProtocol.swift in Sources */,
+				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */,

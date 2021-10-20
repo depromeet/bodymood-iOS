@@ -8,13 +8,13 @@
 import Foundation
 import UIKit
 
-class AuthCoordinator: AuthCoordinatorProtocol {
+class AuthCoordinator: Coordinator {
     var navigationController: UINavigationController?
 
     func eventOccured(with type: Event) {
         switch type {
         case .buttonDidTap:
-            var cameraVC: UIViewController & AuthCoordinating {
+            var cameraVC: UIViewController & Coordinating {
                 let cameraVC = CameraViewController()
                 cameraVC.coordinator = self
                 return cameraVC
@@ -25,7 +25,7 @@ class AuthCoordinator: AuthCoordinatorProtocol {
     }
 
     func start() {
-        var viewController: UIViewController & AuthCoordinating {
+        var viewController: UIViewController & Coordinating {
             let viewController = LoginViewController()
             viewController.coordinator = self
             return viewController

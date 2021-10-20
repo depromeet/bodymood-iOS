@@ -12,13 +12,13 @@ enum Event {
     case buttonDidTap
 }
 
-protocol AuthCoordinatorProtocol {
+protocol Coordinator {
     var navigationController: UINavigationController? { get set }
 
     func eventOccured(with type: Event)
     func start()
 }
 
-protocol AuthCoordinating {
-    var coordinator: AuthCoordinatorProtocol? { get set }
+protocol Coordinating {
+    var coordinator: Coordinator? { get set }
 }

@@ -12,9 +12,9 @@ import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
 
-class LoginViewController: UIViewController, AuthCoordinating {
+class LoginViewController: UIViewController, Coordinating {
     
-    var coordinator: AuthCoordinatorProtocol?
+    var coordinator: Coordinator?
     
     lazy var authViewModel: AuthViewModel = {
         let viewModel = AuthViewModel()

@@ -3,13 +3,32 @@ import UIKit
 import Alamofire
 import KakaoSDKTemplate
 
-class CameraViewController: UIViewController, AuthCoordinating {
+class CameraFocusSquare: UIView {
+    override func draw(_ rect: CGRect) {
+        let height = rect.height
+        let width = rect.width
+        let color: UIColor = UIColor.orange
+        
+        let drect = CGRect(
+            x: (width * 0.25),
+            y: (height * 0.25),
+            width: (width * 0.5),
+            height: (height * 0.5)
+        )
+        let bpath: UIBezierPath = UIBezierPath(rect: drect)
+
+        color.set()
+        bpath.stroke()
+    }
+}
+
+class CameraViewController: UIViewController, Coordinating {
     enum CameraType {
         case front
         case back
     }
 
-    var coordinator: AuthCoordinatorProtocol?
+    var coordinator: Coordinator?
     private var captureSession: AVCaptureSession!
     private var backCamera: AVCaptureDevice!
     private var backCameraInput: AVCaptureInput!
@@ -17,7 +36,7 @@ class CameraViewController: UIViewController, AuthCoordinating {
     private var frontCameraInput: AVCaptureInput!
     private var previewLayer: AVCaptureVideoPreviewLayer!
     private var cameraOutput: AVCapturePhotoOutput!
-    
+
     private var takePicture = false
     private var isBackCamera = true
 
@@ -42,12 +61,65 @@ class CameraViewController: UIViewController, AuthCoordinating {
         previewLayer.frame = view.frame
         flashView.frame = view.frame
     }
+    lazy var focusGesture: UITapGestureRecognizer = {
+        let instance = UITapGestureRecognizer(target: self, action: #selector(tapToFocus(_: )))
+        instance.cancelsTouchesInView = false
+        instance.numberOfTapsRequired = 1
+        instance.numberOfTouchesRequired = 1
+        return instance
+    }()
+
+    @objc func tapToFocus(_ gesture: UITapGestureRecognizer) {
+        guard previewLayer != nil else {
+            Log.error("Expected a previewLayer")
+            return
+        }
+
+        let touchPoint: CGPoint = gesture.location(in: contentView)
+        let convertedPoint: CGPoint = previewLayer.captureDevicePointConverted(fromLayerPoint: touchPoint)
+
+        if let device = AVCaptureDevice.default(for: AVMediaType.video) {
+            do {
+                try device.lockForConfiguration()
+                if device.isFocusPointOfInterestSupported {
+                    device.focusPointOfInterest = convertedPoint
+                    device.focusMode = AVCaptureDevice.FocusMode.autoFocus
+                }
+
+                if device.isExposurePointOfInterestSupported {
+                    device.exposurePointOfInterest = convertedPoint
+                    device.exposureMode = AVCaptureDevice.ExposureMode.autoExpose
+                }
+            } catch {
+                Log.debug("unable to focus")
+            }
+
+            let location = gesture.location(in: contentView)
+            let locationX = location.x-125
+            let locationY = location.y-125
+            let lineView = CameraFocusSquare(frame: CGRect(
+                x: locationX,
+                y: locationY,
+                width: 250,
+                height: 250)
+            )
+            lineView.backgroundColor = UIColor.clear
+            lineView.alpha = 0.9
+            contentView.addSubview(lineView)
+
+            CameraFocusSquare.animate(withDuration: 0.5, animations: {
+                lineView.alpha = 1
+            }) { _ in
+                lineView.alpha = 0
+            }
+        }
+    }
 
     private func checkCameraPermission() {
         switch AVCaptureDevice.authorizationStatus(for: .video) {
 
         case .notDetermined:
-            AVCaptureDevice.requestAccess(for: .video) { [weak self] granted in
+            AVCaptureDevice.requestAccess(for: .video) { granted in
                 guard granted else {
                     return
                 }
@@ -74,7 +146,6 @@ class CameraViewController: UIViewController, AuthCoordinating {
     }
 
     private func captureDevice() {
-        // 후면 카메라 설정
         if let device = AVCaptureDevice.default(
             .builtInWideAngleCamera,
             for: .video,
@@ -84,7 +155,6 @@ class CameraViewController: UIViewController, AuthCoordinating {
             Log.error("no back camera")
         }
 
-        // 전면 카메라 설정
         if let device = AVCaptureDevice.default(
             .builtInWideAngleCamera,
             for: .video,
@@ -94,7 +164,6 @@ class CameraViewController: UIViewController, AuthCoordinating {
             Log.error("no front camera")
         }
 
-        // 후면 카메라 input 설정
         guard let backCameraDeviceInput = try? AVCaptureDeviceInput(device: backCamera) else {
             Log.error("coult not set the input of back camera")
             return
@@ -175,7 +244,7 @@ class CameraViewController: UIViewController, AuthCoordinating {
                 options: .transitionFlipFromLeft,
                 animations: nil,
                 completion: nil)
-            
+
             isBackCamera = false
         } else {
             captureSession.removeInput(frontCameraInput)
@@ -259,6 +328,7 @@ extension CameraViewController {
         ])
 
         contentView.layer.addSublayer(previewLayer)
+        contentView.addGestureRecognizer(focusGesture)
         contentView.addSubview(flashView)
         contentView.addSubview(shutterButton)
         shutterButton.translatesAutoresizingMaskIntoConstraints = false
