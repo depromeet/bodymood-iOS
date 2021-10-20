@@ -3,15 +3,21 @@ import UIKit
 
 class CameraViewController: UIViewController, AuthCoordinating {
     enum CameraType {
-        case Front
-        case Back
+        case front
+        case back
     }
 
     var coordinator: AuthCoordinatorProtocol?
-    private var cameraCheck = CameraType.Back
-    private var session: AVCaptureSession?
-    private let output = AVCapturePhotoOutput()
-    private let previewLayer = AVCaptureVideoPreviewLayer()
+    private var captureSession: AVCaptureSession!
+    private var backCamera: AVCaptureDevice!
+    private var backCameraInput: AVCaptureInput!
+    private var frontCamera: AVCaptureDevice!
+    private var frontCameraInput: AVCaptureInput!
+    private var previewLayer: AVCaptureVideoPreviewLayer!
+    private var cameraOutput: AVCapturePhotoOutput!
+    
+    private var takePicture = false
+    private var isBackCamera = true
 
     private lazy var contentView: UIView = {createContentView()}()
     private lazy var shutterButton: UIButton = {createShutterButton()}()
@@ -19,9 +25,13 @@ class CameraViewController: UIViewController, AuthCoordinating {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        checkCameraPermission()
+        session()
+        captureDevice()
+        cameraLayer()
+        cameraDataOutput()
         style()
         layout()
-        checkCameraPermission()
     }
 
     override func viewDidLayoutSubviews() {
@@ -55,37 +65,132 @@ class CameraViewController: UIViewController, AuthCoordinating {
         }
     }
 
-    func cameraView() {
-        let session = AVCaptureSession()
-        if let device = AVCaptureDevice.default(for: .video) {
-            do {
-                let input = try AVCaptureDeviceInput(device: device)
-                if session.canAddInput(input) {
-                    session.addInput(input)
-                }
-
-                if session.canAddOutput(output) {
-                    session.addOutput(output)
-                }
-
-                previewLayer.videoGravity = .resizeAspectFill
-                previewLayer.session = session
-
-                session.startRunning()
-                self.session = session
-
-            } catch {
-                print(error)
-            }
+    private func session() {
+        captureSession = AVCaptureSession()
+        captureSession.beginConfiguration()
+        if captureSession.canSetSessionPreset(.photo) {
+            captureSession.sessionPreset = .photo
         }
     }
     
-    private func switchCamera(captureSession: AVCaptureSession?) {
+    private func captureDevice() {
+        // 후면 카메라 설정
+        if let device = AVCaptureDevice.default(
+            .builtInWideAngleCamera,
+            for: .video,
+            position: .back) {
+            backCamera = device
+        } else {
+            Log.error("no back camera")
+        }
         
+        // 전면 카메라 설정
+        if let device = AVCaptureDevice.default(
+            .builtInWideAngleCamera,
+            for: .video,
+            position: .front) {
+            frontCamera = device
+        } else {
+            Log.error("no front camera")
+        }
+
+        // 후면 카메라 input 설정
+        guard let backCameraDeviceInput = try? AVCaptureDeviceInput(device: backCamera) else {
+            Log.error("coult not set the input of back camera")
+            return
+        }
+        backCameraInput = backCameraDeviceInput
+        if !captureSession.canAddInput(backCameraInput) {
+            Log.error("back camera is not installed")
+        }
+
+        guard let frontCameraDeviceInput = try? AVCaptureDeviceInput(device: frontCamera) else {
+            Log.error("could not set the input of front camera")
+            return
+        }
+        frontCameraInput = frontCameraDeviceInput
+        if !captureSession.canAddInput(frontCameraInput) {
+            Log.error("front camera is not installed")
+        }
+        captureSession.addInput(backCameraInput)
+
+    }
+
+    private func cameraLayer() {
+        previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        previewLayer.videoGravity = .resizeAspectFill
+        previewLayer.connection?.videoOrientation = .portrait
+        self.previewLayer.frame = self.contentView.frame
+        contentView.layer.insertSublayer(previewLayer, at: 0)
+    }
+
+    private func cameraDataOutput() {
+        cameraOutput = AVCapturePhotoOutput()
+        if captureSession.canAddOutput(cameraOutput) {
+            captureSession.addOutput(cameraOutput)
+        } else {
+            Log.debug("could not set the output")
+        }
+        cameraOutput.connections.first?.videoOrientation = .portrait
+        captureSession.commitConfiguration()
+        captureSession.startRunning()
+    }
+
+    func cameraView() {
+//        if cameraCheck == CameraType.back {
+//            cameraCheck = CameraType.front
+//            let session = AVCaptureSession()
+//            if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+//                do {
+//                    let input = try AVCaptureDeviceInput(device: device)
+//                    if session.canAddInput(input) {
+//                        session.addInput(input)
+//                    }
+//
+//                    if session.canAddOutput(output) {
+//                        session.addOutput(output)
+//                    }
+//
+//                    previewLayer.videoGravity = .resizeAspectFill
+//                    previewLayer.session = session
+//
+//                    session.startRunning()
+//                    self.session = session
+//
+//                } catch {
+//                    Log.debug(error)
+//                }
+//            }
+//        } else if cameraCheck == CameraType.front {
+//            cameraCheck = CameraType.back
+//            let session = AVCaptureSession()
+//            if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
+//                do {
+//                    let input = try AVCaptureDeviceInput(device: device)
+//                    if session.canAddInput(input) {
+//                        session.addInput(input)
+//                    }
+//
+//                    if session.canAddOutput(output) {
+//                        session.addOutput(output)
+//                    }
+//
+//                    previewLayer.videoGravity = .resizeAspectFill
+//                    previewLayer.session = session
+//
+//                    session.startRunning()
+//                    self.session = session
+//
+//                } catch {
+//                    Log.debug(error)
+//                }
+//            }
+//        }
+//
     }
 
     @objc func shutterButtonDidTap() {
-        output.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+        cameraOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
     }
 
     @objc func backButtonDidTap() {
@@ -95,7 +200,26 @@ class CameraViewController: UIViewController, AuthCoordinating {
 
     @objc func flipButtonDidTap() {
         Log.debug("flipButtonDidTap")
-        
+        switchCameraInput()
+    }
+
+    func switchCameraInput() {
+        navigationItem.rightBarButtonItem?.customView?.isUserInteractionEnabled = false
+        captureSession.beginConfiguration()
+        if isBackCamera {
+            captureSession.removeInput(backCameraInput)
+            captureSession.addInput(frontCameraInput)
+            isBackCamera = false
+        } else {
+            captureSession.removeInput(frontCameraInput)
+            captureSession.addInput(backCameraInput)
+            isBackCamera = true
+        }
+        cameraOutput.connections.first?.videoOrientation = .portrait
+        cameraOutput.connections.first?.isVideoMirrored = !isBackCamera
+
+        captureSession.commitConfiguration()
+        navigationItem.rightBarButtonItem?.customView?.isUserInteractionEnabled = true
     }
 }
 
@@ -172,8 +296,6 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         }
 
         let image = UIImage(data: data)
-
-        session?.stopRunning()
 
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
