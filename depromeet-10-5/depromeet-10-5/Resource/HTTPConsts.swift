@@ -8,5 +8,5 @@
 import Foundation
 
 class URLConsts {
-    static let baseURL = "http://dgdg-backend-alb-1085144894.ap-northeast-2.elb.amazonaws.com/api/v1"
+    static let baseURL = "https://dev.bodymood.me/api/v1"
 }

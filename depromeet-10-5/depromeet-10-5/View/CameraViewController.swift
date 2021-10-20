@@ -1,5 +1,7 @@
 import AVFoundation
 import UIKit
+import Alamofire
+import KakaoSDKTemplate
 
 class CameraViewController: UIViewController, AuthCoordinating {
     enum CameraType {
@@ -20,6 +22,7 @@ class CameraViewController: UIViewController, AuthCoordinating {
     private var isBackCamera = true
 
     private lazy var contentView: UIView = {createContentView()}()
+    private lazy var flashView: UIView = {createFlashView()}()
     private lazy var shutterButton: UIButton = {createShutterButton()}()
 
     override func viewDidLoad() {
@@ -37,6 +40,7 @@ class CameraViewController: UIViewController, AuthCoordinating {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         previewLayer.frame = view.frame
+        flashView.frame = view.frame
     }
 
     private func checkCameraPermission() {
@@ -47,10 +51,6 @@ class CameraViewController: UIViewController, AuthCoordinating {
                 guard granted else {
                     return
                 }
-
-                DispatchQueue.main.async {
-                    self?.cameraView()
-                }
             }
 
         case .restricted:
@@ -58,7 +58,7 @@ class CameraViewController: UIViewController, AuthCoordinating {
         case .denied:
             break
         case .authorized:
-            cameraView()
+            Log.debug("camera authorized")
 
         @unknown default:
         break
@@ -72,7 +72,7 @@ class CameraViewController: UIViewController, AuthCoordinating {
             captureSession.sessionPreset = .photo
         }
     }
-    
+
     private func captureDevice() {
         // 후면 카메라 설정
         if let device = AVCaptureDevice.default(
@@ -83,7 +83,7 @@ class CameraViewController: UIViewController, AuthCoordinating {
         } else {
             Log.error("no back camera")
         }
-        
+
         // 전면 카메라 설정
         if let device = AVCaptureDevice.default(
             .builtInWideAngleCamera,
@@ -136,60 +136,20 @@ class CameraViewController: UIViewController, AuthCoordinating {
         captureSession.startRunning()
     }
 
-    func cameraView() {
-//        if cameraCheck == CameraType.back {
-//            cameraCheck = CameraType.front
-//            let session = AVCaptureSession()
-//            if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-//                do {
-//                    let input = try AVCaptureDeviceInput(device: device)
-//                    if session.canAddInput(input) {
-//                        session.addInput(input)
-//                    }
-//
-//                    if session.canAddOutput(output) {
-//                        session.addOutput(output)
-//                    }
-//
-//                    previewLayer.videoGravity = .resizeAspectFill
-//                    previewLayer.session = session
-//
-//                    session.startRunning()
-//                    self.session = session
-//
-//                } catch {
-//                    Log.debug(error)
-//                }
-//            }
-//        } else if cameraCheck == CameraType.front {
-//            cameraCheck = CameraType.back
-//            let session = AVCaptureSession()
-//            if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front) {
-//                do {
-//                    let input = try AVCaptureDeviceInput(device: device)
-//                    if session.canAddInput(input) {
-//                        session.addInput(input)
-//                    }
-//
-//                    if session.canAddOutput(output) {
-//                        session.addOutput(output)
-//                    }
-//
-//                    previewLayer.videoGravity = .resizeAspectFill
-//                    previewLayer.session = session
-//
-//                    session.startRunning()
-//                    self.session = session
-//
-//                } catch {
-//                    Log.debug(error)
-//                }
-//            }
-//        }
-//
-    }
-
     @objc func shutterButtonDidTap() {
+        Log.debug("shutterButtonDidTap")
+        UIView.animate(
+            withDuration: 0.1,
+            delay: 0.0,
+            options: [.curveEaseOut],
+            animations: {() -> Void in
+            self.flashView.alpha = 1.0
+            }, completion: { (_: Bool) -> Void in
+                UIView.animate(withDuration: 0.1, delay: 0.0, animations: {() -> Void in
+                    self.flashView.alpha = 0.0
+                })
+            })
+
         cameraOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
     }
 
@@ -228,6 +188,13 @@ extension CameraViewController {
     private func createContentView() -> UIView {
         let view = UIView()
         view.backgroundColor = .black
+        return view
+    }
+
+    private func createFlashView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
         return view
     }
 
@@ -279,6 +246,7 @@ extension CameraViewController {
         ])
 
         contentView.layer.addSublayer(previewLayer)
+        contentView.addSubview(flashView)
         contentView.addSubview(shutterButton)
         shutterButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -288,7 +256,6 @@ extension CameraViewController {
     }
 }
 
-/// TODO: 테스트용 코드. 추후 제거할 것
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         guard let data = photo.fileDataRepresentation() else {
@@ -299,7 +266,19 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
 
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
-        imageView.frame = view.bounds
-        contentView.addSubview(imageView)
+        imageView.frame = self.view.bounds
+        self.contentView.addSubview(imageView)
+    }
+
+    func photoOutput(
+        _ output: AVCapturePhotoOutput,
+        willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+        AudioServicesDisposeSystemSoundID(1108)
+    }
+
+    func photoOutput(
+        _ output: AVCapturePhotoOutput,
+        didCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+        AudioServicesDisposeSystemSoundID(1108)
     }
 }
