@@ -43,6 +43,11 @@ class CameraViewController: UIViewController, Coordinating {
     private lazy var contentView: UIView = {createContentView()}()
     private lazy var flashView: UIView = {createFlashView()}()
     private lazy var shutterButton: UIButton = {createShutterButton()}()
+    private lazy var focusGesture: UITapGestureRecognizer = {createfocusGesture()}()
+
+    deinit {
+        Log.debug(Self.self, #function)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,59 +65,6 @@ class CameraViewController: UIViewController, Coordinating {
         super.viewDidLayoutSubviews()
         previewLayer.frame = view.frame
         flashView.frame = view.frame
-    }
-    lazy var focusGesture: UITapGestureRecognizer = {
-        let instance = UITapGestureRecognizer(target: self, action: #selector(tapToFocus(_: )))
-        instance.cancelsTouchesInView = false
-        instance.numberOfTapsRequired = 1
-        instance.numberOfTouchesRequired = 1
-        return instance
-    }()
-
-    @objc func tapToFocus(_ gesture: UITapGestureRecognizer) {
-        guard previewLayer != nil else {
-            Log.error("Expected a previewLayer")
-            return
-        }
-
-        let touchPoint: CGPoint = gesture.location(in: contentView)
-        let convertedPoint: CGPoint = previewLayer.captureDevicePointConverted(fromLayerPoint: touchPoint)
-
-        if let device = AVCaptureDevice.default(for: AVMediaType.video) {
-            do {
-                try device.lockForConfiguration()
-                if device.isFocusPointOfInterestSupported {
-                    device.focusPointOfInterest = convertedPoint
-                    device.focusMode = AVCaptureDevice.FocusMode.autoFocus
-                }
-
-                if device.isExposurePointOfInterestSupported {
-                    device.exposurePointOfInterest = convertedPoint
-                    device.exposureMode = AVCaptureDevice.ExposureMode.autoExpose
-                }
-            } catch {
-                Log.debug("unable to focus")
-            }
-
-            let location = gesture.location(in: contentView)
-            let locationX = location.x-125
-            let locationY = location.y-125
-            let lineView = CameraFocusSquare(frame: CGRect(
-                x: locationX,
-                y: locationY,
-                width: 250,
-                height: 250)
-            )
-            lineView.backgroundColor = UIColor.clear
-            lineView.alpha = 0.9
-            contentView.addSubview(lineView)
-
-            CameraFocusSquare.animate(withDuration: 0.5, animations: {
-                lineView.alpha = 1
-            }) { _ in
-                lineView.alpha = 0
-            }
-        }
     }
 
     private func checkCameraPermission() {
@@ -204,65 +156,6 @@ class CameraViewController: UIViewController, Coordinating {
         captureSession.commitConfiguration()
         captureSession.startRunning()
     }
-
-    @objc func shutterButtonDidTap() {
-        Log.debug("shutterButtonDidTap")
-        UIView.animate(
-            withDuration: 0.1,
-            delay: 0.0,
-            options: [.curveEaseOut],
-            animations: {() -> Void in
-            self.flashView.alpha = 1.0
-            }, completion: { (_: Bool) -> Void in
-                UIView.animate(withDuration: 0.1, delay: 0.0, animations: {() -> Void in
-                    self.flashView.alpha = 0.0
-                })
-            })
-
-        cameraOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
-    }
-
-    @objc func backButtonDidTap() {
-        Log.debug("backButtonDidTap")
-        navigationController?.popViewController(animated: true)
-    }
-
-    @objc func flipButtonDidTap() {
-        Log.debug("flipButtonDidTap")
-        switchCameraInput()
-    }
-
-    func switchCameraInput() {
-        navigationItem.rightBarButtonItem?.customView?.isUserInteractionEnabled = false
-        captureSession.beginConfiguration()
-        if isBackCamera {
-            captureSession.removeInput(backCameraInput)
-            captureSession.addInput(frontCameraInput)
-            UIView.transition(
-                with: contentView,
-                duration: 0.3,
-                options: .transitionFlipFromLeft,
-                animations: nil,
-                completion: nil)
-
-            isBackCamera = false
-        } else {
-            captureSession.removeInput(frontCameraInput)
-            captureSession.addInput(backCameraInput)
-            UIView.transition(
-                with: contentView,
-                duration: 0.3,
-                options: .transitionFlipFromRight,
-                animations: nil,
-                completion: nil)
-            isBackCamera = true
-        }
-        cameraOutput.connections.first?.videoOrientation = .portrait
-        cameraOutput.connections.first?.isVideoMirrored = !isBackCamera
-
-        captureSession.commitConfiguration()
-        navigationItem.rightBarButtonItem?.customView?.isUserInteractionEnabled = true
-    }
 }
 
 // MARK: - Configure UI
@@ -286,6 +179,14 @@ extension CameraViewController {
         button.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height - 100)
         button.addTarget(self, action: #selector(shutterButtonDidTap), for: .touchUpInside)
         return button
+    }
+
+    private func createfocusGesture() -> UITapGestureRecognizer {
+        let instance = UITapGestureRecognizer(target: self, action: #selector(tapToFocus(_: )))
+        instance.cancelsTouchesInView = false
+        instance.numberOfTapsRequired = 1
+        instance.numberOfTouchesRequired = 1
+        return instance
     }
 
     private func style() {
@@ -336,6 +237,112 @@ extension CameraViewController {
             shutterButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             shutterButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50)
         ])
+    }
+}
+
+// MARK: - Configure Actions
+extension CameraViewController {
+    @objc func shutterButtonDidTap() {
+        UIView.animate(
+            withDuration: 0.1,
+            delay: 0.0,
+            options: [.curveEaseOut],
+            animations: {() -> Void in
+            self.flashView.alpha = 1.0
+            }, completion: { (_: Bool) -> Void in
+                UIView.animate(withDuration: 0.1, delay: 0.0, animations: {() -> Void in
+                    self.flashView.alpha = 0.0
+                })
+            })
+
+        cameraOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
+    }
+
+    @objc func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+    }
+
+    @objc func flipButtonDidTap() {
+        switchCameraInput()
+    }
+
+    func switchCameraInput() {
+        navigationItem.rightBarButtonItem?.customView?.isUserInteractionEnabled = false
+        captureSession.beginConfiguration()
+        if isBackCamera {
+            captureSession.removeInput(backCameraInput)
+            captureSession.addInput(frontCameraInput)
+            UIView.transition(
+                with: contentView,
+                duration: 0.3,
+                options: .transitionFlipFromLeft,
+                animations: nil,
+                completion: nil)
+
+            isBackCamera = false
+        } else {
+            captureSession.removeInput(frontCameraInput)
+            captureSession.addInput(backCameraInput)
+            UIView.transition(
+                with: contentView,
+                duration: 0.3,
+                options: .transitionFlipFromRight,
+                animations: nil,
+                completion: nil)
+            isBackCamera = true
+        }
+        cameraOutput.connections.first?.videoOrientation = .portrait
+        cameraOutput.connections.first?.isVideoMirrored = !isBackCamera
+
+        captureSession.commitConfiguration()
+        navigationItem.rightBarButtonItem?.customView?.isUserInteractionEnabled = true
+    }
+
+    @objc func tapToFocus(_ gesture: UITapGestureRecognizer) {
+        guard previewLayer != nil else {
+            return
+        }
+
+        let touchPoint: CGPoint = gesture.location(in: contentView)
+        let convertedPoint: CGPoint = previewLayer.captureDevicePointConverted(fromLayerPoint: touchPoint)
+
+        if let device = AVCaptureDevice.default(for: AVMediaType.video) {
+            do {
+                try device.lockForConfiguration()
+                if device.isFocusPointOfInterestSupported {
+                    device.focusPointOfInterest = convertedPoint
+                    device.focusMode = AVCaptureDevice.FocusMode.autoFocus
+                }
+
+                if device.isExposurePointOfInterestSupported {
+                    device.exposurePointOfInterest = convertedPoint
+                    device.exposureMode = AVCaptureDevice.ExposureMode.autoExpose
+                }
+            } catch {
+            }
+
+            let location = gesture.location(in: contentView)
+            let locationX = location.x-125
+            let locationY = location.y-125
+            let lineView = CameraFocusSquare(frame: CGRect(
+                x: locationX,
+                y: locationY,
+                width: 250,
+                height: 250)
+            )
+            lineView.backgroundColor = UIColor.clear
+            lineView.alpha = 0.9
+            contentView.addSubview(lineView)
+
+            CameraFocusSquare.animate(
+                withDuration: 0.5,
+                animations: {
+                    lineView.alpha = 1
+                }, completion: { _ in
+                    lineView.alpha = 0
+                }
+            )
+        }
     }
 }
 

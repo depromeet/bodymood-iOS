@@ -21,6 +21,7 @@
 		9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */; };
 		9641DAEE2713334E001BE018 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAED2713334E001BE018 /* AuthService.swift */; };
 		9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEF271333EB001BE018 /* HTTPConsts.swift */; };
+		96C481F52720396A00244296 /* CameraCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C481F42720396A00244296 /* CameraCoordinator.swift */; };
 		96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBB6271B0ED6008013CA /* CameraViewController.swift */; };
 		96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */; };
 		96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBF271B1704008013CA /* Coordinator.swift */; };
@@ -54,6 +55,7 @@
 		9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginResponse.swift; sourceTree = "<group>"; };
 		9641DAED2713334E001BE018 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		9641DAEF271333EB001BE018 /* HTTPConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConsts.swift; sourceTree = "<group>"; };
+		96C481F42720396A00244296 /* CameraCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCoordinator.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		96F0BBBF271B1704008013CA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			children = (
 				96F0BBBF271B1704008013CA /* Coordinator.swift */,
 				96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */,
+				96C481F42720396A00244296 /* CameraCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -400,6 +403,7 @@
 				96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */,
+				96C481F52720396A00244296 /* CameraCoordinator.swift in Sources */,
 				96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */,
 				9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */,
 				E86EC939271AD2B500A7DD54 /* AlbumViewController.swift in Sources */,

@@ -8,7 +8,8 @@
 import Foundation
 import UIKit
 
-class AuthCoordinator: Coordinator {
+class AuthCoordinator: Coordinator {   
+
     var navigationController: UINavigationController?
 
     func eventOccured(with type: Event) {
@@ -30,7 +31,7 @@ class AuthCoordinator: Coordinator {
             viewController.coordinator = self
             return viewController
         }
-    
+
         navigationController?.setViewControllers([viewController], animated: false)
     }
 }
