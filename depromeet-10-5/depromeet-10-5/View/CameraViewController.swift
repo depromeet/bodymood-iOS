@@ -169,10 +169,23 @@ class CameraViewController: UIViewController, AuthCoordinating {
         if isBackCamera {
             captureSession.removeInput(backCameraInput)
             captureSession.addInput(frontCameraInput)
+            UIView.transition(
+                with: contentView,
+                duration: 0.3,
+                options: .transitionFlipFromLeft,
+                animations: nil,
+                completion: nil)
+            
             isBackCamera = false
         } else {
             captureSession.removeInput(frontCameraInput)
             captureSession.addInput(backCameraInput)
+            UIView.transition(
+                with: contentView,
+                duration: 0.3,
+                options: .transitionFlipFromRight,
+                animations: nil,
+                completion: nil)
             isBackCamera = true
         }
         cameraOutput.connections.first?.videoOrientation = .portrait
