@@ -13,14 +13,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
  func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
-
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
         // Change an intial view (if you need to change, remove codes below)
-        let storyboard = UIStoryboard(name: "Auth", bundle: nil)
-        let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC")
-
-        self.window?.rootViewController = initialViewController
-        self.window?.makeKeyAndVisible()
+         let navVC = UINavigationController()
+         
+         let coordinator = AuthCoordinator()
+         coordinator.navigationController = navVC
+         
+         let window = UIWindow(windowScene: windowScene)
+         window.rootViewController = navVC
+         window.makeKeyAndVisible()
+         
+         self.window = window
+         
+         coordinator.start()
+     
+//        let storyboard = UIStoryboard(name: "Auth", bundle: nil)
+//        let initialViewController = storyboard.instantiateViewController(withIdentifier: "LoginVC")
+//
+//        self.window?.rootViewController = initialViewController
+//        self.window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

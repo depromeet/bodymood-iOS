@@ -11,10 +11,25 @@ import KakaoSDKAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
         KakaoSDKCommon.initSDK(appKey: "1f1d9175f9c1e2682cf32d234475f94a") // initialize Kakao SDK
+        
+        let navVC = UINavigationController()
+        
+        let coordinator = AuthCoordinator()
+        coordinator.navigationController = navVC
+        
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        window.rootViewController = navVC
+        window.makeKeyAndVisible()
+        
+        self.window = window
+        
+        coordinator.start()
         
         return true
     }
