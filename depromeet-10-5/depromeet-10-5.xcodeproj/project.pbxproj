@@ -398,7 +398,7 @@
 				9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */,
 				9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */,
 				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
-				96F0BBC0271B1704008013CA /* AuthCoordinatorProtocol.swift in Sources */,
+				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
@@ -556,7 +556,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RC5265XPLQ;
+				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -577,7 +577,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RC5265XPLQ;
+				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

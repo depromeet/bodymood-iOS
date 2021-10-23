@@ -1,10 +1,3 @@
-//
-//  LoginViewController.swift
-//  depromeet-10-5
-//
-//  Created by 허예은 on 2021/09/28.
-//
-
 import Combine
 import UIKit
 
@@ -20,7 +13,7 @@ class LoginViewController: UIViewController, Coordinating {
         let viewModel = AuthViewModel()
         return viewModel
     }()
-    
+
     var subscription: Set<AnyCancellable> = []
 
     private var kakaoLoginSubscriber: AnyCancellable?
@@ -28,15 +21,57 @@ class LoginViewController: UIViewController, Coordinating {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Login"
+        let backgroundView: UIView = {
+            let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
+            view.addSubview(backgroundView)
+            backgroundView.backgroundColor = .blue
+            return backgroundView
+        }()
+        
+        let buttonContainerView: UIView = {
+            let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 128))
+            backgroundView.addSubview(containerView)
+            containerView.backgroundColor = .green
 
-        let button: UIButton = {
-            let button = UIButton(frame: CGRect(x: 0, y: 0, width: 220, height: 55))
-            view.addSubview(button)
-            button.center = view.center
-            button.backgroundColor = .systemGreen
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            containerView.backgroundColor = .green
+            containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
+            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
+            containerView.widthAnchor.constraint(equalToConstant: 327).isActive = true
+            containerView.heightAnchor.constraint(equalToConstant: 500).isActive = true
+            return containerView
+        }()
+        
+        let kakaoLoginButton: UIButton = {
+            let button = UIButton()
+            buttonContainerView.addSubview(button)
             button.setTitleColor(.white, for: .normal)
+            button.setImage(UIImage(named: "kakao_login_large_wide"), for: .normal)
+            button.imageView?.contentMode = .scaleAspectFill
             button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 327).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+
+            return button
+        }()
+        
+        let appleLoginButton: UIButton = {
+            let button = UIButton()
+            buttonContainerView.addSubview(button)
+
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.setTitleColor(.white, for: .normal)
+            button.setImage(UIImage(named: "apple_login"), for: .normal)
+            button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+
+            button.topAnchor.constraint(equalTo: kakaoLoginButton.bottomAnchor, constant: 16).isActive = true
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+            button.widthAnchor.constraint(equalToConstant: 327).isActive = true
+            button.heightAnchor.constraint(equalToConstant: 56).isActive = true
             return button
         }()
     }
@@ -62,13 +97,4 @@ class LoginViewController: UIViewController, Coordinating {
             }).store(in: &subscription)
 
     }
-	
-	
-	// TODO: 제거할 것
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-			presentAlbumVC(on: self)
-		}
-	}
 }
