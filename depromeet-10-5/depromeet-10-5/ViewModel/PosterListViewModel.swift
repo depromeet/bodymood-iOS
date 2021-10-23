@@ -7,7 +7,7 @@ protocol PosterListViewModelType {
     var posters: AnyPublisher<[PHAsset], Never> { get }
     var title: AnyPublisher<String, Never> { get }
     var guideText: AnyPublisher<String, Never> { get }
-    func loadImage() -> AnyPublisher<Bool, Never>
+    var moveToDetail: PassthroughSubject<PHAsset, Never> { get }
 
     // Inputs
     var numOfItemsPerRow: Int { get }
@@ -27,6 +27,7 @@ class PosterListViewModel: PosterListViewModelType {
     var posters: AnyPublisher<[PHAsset], Never> { postersSubject.prefix(maxNumOfItems).eraseToAnyPublisher() }
     var title: AnyPublisher<String, Never> { Just("Bodymood").eraseToAnyPublisher() }
     var guideText: AnyPublisher<String, Never> { Just("나의 Bodymood로\n이 곳을 채워주세요").eraseToAnyPublisher() }
+    let moveToDetail = PassthroughSubject<PHAsset, Never>()
 
     let addBtnTapped = PassthroughSubject<Void, Never>()
     let posterSelected = PassthroughSubject<Int, Never>()
@@ -61,7 +62,8 @@ class PosterListViewModel: PosterListViewModelType {
 
         posterSelected
             .sink { [weak self] index in
-                Log.debug("posterSelected", self?.postersSubject.value[safe: index])
+                guard let poster = self?.postersSubject.value[safe: index] else { return }
+                self?.moveToDetail.send(poster)
             }.store(in: &subscriptions)
     }
 }

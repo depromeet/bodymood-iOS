@@ -1,6 +1,5 @@
+import UIKit
+
 struct PosterModel {
-    enum DefaultSize: Int {
-        case width = 327
-        case height = 580
-    }
+    static let defaultSize = CGSize(width: 156, height: 277)
 }

@@ -3,12 +3,14 @@ import Photos
 
 class PosterCell: UICollectionViewCell {
 
-    private var requestID: PHImageRequestID?
+    private var assetId: String?
 
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(view)
         return view
     }()
 
@@ -22,18 +24,20 @@ class PosterCell: UICollectionViewCell {
     }
 
     func update(with asset: PHAsset) {
-        requestID = imageView.fetchImageAsset(asset, frameSize: bounds.size)
-    }
-
-    override func prepareForReuse() {
-        if let requestID = requestID {
-            PHImageManager.default().cancelImageRequest(requestID)
+        assetId = asset.localIdentifier
+        imageView.fetchImageAsset(asset, frameSize: bounds.size) { [weak self] image, _ in
+            if self?.assetId == asset.localIdentifier {
+                self?.imageView.image = image
+            }
         }
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+    }
+
     private func layout() {
-        contentView.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),

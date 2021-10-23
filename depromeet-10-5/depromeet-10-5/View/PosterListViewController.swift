@@ -3,30 +3,7 @@ import Photos
 import Combine
 
 class PosterListViewController: UIViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, PHAsset>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, PHAsset>
-    typealias CellRegistration = UICollectionView.CellRegistration<PosterCell, PHAsset>
-
-    enum Section {
-        case main
-    }
-
-    enum Layout {
-        static let horizontalInset: CGFloat = 24
-        static let listViewTopInset: CGFloat = 24
-        static let listViewBottomInset: CGFloat = 0
-        static let horizontalSpacing: CGFloat = 15
-        static let verticalSpacing: CGFloat = 24
-
-        static let btnBottomInset: CGFloat = 28
-        static let btnHeight: CGFloat = 56
-        static let btnContentInset: CGFloat = 16
-    }
     
-    enum Style {
-        static let lineHeight: CGFloat = 24
-    }
-
     private lazy var collectionView: UICollectionView = { createCollectionView() }()
     private lazy var dataSource: DataSource = { createDataSource() }()
     private lazy var addButton: UIButton = { createAddButton() }()
@@ -75,6 +52,13 @@ class PosterListViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] title in
                 self?.navigationItem.title = title
+            }.store(in: &subscriptions)
+
+        viewModel.moveToDetail
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] asset in
+                let detailVC = PosterDetailViewController(viewModel: PosterDetailViewModel(with: asset))
+                self?.navigationController?.pushViewController(detailVC, animated: true)
             }.store(in: &subscriptions)
 
         addButton.publisher(for: .touchUpInside)
@@ -150,8 +134,7 @@ extension PosterListViewController {
             let numOfItemsPerRow = CGFloat(self?.viewModel.numOfItemsPerRow ?? 1)
 
             let itemWidth = (width - Layout.horizontalSpacing * (numOfItemsPerRow - 1)) / numOfItemsPerRow
-            let posterSize = CGSize(width: PosterModel.DefaultSize.width.rawValue,
-                              height: PosterModel.DefaultSize.height.rawValue)
+            let posterSize = PosterModel.defaultSize
             let itemHeight = itemWidth / posterSize.width * posterSize.height
 
             let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(itemWidth),
@@ -178,6 +161,7 @@ extension PosterListViewController {
     private func style() {
         view.backgroundColor = .white
 
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -238,4 +222,31 @@ func presentPosterListVC(on viewController: UIViewController) {
     nav.overrideUserInterfaceStyle = .light
     nav.modalPresentationStyle = .fullScreen
     viewController.present(nav, animated: true, completion: nil)
+}
+
+// MARK: - Definitions
+extension PosterListViewController {
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, PHAsset>
+    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, PHAsset>
+    typealias CellRegistration = UICollectionView.CellRegistration<PosterCell, PHAsset>
+
+    enum Section {
+        case main
+    }
+
+    enum Layout {
+        static let horizontalInset = CommonLayout.horizontalInset
+        static let listViewTopInset: CGFloat = 24
+        static let listViewBottomInset: CGFloat = 0
+        static let horizontalSpacing: CGFloat = 15
+        static let verticalSpacing: CGFloat = 24
+
+        static let btnBottomInset: CGFloat = 28
+        static let btnHeight: CGFloat = 56
+        static let btnContentInset: CGFloat = 16
+    }
+    
+    enum Style {
+        static let lineHeight: CGFloat = 24
+    }
 }
