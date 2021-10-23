@@ -1,7 +1,7 @@
 import UIKit
 import Photos
 
-class AlbumCollectionViewCell: UICollectionViewCell {
+class PhotoCell: UICollectionViewCell {
 
 	private var requestID: PHImageRequestID?
 
