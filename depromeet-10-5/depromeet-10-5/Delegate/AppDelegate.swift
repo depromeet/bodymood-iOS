@@ -8,6 +8,7 @@
 import UIKit
 import KakaoSDKCommon
 import KakaoSDKAuth
+import AuthenticationServices
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +18,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
         KakaoSDKCommon.initSDK(appKey: "1f1d9175f9c1e2682cf32d234475f94a") // initialize Kakao SDK
-
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: UserDefaultKey.appleID) ?? "", completion: { credentialState, error in
+            switch credentialState {
+            case .authorized:
+                Log.debug("애플로그인 연동 완료")
+            case .revoked:
+                Log.debug("애플로그인 연동 상태 X")
+            case .notFound:
+                Log.debug("해당 ID를 찾을 수 없습니다")
+            default:
+                break
+            }
+        })
+        
+        NotificationCenter.default.addObserver(forName: ASAuthorizationAppleIDProvider.credentialRevokedNotification, object: nil, queue: nil) { notification in
+            Log.debug("Revoked Notification")
+            // 로그인 페이지 이동
+        }
+        
         let navVC = UINavigationController()
 
         let coordinator = AuthCoordinator()

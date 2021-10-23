@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct KakoLoginRequest: Codable {
+struct LoginRequest: Codable {
     let accessToken: String
 }

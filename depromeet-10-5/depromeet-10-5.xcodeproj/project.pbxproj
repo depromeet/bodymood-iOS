@@ -17,8 +17,8 @@
 		9637665E26EDD79E00E8E547 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637665C26EDD79E00E8E547 /* Main.storyboard */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
 		9637666326EDD79F00E8E547 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */; };
-		9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAE82713319C001BE018 /* KakaoLoginRequest.swift */; };
-		9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */; };
+		9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAE82713319C001BE018 /* LoginRequest.swift */; };
+		9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEA271331A2001BE018 /* LoginResponse.swift */; };
 		9641DAEE2713334E001BE018 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAED2713334E001BE018 /* AuthService.swift */; };
 		9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEF271333EB001BE018 /* HTTPConsts.swift */; };
 		96C481F52720396A00244296 /* CameraCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C481F42720396A00244296 /* CameraCoordinator.swift */; };
@@ -51,8 +51,8 @@
 		9637665F26EDD79F00E8E547 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9637666226EDD79F00E8E547 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9637666426EDD79F00E8E547 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9641DAE82713319C001BE018 /* KakaoLoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginRequest.swift; sourceTree = "<group>"; };
-		9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginResponse.swift; sourceTree = "<group>"; };
+		9641DAE82713319C001BE018 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
+		9641DAEA271331A2001BE018 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		9641DAED2713334E001BE018 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		9641DAEF271333EB001BE018 /* HTTPConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConsts.swift; sourceTree = "<group>"; };
 		964EBDD5272418A60093AA76 /* depromeet-10-5.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "depromeet-10-5.entitlements"; sourceTree = "<group>"; };
@@ -135,8 +135,8 @@
 		9641DAE727133188001BE018 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				9641DAE82713319C001BE018 /* KakaoLoginRequest.swift */,
-				9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */,
+				9641DAE82713319C001BE018 /* LoginRequest.swift */,
+				9641DAEA271331A2001BE018 /* LoginResponse.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -397,8 +397,8 @@
 				9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
 				E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */,
-				9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */,
-				9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */,
+				9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */,
+				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
 				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,

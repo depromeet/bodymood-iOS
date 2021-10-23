@@ -1,15 +1,16 @@
 import Combine
 import UIKit
 
+import AuthenticationServices
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
 
 class LoginViewController: UIViewController, Coordinating {
     var coordinator: Coordinator?
-    
+
     private lazy var kakaoLoginButton: UIButton = { createKakaoButton() }()
-    private lazy var appleLoginButton: UIButton = { createAppleButton() }()
+    private lazy var appleLoginButton: ASAuthorizationAppleIDButton = { createAppleButton() }()
     private lazy var stackView: UIStackView = { createStackView() }()
     private lazy var authViewModel: AuthViewModel = {
         let viewModel = AuthViewModel()
@@ -17,9 +18,9 @@ class LoginViewController: UIViewController, Coordinating {
     }()
 
     private var subscriptions: Set<AnyCancellable> = []
+    private var kakaoAccessToken: String?
+    private var appleAccessToken: String?
 
-    private var accessToken: String?
-    
     deinit {
         Log.debug(Self.self, #function)
     }
@@ -38,27 +39,6 @@ class LoginViewController: UIViewController, Coordinating {
 
         }.store(in: &subscriptions)
     }
-
-    @objc func buttonDidTap() {
-        let kakaoLogin = authViewModel.kakaoLoginAvailable()
-
-        kakaoLogin.sink( receiveCompletion: { completion in
-            switch completion {
-            case .finished:
-                self.authViewModel.kakaoAuth(accessToken: self.accessToken ?? "")
-
-                if(UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "") {
-                    self.coordinator?.eventOccured(with: .buttonDidTap)
-                }
-
-            case .failure(let error):
-                Log.debug(error)
-            }
-        }, receiveValue: {
-            Log.debug("====\($0.accessToken)====")
-            self.accessToken = $0.accessToken
-        }).store(in: &subscriptions)
-    }
 }
 
 extension LoginViewController {
@@ -67,15 +47,13 @@ extension LoginViewController {
         button.setTitleColor(.white, for: .normal)
         button.setImage(UIImage(named: "kakao_login_large_wide"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+        button.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
         return button
     }
 
-    private func createAppleButton() -> UIButton {
-        let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.setImage(UIImage(named: "apple_login"), for: .normal)
-        button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+    private func createAppleButton() -> ASAuthorizationAppleIDButton {
+        let button = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+        button.addTarget(self, action: #selector(appleLoginDidTap), for: .touchUpInside)
         return button
     }
 
@@ -113,5 +91,76 @@ extension LoginViewController {
             appleLoginButton.widthAnchor.constraint(equalToConstant: 300),
             appleLoginButton.heightAnchor.constraint(equalToConstant: 45)
         ])
+    }
+}
+
+extension LoginViewController {
+    @objc func kakaoLoginButtonDidTap() {
+        let kakaoLogin = authViewModel.kakaoLoginAvailable()
+
+        kakaoLogin.sink( receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                self.authViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
+
+                if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
+                    self.coordinator?.eventOccured(with: .buttonDidTap)
+                }
+
+            case .failure(let error):
+                Log.debug(error)
+            }
+        }, receiveValue: {
+            Log.debug("====\($0.accessToken)====")
+            self.kakaoAccessToken = $0.accessToken
+        }).store(in: &subscriptions)
+    }
+
+    @objc func appleLoginDidTap() {
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+
+        DispatchQueue.main.asyncAfter(
+            deadline: .now()+0.1) { self.authViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
+        }
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding {
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerDelegate {
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            let token = appleIDCredential.identityToken
+            let tokenToUTF8 = String(data: token!, encoding: .utf8)
+            appleAccessToken = tokenToUTF8
+
+            Log.debug("user token: \(String(describing: tokenToUTF8))")
+            Log.debug("User ID: \(userIdentifier)")
+            Log.debug("User full name: \(String(describing: fullName))")
+            Log.debug("User email: \(String(describing: email))")
+        default:
+            break
+        }
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        Log.debug("login error")
     }
 }
