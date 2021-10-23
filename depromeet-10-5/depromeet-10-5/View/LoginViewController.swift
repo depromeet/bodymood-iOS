@@ -6,95 +6,112 @@ import KakaoSDKCommon
 import KakaoSDKUser
 
 class LoginViewController: UIViewController, Coordinating {
-    
     var coordinator: Coordinator?
     
-    lazy var authViewModel: AuthViewModel = {
+    private lazy var kakaoLoginButton: UIButton = { createKakaoButton() }()
+    private lazy var appleLoginButton: UIButton = { createAppleButton() }()
+    private lazy var stackView: UIStackView = { createStackView() }()
+    private lazy var authViewModel: AuthViewModel = {
         let viewModel = AuthViewModel()
         return viewModel
     }()
 
-    var subscription: Set<AnyCancellable> = []
+    private var subscriptions: Set<AnyCancellable> = []
 
-    private var kakaoLoginSubscriber: AnyCancellable?
     private var accessToken: String?
+    
+    deinit {
+        Log.debug(Self.self, #function)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let backgroundView: UIView = {
-            let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height))
-            view.addSubview(backgroundView)
-            backgroundView.backgroundColor = .blue
-            return backgroundView
-        }()
-        
-        let buttonContainerView: UIView = {
-            let containerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 128))
-            backgroundView.addSubview(containerView)
-            containerView.backgroundColor = .green
+        Log.debug("login view")
+        style()
+        layout()
+        bind()
+    }
 
-            containerView.translatesAutoresizingMaskIntoConstraints = false
-            containerView.backgroundColor = .green
-            containerView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            containerView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-            containerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24).isActive = true
-            containerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24).isActive = true
-            containerView.widthAnchor.constraint(equalToConstant: 327).isActive = true
-            containerView.heightAnchor.constraint(equalToConstant: 500).isActive = true
-            return containerView
-        }()
-        
-        let kakaoLoginButton: UIButton = {
-            let button = UIButton()
-            buttonContainerView.addSubview(button)
-            button.setTitleColor(.white, for: .normal)
-            button.setImage(UIImage(named: "kakao_login_large_wide"), for: .normal)
-            button.imageView?.contentMode = .scaleAspectFill
-            button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 327).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 56).isActive = true
+    private func bind() {
+        authViewModel.kakaoBtnTapped.receive(on: DispatchQueue.main).sink { _ in
+            Log.debug("kakaoLogin Button Tapped")
 
-            return button
-        }()
-        
-        let appleLoginButton: UIButton = {
-            let button = UIButton()
-            buttonContainerView.addSubview(button)
-
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.setTitleColor(.white, for: .normal)
-            button.setImage(UIImage(named: "apple_login"), for: .normal)
-            button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
-
-            button.topAnchor.constraint(equalTo: kakaoLoginButton.bottomAnchor, constant: 16).isActive = true
-            button.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-            button.widthAnchor.constraint(equalToConstant: 327).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 56).isActive = true
-            return button
-        }()
+        }.store(in: &subscriptions)
     }
 
     @objc func buttonDidTap() {
-        let kakaoLoginFuture = authViewModel.loginAvailable()
+        let kakaoLogin = authViewModel.kakaoLoginAvailable()
 
-        _ = kakaoLoginFuture.sink( receiveCompletion: { completion in
+        kakaoLogin.sink( receiveCompletion: { completion in
             switch completion {
-                case .finished:
+            case .finished:
                 self.authViewModel.kakaoAuth(accessToken: self.accessToken ?? "")
-                
+
                 if(UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "") {
                     self.coordinator?.eventOccured(with: .buttonDidTap)
                 }
-                
-                case .failure(let error):
-                    Log.debug(error)
-                }
-            }, receiveValue: {
-                Log.debug("====\($0.accessToken)====")
-                self.accessToken = $0.accessToken
-            }).store(in: &subscription)
 
+            case .failure(let error):
+                Log.debug(error)
+            }
+        }, receiveValue: {
+            Log.debug("====\($0.accessToken)====")
+            self.accessToken = $0.accessToken
+        }).store(in: &subscriptions)
+    }
+}
+
+extension LoginViewController {
+    private func createKakaoButton() -> UIButton {
+        let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(named: "kakao_login_large_wide"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+        return button
+    }
+
+    private func createAppleButton() -> UIButton {
+        let button = UIButton()
+        button.setTitleColor(.white, for: .normal)
+        button.setImage(UIImage(named: "apple_login"), for: .normal)
+        button.addTarget(self, action: #selector(buttonDidTap), for: .touchUpInside)
+        return button
+    }
+
+    private func createStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [kakaoLoginButton, appleLoginButton])
+
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 18.0
+        return stackView
+    }
+
+    func style() {
+        view.backgroundColor = .white
+    }
+
+    func layout() {
+        view.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+
+        kakaoLoginButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            kakaoLoginButton.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
+            kakaoLoginButton.widthAnchor.constraint(equalToConstant: 300),
+            kakaoLoginButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
+
+        appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            appleLoginButton.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
+            appleLoginButton.widthAnchor.constraint(equalToConstant: 300),
+            appleLoginButton.heightAnchor.constraint(equalToConstant: 45)
+        ])
     }
 }

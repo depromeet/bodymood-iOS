@@ -13,21 +13,24 @@ import KakaoSDKAuth
 import KakaoSDKUser
 
 class AuthViewModel {
-    var authService: AuthService?
-    var subscription: Cancellable?
-    
-    private var kakaoAuthSubscriber: AnyCancellable?
+    private let accessTokenSubject = CurrentValueSubject<String, Never>(.init())
+    private var authService: AuthService
+    private var subscription: AnyCancellable?
+    var accessToken: AnyPublisher<String, Never> {
+        accessTokenSubject.eraseToAnyPublisher()
+    }
+
+    let kakaoBtnTapped =  PassthroughSubject<Void, Never>()
 
     init() {
         self.authService = AuthService()
     }
 
     deinit {
-        Log.debug("viewModel \(Self.self) deallocated")
+        Log.debug(Self.self, #function)
     }
 
-
-    func loginAvailable() -> Future<OAuthToken, Error> {
+    func kakaoLoginAvailable() -> Future<OAuthToken, Error> {
         return Future { promise in
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
@@ -43,19 +46,19 @@ class AuthViewModel {
 
     /// Server에 Access Token 보내기
     func kakaoAuth(accessToken: String) {
-    
-        subscription = authService?.kakaoAuth(accessToken: accessToken).sink(receiveCompletion: { completion in
+        subscription = authService.kakaoAuth(accessToken: accessToken).sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
                 Log.debug("success kakaoAuth View Model")
-        
+
             case .failure(let error):
                 Log.error(error)
             }
+
         }, receiveValue: { response in
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                 UserDefaults.standard.setValue(response.data?.accessToken ?? "", forKey: UserDefaultKey.accessToken)
-                UserDefaults.standard.setValue(response.data?.refreshToken ?? "", forKey: UserDefaultKey.accessToken)
+                self.accessTokenSubject.send(response.data?.accessToken ?? "")
             }
         })
     }

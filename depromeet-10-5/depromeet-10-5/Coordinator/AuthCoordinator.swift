@@ -1,14 +1,7 @@
-//
-//  AuthCoordinator.swift
-//  depromeet-10-5
-//
-//  Created by 허예은 on 2021/10/16.
-//
-
 import Foundation
 import UIKit
 
-class AuthCoordinator: Coordinator {   
+class AuthCoordinator: Coordinator {
 
     var navigationController: UINavigationController?
 

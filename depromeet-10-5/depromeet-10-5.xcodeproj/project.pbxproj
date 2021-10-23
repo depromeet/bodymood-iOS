@@ -55,6 +55,7 @@
 		9641DAEA271331A2001BE018 /* KakaoLoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoLoginResponse.swift; sourceTree = "<group>"; };
 		9641DAED2713334E001BE018 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		9641DAEF271333EB001BE018 /* HTTPConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConsts.swift; sourceTree = "<group>"; };
+		964EBDD5272418A60093AA76 /* depromeet-10-5.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "depromeet-10-5.entitlements"; sourceTree = "<group>"; };
 		96C481F42720396A00244296 /* CameraCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCoordinator.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -115,6 +116,7 @@
 		9637665526EDD79E00E8E547 /* depromeet-10-5 */ = {
 			isa = PBXGroup;
 			children = (
+				964EBDD5272418A60093AA76 /* depromeet-10-5.entitlements */,
 				E86EC93E271B1FC800A7DD54 /* Extentions */,
 				96F0BBAF271AF939008013CA /* Coordinator */,
 				967549B52700AA9A007E4E95 /* Delegate */,
@@ -555,6 +557,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
@@ -576,6 +579,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
