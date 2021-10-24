@@ -221,6 +221,7 @@ extension CameraViewController {
     private func createFlashButton() -> UIButton {
         let button = UIButton()
         button.setImage(UIImage(named: "flash"), for: UIControl.State.normal)
+        button.addTarget(self, action: #selector(flashButtonDidTap), for: .touchUpInside)
         return button
     }
 
@@ -351,6 +352,10 @@ extension CameraViewController {
 
 // MARK: - Configure Actions
 extension CameraViewController {
+    @objc func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+    }
+
     @objc func shutterButtonDidTap() {
         UIView.animate(
             withDuration: 0.1,
@@ -367,8 +372,24 @@ extension CameraViewController {
         cameraOutput.capturePhoto(with: AVCapturePhotoSettings(), delegate: self)
     }
 
-    @objc func backButtonDidTap() {
-        navigationController?.popViewController(animated: true)
+    @objc func flashButtonDidTap() {
+        if isBackCamera {
+            if backCamera.hasTorch {
+                do {
+                    try backCamera.lockForConfiguration()
+                } catch {
+                    Log.error("back camera has not torch")
+                }
+            }
+            
+            if backCamera.isTorchActive {
+                backCamera.torchMode = .off
+            } else {
+                backCamera.torchMode = .on
+            }
+            
+            backCamera.unlockForConfiguration()
+        }
     }
 
     @objc func flipButtonDidTap() {
