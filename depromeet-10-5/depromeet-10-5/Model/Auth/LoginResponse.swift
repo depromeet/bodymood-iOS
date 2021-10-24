@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct KakaoLoginResponse: Decodable {
+struct LoginResponse: Decodable {
     let code: String
     let data: AuthResponse?
     let message: String
