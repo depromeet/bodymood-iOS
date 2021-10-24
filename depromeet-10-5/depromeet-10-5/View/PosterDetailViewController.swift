@@ -26,6 +26,8 @@ class PosterDetailViewController: UIViewController {
 
     // MARK: Life Cycle
     override func viewDidLoad() {
+        super.viewDidLoad()
+
         style()
         layout()
         bind()
@@ -35,8 +37,10 @@ class PosterDetailViewController: UIViewController {
         super.viewDidAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
+}
 
-    // MARK: Bind ViewModel
+// MARK: - Bind ViewModel
+extension PosterDetailViewController {
     private func bind() {
         viewModel.poster
             .receive(on: DispatchQueue.main)
@@ -76,7 +80,6 @@ class PosterDetailViewController: UIViewController {
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &bag)
     }
-
 }
 
 // MARK: - Definitions

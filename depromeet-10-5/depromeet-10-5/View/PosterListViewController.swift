@@ -3,7 +3,7 @@ import Photos
 import Combine
 
 class PosterListViewController: UIViewController {
-    
+
     private lazy var collectionView: UICollectionView = { createCollectionView() }()
     private lazy var dataSource: DataSource = { createDataSource() }()
     private lazy var addButton: UIButton = { createAddButton() }()
@@ -32,7 +32,10 @@ class PosterListViewController: UIViewController {
         layout()
         bind()
     }
+}
 
+// MARK: - Bind ViewModel
+extension PosterListViewController {
     private func bind() {
         viewModel.posters
             .receive(on: DispatchQueue.main)
@@ -61,6 +64,14 @@ class PosterListViewController: UIViewController {
                 self?.navigationController?.pushViewController(detailVC, animated: true)
             }.store(in: &subscriptions)
 
+        viewModel.moveToTemplate
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                let templateVM = PosterTemplateListViewModel()
+                let templateVC = PosterTemplateListViewController(viewModel: templateVM)
+                self?.navigationController?.pushViewController(templateVC, animated: true)
+            }.store(in: &subscriptions)
+
         addButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 guard
@@ -70,7 +81,7 @@ class PosterListViewController: UIViewController {
             }.store(in: &subscriptions)
     }
 
-    func updateList(with photos: [PHAsset], animatingDifferences: Bool = true) {
+    private func updateList(with photos: [PHAsset], animatingDifferences: Bool = true) {
         var snapshot = SnapShot()
         snapshot.appendSections([.main])
         snapshot.appendItems(photos, toSection: .main)
@@ -80,6 +91,27 @@ class PosterListViewController: UIViewController {
 
 // MARK: - Configure UI
 extension PosterListViewController {
+    private func style() {
+        view.backgroundColor = .white
+
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = .white
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 25),
+            .foregroundColor: UIColor.black
+        ]
+    }
+
+    private func layout() {
+        setGuideLabelLayout()
+        setPosterListViewLayout()
+        setAddButtonLayout()
+    }
+
+    // MARK: Create Views
     private func createAddButton() -> UIButton {
         let view = UIButton()
         view.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1098039216, alpha: 1)
@@ -100,6 +132,8 @@ extension PosterListViewController {
                                      left: Layout.btnContentInset,
                                      bottom: Layout.btnContentInset,
                                      right: Layout.btnContentInset)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
         return view
     }
 
@@ -108,6 +142,8 @@ extension PosterListViewController {
         view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 18)
         view.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
         return view
     }
 
@@ -115,6 +151,8 @@ extension PosterListViewController {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         view.backgroundColor = .clear
         view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
         return view
     }
 
@@ -158,42 +196,27 @@ extension PosterListViewController {
         return layout
     }
 
-    private func style() {
-        view.backgroundColor = .white
-
-        navigationController?.view.backgroundColor = .white
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        navigationController?.navigationBar.tintColor = .white
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 25),
-            .foregroundColor: UIColor.black
-        ]
-    }
-
-    private func layout() {
-        view.addSubview(guideLabel)
-        guideLabel.translatesAutoresizingMaskIntoConstraints = false
+    // MARK: Set Layouts
+    private func setGuideLabelLayout() {
         NSLayoutConstraint.activate([
             guideLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                    constant: Layout.horizontalInset),
+                                                constant: Layout.horizontalInset),
             guideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                     constant: -Layout.horizontalInset),
+                                                 constant: -Layout.horizontalInset),
             guideLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func setPosterListViewLayout() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-
-        view.addSubview(addButton)
-        addButton.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func setAddButtonLayout() {
         NSLayoutConstraint.activate([
             addButton.widthAnchor.constraint(equalToConstant: Layout.btnHeight),
             addButton.heightAnchor.constraint(equalToConstant: Layout.btnHeight),
@@ -213,6 +236,13 @@ extension PosterListViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let value = scrollView.panGestureRecognizer.translation(in: scrollView).y
         navigationController?.setNavigationBarHidden(value < 0, animated: true)
+    }
+}
+
+// MARK: UIGestureRecognizerDelegate
+extension PosterListViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return !self.isEqual(navigationController?.topViewController)
     }
 }
 
@@ -246,7 +276,7 @@ extension PosterListViewController {
         static let btnHeight: CGFloat = 56
         static let btnContentInset: CGFloat = 16
     }
-    
+
     enum Style {
         static let lineHeight: CGFloat = 24
     }
