@@ -8,7 +8,12 @@
 import Combine
 import Foundation
 
-struct AuthService {
+protocol AuthServiceType {
+    func kakaoLogin(accessToken: String) -> AnyPublisher<LoginResponse, Error>
+    func appleLogin(accessToken: String) -> AnyPublisher<LoginResponse, Error>
+}
+
+class AuthService: AuthServiceType {
     func kakaoLogin(accessToken: String) -> AnyPublisher<LoginResponse, Error> {
             let url = URL(string: "\(URLConsts.baseURL)/auth/kakao")
 

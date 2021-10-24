@@ -12,18 +12,30 @@ import UIKit
 import KakaoSDKAuth
 import KakaoSDKUser
 
-class AuthViewModel {
+protocol AuthViewModelType {
+    var accessToken: AnyPublisher<String, Never> { get }
+
+    var kakaoBtnTapped: PassthroughSubject<Void, Never> { get }
+
+    func kakaoLoginAvailable() -> Future<OAuthToken, Error>
+    func kakaoLogin(accessToken: String)
+    func appleLogin(accessToken: String)
+}
+
+class AuthViewModel: AuthViewModelType {
     private let accessTokenSubject = CurrentValueSubject<String, Never>(.init())
-    private var authService: AuthService
+    private var authService: AuthServiceType
     private var subscription: AnyCancellable?
     var accessToken: AnyPublisher<String, Never> {
         accessTokenSubject.eraseToAnyPublisher()
     }
 
     let kakaoBtnTapped =  PassthroughSubject<Void, Never>()
+    let appleBtnTapped = PassthroughSubject<Void, Never>()
 
-    init() {
-        self.authService = AuthService()
+    init(service: AuthServiceType) {
+        self.authService = service
+        bind()
     }
 
     deinit {
@@ -44,7 +56,6 @@ class AuthViewModel {
         }
     }
 
-    /// Server에 Access Token 보내기
     func kakaoLogin(accessToken: String) {
         subscription = authService.kakaoLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
             switch completion {
@@ -81,5 +92,15 @@ class AuthViewModel {
                 self.accessTokenSubject.send(response.data?.accessToken ?? "")
             }
         })
+    }
+    
+    private func bind() {
+        kakaoBtnTapped.sink { _ in
+            Log.debug("kakaoButton Tapped")
+        }
+        
+        appleBtnTapped.sink {_ in
+            Log.debug("ApplButton Tapped")
+        }
     }
 }

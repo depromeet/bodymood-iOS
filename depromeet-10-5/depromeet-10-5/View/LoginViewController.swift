@@ -12,15 +12,21 @@ class LoginViewController: UIViewController, Coordinating {
     private lazy var kakaoLoginButton: UIButton = { createKakaoButton() }()
     private lazy var appleLoginButton: ASAuthorizationAppleIDButton = { createAppleButton() }()
     private lazy var stackView: UIStackView = { createStackView() }()
-    private lazy var authViewModel: AuthViewModel = {
-        let viewModel = AuthViewModel()
-        return viewModel
-    }()
+    private var authViewModel: AuthViewModelType
 
     private var subscriptions: Set<AnyCancellable> = []
     private var kakaoAccessToken: String?
     private var appleAccessToken: String?
 
+    init(viewModel: AuthViewModelType) {
+        self.authViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     deinit {
         Log.debug(Self.self, #function)
     }

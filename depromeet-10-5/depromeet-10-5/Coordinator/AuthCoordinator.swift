@@ -20,7 +20,7 @@ class AuthCoordinator: Coordinator {
 
     func start() {
         var viewController: UIViewController & Coordinating {
-            let viewController = LoginViewController()
+            let viewController = LoginViewController(viewModel: AuthViewModel(service: AuthService()))
             viewController.coordinator = self
             return viewController
         }
