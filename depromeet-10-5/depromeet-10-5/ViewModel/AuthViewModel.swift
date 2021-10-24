@@ -12,22 +12,37 @@ import UIKit
 import KakaoSDKAuth
 import KakaoSDKUser
 
-class AuthViewModel {
-    var authService: AuthService?
-    var subscription: Cancellable?
-    
-    private var kakaoAuthSubscriber: AnyCancellable?
+protocol AuthViewModelType {
+    var accessToken: AnyPublisher<String, Never> { get }
 
-    init() {
-        self.authService = AuthService()
+    var kakaoBtnTapped: PassthroughSubject<Void, Never> { get }
+
+    func kakaoLoginAvailable() -> Future<OAuthToken, Error>
+    func kakaoLogin(accessToken: String)
+    func appleLogin(accessToken: String)
+}
+
+class AuthViewModel: AuthViewModelType {
+    private let accessTokenSubject = CurrentValueSubject<String, Never>(.init())
+    private var authService: AuthServiceType
+    private var subscription: AnyCancellable?
+    var accessToken: AnyPublisher<String, Never> {
+        accessTokenSubject.eraseToAnyPublisher()
+    }
+
+    let kakaoBtnTapped =  PassthroughSubject<Void, Never>()
+    let appleBtnTapped = PassthroughSubject<Void, Never>()
+
+    init(service: AuthServiceType) {
+        self.authService = service
+        bind()
     }
 
     deinit {
-        Log.debug("viewModel \(Self.self) deallocated")
+        Log.debug(Self.self, #function)
     }
 
-
-    func loginAvailable() -> Future<OAuthToken, Error> {
+    func kakaoLoginAvailable() -> Future<OAuthToken, Error> {
         return Future { promise in
             if UserApi.isKakaoTalkLoginAvailable() {
                 UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
@@ -41,22 +56,51 @@ class AuthViewModel {
         }
     }
 
-    /// Server에 Access Token 보내기
-    func kakaoAuth(accessToken: String) {
-    
-        subscription = authService?.kakaoAuth(accessToken: accessToken).sink(receiveCompletion: { completion in
+    func kakaoLogin(accessToken: String) {
+        subscription = authService.kakaoLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
-                Log.debug("success kakaoAuth View Model")
-        
+                Log.debug("success kakaoLogin View Model")
+
             case .failure(let error):
                 Log.error(error)
             }
+
         }, receiveValue: { response in
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
                 UserDefaults.standard.setValue(response.data?.accessToken ?? "", forKey: UserDefaultKey.accessToken)
-                UserDefaults.standard.setValue(response.data?.refreshToken ?? "", forKey: UserDefaultKey.accessToken)
+                UserDefaults.standard.setValue(response.data?.refreshToken ?? "", forKey: UserDefaultKey.refreshToken)
+
+                self.accessTokenSubject.send(response.data?.accessToken ?? "")
             }
         })
+    }
+
+    func appleLogin(accessToken: String) {
+        subscription = authService.appleLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                Log.debug("success Apple Login View Model")
+            case .failure(let error):
+                Log.error(error)
+            }
+
+        }, receiveValue: { response in
+            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+                UserDefaults.standard.setValue(response.data?.accessToken, forKey: UserDefaultKey.accessToken)
+                UserDefaults.standard.setValue(response.data?.refreshToken ?? "", forKey: UserDefaultKey.refreshToken)
+                self.accessTokenSubject.send(response.data?.accessToken ?? "")
+            }
+        })
+    }
+    
+    private func bind() {
+        kakaoBtnTapped.sink { _ in
+            Log.debug("kakaoButton Tapped")
+        }
+        
+        appleBtnTapped.sink {_ in
+            Log.debug("ApplButton Tapped")
+        }
     }
 }

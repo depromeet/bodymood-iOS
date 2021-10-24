@@ -1,26 +1,20 @@
 import Foundation
 import UIKit
 
-class AuthCoordinator: Coordinator {
+class SplashCoordinator: Coordinator {
 
     var navigationController: UINavigationController?
 
     func eventOccured(with type: Event) {
         switch type {
         case .buttonDidTap:
-            var cameraVC: UIViewController & Coordinating {
-                let cameraVC = CameraViewController()
-                cameraVC.coordinator = self
-                return cameraVC
-            }
-
-            navigationController?.pushViewController(cameraVC, animated: true)
+            break
         }
     }
 
     func start() {
         var viewController: UIViewController & Coordinating {
-            let viewController = LoginViewController(viewModel: AuthViewModel(service: AuthService()))
+            let viewController = SplashViewController()
             viewController.coordinator = self
             return viewController
         }

@@ -174,7 +174,7 @@ extension CameraViewController {
     }
 
     private func createShutterButton() -> UIButton {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 80, height: 80))
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
         button.setImage(UIImage(named: "shutter"), for: UIControl.State.normal)
         button.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height - 100)
         button.addTarget(self, action: #selector(shutterButtonDidTap), for: .touchUpInside)
