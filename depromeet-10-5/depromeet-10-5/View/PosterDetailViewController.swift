@@ -70,6 +70,11 @@ class PosterDetailViewController: UIViewController {
                 let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
                 self?.present(activityVC, animated: true, completion: nil)
             }.store(in: &bag)
+
+        navigationItem.leftBarButtonItem?.tap
+            .sink { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+            }.store(in: &bag)
     }
 
 }
