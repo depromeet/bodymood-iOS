@@ -8,6 +8,7 @@ protocol PosterListViewModelType {
     var title: AnyPublisher<String, Never> { get }
     var guideText: AnyPublisher<String, Never> { get }
     var moveToDetail: PassthroughSubject<PHAsset, Never> { get }
+    var moveToTemplate: PassthroughSubject<Void, Never> { get }
 
     // Inputs
     var numOfItemsPerRow: Int { get }
@@ -28,6 +29,7 @@ class PosterListViewModel: PosterListViewModelType {
     var title: AnyPublisher<String, Never> { Just("Bodymood").eraseToAnyPublisher() }
     var guideText: AnyPublisher<String, Never> { Just("나의 Bodymood로\n이 곳을 채워주세요").eraseToAnyPublisher() }
     let moveToDetail = PassthroughSubject<PHAsset, Never>()
+    let moveToTemplate = PassthroughSubject<Void, Never>()
 
     let addBtnTapped = PassthroughSubject<Void, Never>()
     let posterSelected = PassthroughSubject<Int, Never>()
@@ -55,9 +57,8 @@ class PosterListViewModel: PosterListViewModelType {
 
     private func bind() {
         addBtnTapped
-            .sink { _ in
-                // TODO: 포스터 편집 화면 노출
-                Log.debug("addBtnTapped")
+            .sink { [weak self] _ in
+                self?.moveToTemplate.send()
             }.store(in: &subscriptions)
 
         posterSelected

@@ -34,6 +34,9 @@
 		96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBC1271B3001008013CA /* UserDefaultKey.swift */; };
 		E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = E8002DE426EDDE09000621CB /* .swiftlint.yml */; };
 		E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */; };
+		E83C14D02725CD9A007B2E11 /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83C14CF2725CD9A007B2E11 /* PageIndicator.swift */; };
+		E86415082725755000D58B3E /* UIColor+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86415072725755000D58B3E /* UIColor+init.swift */; };
+		E864150A27257D9600D58B3E /* PosterTemplateListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E864150927257D9600D58B3E /* PosterTemplateListViewModel.swift */; };
 		E86EC939271AD2B500A7DD54 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */; };
 		E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */; };
 		E86EC93D271B1FAD00A7DD54 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */; };
@@ -52,6 +55,10 @@
 		E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD7645272437CF009A3432 /* CommonLayout.swift */; };
 		E8AD764927248834009A3432 /* CommonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764827248834009A3432 /* CommonText.swift */; };
 		E8AD764B2724B1EE009A3432 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764A2724B1EE009A3432 /* Date+toString.swift */; };
+		E8AD764D27254509009A3432 /* PosterTemplateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764C27254509009A3432 /* PosterTemplateListViewController.swift */; };
+		E8AD764F272552BD009A3432 /* UIButton+setBackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764E272552BD009A3432 /* UIButton+setBackgroundColor.swift */; };
+		E8B351432725EB8600A9C54D /* PosterTemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351422725EB8600A9C54D /* PosterTemplateCell.swift */; };
+		E8B351452725ED6F00A9C54D /* PosterTemplate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351442725ED6F00A9C54D /* PosterTemplate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -87,6 +94,9 @@
 		D7BC365CD3E3383551B38498 /* Pods_depromeet_10_5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_depromeet_10_5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8002DE426EDDE09000621CB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+UIBarButtonItem.swift"; sourceTree = "<group>"; };
+		E83C14CF2725CD9A007B2E11 /* PageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicator.swift; sourceTree = "<group>"; };
+		E86415072725755000D58B3E /* UIColor+init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+init.swift"; sourceTree = "<group>"; };
+		E864150927257D9600D58B3E /* PosterTemplateListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterTemplateListViewModel.swift; sourceTree = "<group>"; };
 		E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewModel.swift; sourceTree = "<group>"; };
 		E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
@@ -105,6 +115,10 @@
 		E8AD7645272437CF009A3432 /* CommonLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonLayout.swift; sourceTree = "<group>"; };
 		E8AD764827248834009A3432 /* CommonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonText.swift; sourceTree = "<group>"; };
 		E8AD764A2724B1EE009A3432 /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
+		E8AD764C27254509009A3432 /* PosterTemplateListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterTemplateListViewController.swift; sourceTree = "<group>"; };
+		E8AD764E272552BD009A3432 /* UIButton+setBackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+setBackgroundColor.swift"; sourceTree = "<group>"; };
+		E8B351422725EB8600A9C54D /* PosterTemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterTemplateCell.swift; sourceTree = "<group>"; };
+		E8B351442725ED6F00A9C54D /* PosterTemplate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterTemplate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +201,8 @@
 				E8AD75B02721A80C009A3432 /* PosterListViewController.swift */,
 				E8AD763F27243139009A3432 /* PosterDetailViewController.swift */,
 				96DAF9CF2727017100B21E08 /* EmotionViewController.swift */,
+				E8AD764C27254509009A3432 /* PosterTemplateListViewController.swift */,
+				E83C14CF2725CD9A007B2E11 /* PageIndicator.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -207,6 +223,7 @@
 				9641DAE727133188001BE018 /* Auth */,
 				96F0BBC1271B3001008013CA /* UserDefaultKey.swift */,
 				E8AD75BC2723C834009A3432 /* PosterModel.swift */,
+				E8B351442725ED6F00A9C54D /* PosterTemplate.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -219,6 +236,7 @@
 				E8AD75B22721A817009A3432 /* PosterListViewModel.swift */,
 				E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */,
 				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
+				E864150927257D9600D58B3E /* PosterTemplateListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -296,6 +314,8 @@
 				E8AD75B42721BDE4009A3432 /* String+toAttributedText.swift */,
 				E8AD75BA2721D175009A3432 /* Collection+subscript.swift */,
 				E8AD764A2724B1EE009A3432 /* Date+toString.swift */,
+				E8AD764E272552BD009A3432 /* UIButton+setBackgroundColor.swift */,
+				E86415072725755000D58B3E /* UIColor+init.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -314,6 +334,7 @@
 				E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */,
 				E8AD75B82721CF36009A3432 /* PosterCell.swift */,
 				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
+				E8B351422725EB8600A9C54D /* PosterTemplateCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -463,9 +484,11 @@
 				E86EC940271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift in Sources */,
 				E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */,
 				E86EC93D271B1FAD00A7DD54 /* PhotoCell.swift in Sources */,
+				E83C14D02725CD9A007B2E11 /* PageIndicator.swift in Sources */,
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
 				E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */,
 				E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */,
+				E864150A27257D9600D58B3E /* PosterTemplateListViewModel.swift in Sources */,
 				9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */,
 				E8AD764027243139009A3432 /* PosterDetailViewController.swift in Sources */,
 				965EC52A27279EEE00ED0420 /* EmotionService.swift in Sources */,
@@ -482,8 +505,14 @@
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
 				96DAF9CE2726D83000B21E08 /* CameraOutputViewController.swift in Sources */,
+				E8B351432725EB8600A9C54D /* PosterTemplateCell.swift in Sources */,
+				9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */,
+				E8B351452725ED6F00A9C54D /* PosterTemplate.swift in Sources */,
+				E8AD764F272552BD009A3432 /* UIButton+setBackgroundColor.swift in Sources */,
+				9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */,
 				E8AD764B2724B1EE009A3432 /* Date+toString.swift in Sources */,
 				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
+				E86415082725755000D58B3E /* UIColor+init.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */,
@@ -494,6 +523,7 @@
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */,
 				965EC52E27280E1E00ED0420 /* EmotionCell.swift in Sources */,
+				E8AD764D27254509009A3432 /* PosterTemplateListViewController.swift in Sources */,
 				E8AD75B52721BDE4009A3432 /* String+toAttributedText.swift in Sources */,
 				E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */,
 				96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */,
@@ -639,7 +669,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet105;
+				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet1052;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -661,7 +691,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet105;
+				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet1052;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
