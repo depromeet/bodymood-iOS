@@ -8,19 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		5DFE960D847EFA3C1FE17CF5 /* Pods_depromeet_10_5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7BC365CD3E3383551B38498 /* Pods_depromeet_10_5.framework */; };
-		9610B3062702331400539F99 /* Auth.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9610B3052702331400539F99 /* Auth.storyboard */; };
 		9610B3082702379B00539F99 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9610B3072702379B00539F99 /* LoginViewController.swift */; };
 		9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B30F27060AB7007CB5BA /* LogConfig.swift */; };
 		9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B31127060B4A007CB5BA /* AuthViewModel.swift */; };
 		9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665626EDD79E00E8E547 /* AppDelegate.swift */; };
 		9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665826EDD79E00E8E547 /* SceneDelegate.swift */; };
-		9637665E26EDD79E00E8E547 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637665C26EDD79E00E8E547 /* Main.storyboard */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
-		9637666326EDD79F00E8E547 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */; };
 		9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAE82713319C001BE018 /* LoginRequest.swift */; };
 		9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEA271331A2001BE018 /* LoginResponse.swift */; };
 		9641DAEE2713334E001BE018 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAED2713334E001BE018 /* AuthService.swift */; };
 		9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEF271333EB001BE018 /* HTTPConsts.swift */; };
+		9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9676E4C42725745B0068C979 /* SplashViewController.swift */; };
+		9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9676E4C627257C110068C979 /* SplashCoordinator.swift */; };
+		9676E4CA2725899B0068C979 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9676E4C92725899B0068C979 /* LaunchScreen.storyboard */; };
 		96C481F52720396A00244296 /* CameraCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C481F42720396A00244296 /* CameraCoordinator.swift */; };
 		96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBB6271B0ED6008013CA /* CameraViewController.swift */; };
 		96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */; };
@@ -40,22 +40,22 @@
 /* Begin PBXFileReference section */
 		2F1F868ABCFD46B1358F5CC0 /* Pods-depromeet-10-5.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.debug.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.debug.xcconfig"; sourceTree = "<group>"; };
 		815C56450EE98D41841E0C7B /* Pods-depromeet-10-5.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.release.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.release.xcconfig"; sourceTree = "<group>"; };
-		9610B3052702331400539F99 /* Auth.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Auth.storyboard; sourceTree = "<group>"; };
 		9610B3072702379B00539F99 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9624B30F27060AB7007CB5BA /* LogConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfig.swift; sourceTree = "<group>"; };
 		9624B31127060B4A007CB5BA /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9637665D26EDD79E00E8E547 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9637665F26EDD79F00E8E547 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9637666226EDD79F00E8E547 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9637666426EDD79F00E8E547 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9641DAE82713319C001BE018 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		9641DAEA271331A2001BE018 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		9641DAED2713334E001BE018 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		9641DAEF271333EB001BE018 /* HTTPConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConsts.swift; sourceTree = "<group>"; };
 		964EBDD5272418A60093AA76 /* depromeet-10-5.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "depromeet-10-5.entitlements"; sourceTree = "<group>"; };
+		9676E4C42725745B0068C979 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		9676E4C627257C110068C979 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
+		9676E4C92725899B0068C979 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		96C481F42720396A00244296 /* CameraCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCoordinator.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -116,18 +116,18 @@
 		9637665526EDD79E00E8E547 /* depromeet-10-5 */ = {
 			isa = PBXGroup;
 			children = (
-				964EBDD5272418A60093AA76 /* depromeet-10-5.entitlements */,
-				E86EC93E271B1FC800A7DD54 /* Extentions */,
 				96F0BBAF271AF939008013CA /* Coordinator */,
 				967549B52700AA9A007E4E95 /* Delegate */,
+				964EBDD5272418A60093AA76 /* depromeet-10-5.entitlements */,
+				E86EC93E271B1FC800A7DD54 /* Extentions */,
 				967549AF2700A874007E4E95 /* Model */,
 				967549AE2700A86F007E4E95 /* Network */,
 				967549B22700A9EB007E4E95 /* Resource */,
-				967549B42700AA33007E4E95 /* Storyboard */,
+				9676E4CC27258A210068C979 /* Storyboard */,
 				967549B32700AA1F007E4E95 /* Supporting Files */,
+				E86EC945271B640200A7DD54 /* UseCase */,
 				967549AD2700A866007E4E95 /* View */,
 				967549B02700A879007E4E95 /* ViewModel */,
-				E86EC945271B640200A7DD54 /* UseCase */,
 			);
 			path = "depromeet-10-5";
 			sourceTree = "<group>";
@@ -148,6 +148,7 @@
 				E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */,
 				E86EC93C271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift */,
 				96F0BBB6271B0ED6008013CA /* CameraViewController.swift */,
+				9676E4C42725745B0068C979 /* SplashViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -196,16 +197,6 @@
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		967549B42700AA33007E4E95 /* Storyboard */ = {
-			isa = PBXGroup;
-			children = (
-				9637665C26EDD79E00E8E547 /* Main.storyboard */,
-				9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */,
-				9610B3052702331400539F99 /* Auth.storyboard */,
-			);
-			path = Storyboard;
-			sourceTree = "<group>";
-		};
 		967549B52700AA9A007E4E95 /* Delegate */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,10 +206,19 @@
 			path = Delegate;
 			sourceTree = "<group>";
 		};
+		9676E4CC27258A210068C979 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				9676E4C92725899B0068C979 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
 		96F0BBAF271AF939008013CA /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
 				96F0BBBF271B1704008013CA /* Coordinator.swift */,
+				9676E4C627257C110068C979 /* SplashCoordinator.swift */,
 				96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */,
 				96C481F42720396A00244296 /* CameraCoordinator.swift */,
 			);
@@ -312,11 +312,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9676E4CA2725899B0068C979 /* LaunchScreen.storyboard in Resources */,
 				E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */,
-				9637666326EDD79F00E8E547 /* LaunchScreen.storyboard in Resources */,
-				9610B3062702331400539F99 /* Auth.storyboard in Resources */,
 				9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */,
-				9637665E26EDD79E00E8E547 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,12 +393,14 @@
 				E86EC942271B32E700A7DD54 /* ImageResource.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */,
+				9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
 				E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */,
 				9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */,
 				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
 				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
+				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
@@ -413,25 +413,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		9637665C26EDD79E00E8E547 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9637665D26EDD79E00E8E547 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9637666126EDD79F00E8E547 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9637666226EDD79F00E8E547 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		9637666526EDD79F00E8E547 /* Debug */ = {

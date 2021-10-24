@@ -154,7 +154,7 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let fullName = appleIDCredential.fullName
             let email = appleIDCredential.email
             let token = appleIDCredential.identityToken
-            let tokenToUTF8 = String(data: token!, encoding: .utf8)
+            let tokenToUTF8 = String(data: token!, encoding: .utf8)!
             appleAccessToken = tokenToUTF8
 
             Log.debug("user token: \(String(describing: tokenToUTF8))")
