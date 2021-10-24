@@ -5,7 +5,7 @@ import Combine
 class AlbumViewController: UIViewController {
 	typealias DataSource = UICollectionViewDiffableDataSource<Section, PHAsset>
 	typealias SnapShot = NSDiffableDataSourceSnapshot<Section, PHAsset>
-	typealias CellRegistration = UICollectionView.CellRegistration<AlbumCollectionViewCell, PHAsset>
+	typealias CellRegistration = UICollectionView.CellRegistration<PhotoCell, PHAsset>
 
 	enum Section {
 		case main

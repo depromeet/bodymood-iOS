@@ -67,8 +67,9 @@ class LoginViewController: UIViewController, Coordinating {
 	// TODO: 제거할 것
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-			presentAlbumVC(on: self)
+		DispatchQueue.main.async {
+//			presentAlbumVC(on: self)
+            presentPosterListVC(on: self)
 		}
 	}
 }
