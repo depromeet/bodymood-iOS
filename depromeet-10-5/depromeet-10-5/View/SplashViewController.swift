@@ -39,12 +39,11 @@ class SplashViewController: UIViewController, Coordinating {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
 
-        let guide = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            imageView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-            imageView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 31),
-            imageView.topAnchor.constraint(equalTo: guide.topAnchor),
-            imageView.bottomAnchor.constraint(equalTo: guide.bottomAnchor, constant: -48)
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 41),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -48)
         ])
     }
 

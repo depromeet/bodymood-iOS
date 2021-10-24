@@ -17,16 +17,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" image="splash_image" translatesAutoresizingMaskIntoConstraints="NO" id="d9d-Fn-WiV">
-                                <rect key="frame" x="31" y="0.0" width="344" height="619"/>
+                                <rect key="frame" x="31" y="41" width="344" height="578"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="d9d-Fn-WiV" secondAttribute="bottom" constant="48" id="EtW-ij-85Y"/>
-                            <constraint firstItem="d9d-Fn-WiV" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="dP7-T2-sOh"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="d9d-Fn-WiV" secondAttribute="trailing" id="f7e-Z2-aQb"/>
-                            <constraint firstItem="d9d-Fn-WiV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="31" id="h5X-BK-Xcr"/>
+                            <constraint firstAttribute="bottom" secondItem="d9d-Fn-WiV" secondAttribute="bottom" constant="48" id="EtW-ij-85Y"/>
+                            <constraint firstItem="d9d-Fn-WiV" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="41" id="dP7-T2-sOh"/>
+                            <constraint firstAttribute="trailing" secondItem="d9d-Fn-WiV" secondAttribute="trailing" id="f7e-Z2-aQb"/>
+                            <constraint firstItem="d9d-Fn-WiV" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="31" id="h5X-BK-Xcr"/>
                         </constraints>
                     </view>
                 </viewController>
