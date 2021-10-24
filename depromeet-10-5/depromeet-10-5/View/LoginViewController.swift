@@ -22,13 +22,17 @@ class LoginViewController: UIViewController, Coordinating {
         self.authViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
         Log.debug(Self.self, #function)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = true
     }
 
     override func viewDidLoad() {
@@ -110,7 +114,8 @@ extension LoginViewController {
                 self.authViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
 
                 if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-                    self.coordinator?.eventOccured(with: .buttonDidTap)
+                    let cameraViewController = CameraViewController()
+                    self.navigationController?.pushViewController(cameraViewController, animated: true)
                 }
 
             case .failure(let error):

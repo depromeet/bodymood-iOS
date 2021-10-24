@@ -40,18 +40,30 @@ class CameraViewController: UIViewController, Coordinating {
     private var takePicture = false
     private var isBackCamera = true
 
-    private lazy var contentView: UIView = {createContentView()}()
-    private lazy var flashView: UIView = {createFlashView()}()
-    private lazy var shutterButton: UIButton = {createShutterButton()}()
-    private lazy var focusGesture: UITapGestureRecognizer = {createfocusGesture()}()
+    private lazy var contentView: UIView = { createContentView() }()
+    private lazy var flashView: UIView = { createFlashView() }()
+    private lazy var topView: UIView = { createTopView() }()
+    private lazy var clearButton: UIButton = { createClearButton() }()
+    private lazy var bottomView: UIView = { createBottomView()}()
+    private lazy var stackView: UIView = { createStackView() }()
+    private lazy var flashButton: UIButton = { createFlashButton() }()
+    private lazy var shutterButton: UIButton = { createShutterButton() }()
+    private lazy var cameraFlipButton: UIButton = {  createCameraFlipButton() }()
+    private lazy var focusGesture: UITapGestureRecognizer = { createfocusGesture() }()
 
     deinit {
         Log.debug(Self.self, #function)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
+        overrideUserInterfaceStyle = .dark
+        setNeedsStatusBarAppearanceUpdate()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
         checkCameraPermission()
         session()
         captureDevice()
@@ -65,6 +77,12 @@ class CameraViewController: UIViewController, Coordinating {
         super.viewDidLayoutSubviews()
         previewLayer.frame = view.frame
         flashView.frame = view.frame
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        overrideUserInterfaceStyle = .light
+        setNeedsStatusBarAppearanceUpdate()
     }
 
     private func checkCameraPermission() {
@@ -134,7 +152,6 @@ class CameraViewController: UIViewController, Coordinating {
             Log.error("front camera is not installed")
         }
         captureSession.addInput(backCameraInput)
-
     }
 
     private func cameraLayer() {
@@ -173,12 +190,53 @@ extension CameraViewController {
         return view
     }
 
+    private func createTopView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0.5
+        return view
+    }
+    
+    private func createClearButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "clear"), for: UIControl.State.normal)
+        button.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        return button
+    }
+
+    private func createBottomView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0.5
+        return view
+    }
+
     private func createShutterButton() -> UIButton {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
+        let button = UIButton()
         button.setImage(UIImage(named: "shutter"), for: UIControl.State.normal)
-        button.center = CGPoint(x: view.frame.size.width/2, y: view.frame.size.height - 100)
         button.addTarget(self, action: #selector(shutterButtonDidTap), for: .touchUpInside)
         return button
+    }
+
+    private func createFlashButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "flash"), for: UIControl.State.normal)
+        return button
+    }
+
+    private func createCameraFlipButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "flip_camera"), for: UIControl.State.normal)
+        button.addTarget(self, action: #selector(flipButtonDidTap), for: .touchUpInside)
+        return button
+    }
+
+    private func createStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [flashButton, shutterButton, cameraFlipButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 48.0
+        return stackView
     }
 
     private func createfocusGesture() -> UITapGestureRecognizer {
@@ -232,10 +290,61 @@ extension CameraViewController {
         contentView.addGestureRecognizer(focusGesture)
         contentView.addSubview(flashView)
         contentView.addSubview(shutterButton)
+
+        view.addSubview(topView)
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            topView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            topView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            topView.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        topView.addSubview(clearButton)
+        clearButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            clearButton.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
+            clearButton.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 21),
+            clearButton.widthAnchor.constraint(equalToConstant: 24),
+            clearButton.heightAnchor.constraint(equalToConstant: 24)
+        ])
+
+        view.addSubview(bottomView)
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            bottomView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            bottomView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            bottomView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            bottomView.heightAnchor.constraint(equalToConstant: 154)
+        ])
+
+        bottomView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
+            stackView.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 20),
+            stackView.heightAnchor.constraint(equalToConstant: 80)
+        ])
+
+        flashButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            flashButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
+            flashButton.widthAnchor.constraint(equalToConstant: 28),
+            flashButton.heightAnchor.constraint(equalToConstant: 28)
+        ])
+
         shutterButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            shutterButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            shutterButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -50)
+            shutterButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
+            shutterButton.widthAnchor.constraint(equalToConstant: 80),
+            shutterButton.heightAnchor.constraint(equalToConstant: 80)
+        ])
+
+        cameraFlipButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            cameraFlipButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
+            cameraFlipButton.widthAnchor.constraint(equalToConstant: 28),
+            cameraFlipButton.heightAnchor.constraint(equalToConstant: 28)
         ])
     }
 }
