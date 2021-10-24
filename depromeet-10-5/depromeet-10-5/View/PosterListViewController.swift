@@ -161,6 +161,7 @@ extension PosterListViewController {
     private func style() {
         view.backgroundColor = .white
 
+        navigationController?.view.backgroundColor = .white
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.isTranslucent = false
