@@ -1,9 +1,9 @@
 import UIKit
 import Photos
 
-class AlbumCollectionViewCell: UICollectionViewCell {
+class PhotoCell: UICollectionViewCell {
 
-	private var requestID: PHImageRequestID?
+	private var assetId: String?
 
 	private lazy var imageView: UIImageView = {
 		let view = UIImageView()
@@ -29,13 +29,17 @@ class AlbumCollectionViewCell: UICollectionViewCell {
 	}
 
 	func update(with asset: PHAsset) {
-		requestID = imageView.fetchImageAsset(asset, frameSize: bounds.size)
+        assetId = asset.localIdentifier
+        imageView.fetchImageAsset(asset, frameSize: bounds.size) { [weak self] image, _ in
+            if self?.assetId == asset.localIdentifier {
+                self?.imageView.image = image
+            }
+        }
 	}
 
 	override func prepareForReuse() {
-		if let requestID = requestID {
-			PHImageManager.default().cancelImageRequest(requestID)
-		}
+        super.prepareForReuse()
+        imageView.image = nil
 	}
 
 	private func layout() {

@@ -30,11 +30,22 @@
 		E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */; };
 		E86EC939271AD2B500A7DD54 /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */; };
 		E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */; };
-		E86EC93D271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93C271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift */; };
+		E86EC93D271B1FAD00A7DD54 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */; };
 		E86EC940271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC93F271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift */; };
 		E86EC942271B32E700A7DD54 /* ImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC941271B32E700A7DD54 /* ImageResource.swift */; };
 		E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC943271B465300A7DD54 /* Combine+UIControl.swift */; };
 		E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */; };
+		E8AD75B12721A80C009A3432 /* PosterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75B02721A80C009A3432 /* PosterListViewController.swift */; };
+		E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75B22721A817009A3432 /* PosterListViewModel.swift */; };
+		E8AD75B52721BDE4009A3432 /* String+toAttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75B42721BDE4009A3432 /* String+toAttributedText.swift */; };
+		E8AD75B92721CF36009A3432 /* PosterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75B82721CF36009A3432 /* PosterCell.swift */; };
+		E8AD75BB2721D175009A3432 /* Collection+subscript.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75BA2721D175009A3432 /* Collection+subscript.swift */; };
+		E8AD75BD2723C834009A3432 /* PosterModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75BC2723C834009A3432 /* PosterModel.swift */; };
+		E8AD764027243139009A3432 /* PosterDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD763F27243139009A3432 /* PosterDetailViewController.swift */; };
+		E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */; };
+		E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD7645272437CF009A3432 /* CommonLayout.swift */; };
+		E8AD764927248834009A3432 /* CommonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764827248834009A3432 /* CommonText.swift */; };
+		E8AD764B2724B1EE009A3432 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764A2724B1EE009A3432 /* Date+toString.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,11 +77,22 @@
 		E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+UIBarButtonItem.swift"; sourceTree = "<group>"; };
 		E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewModel.swift; sourceTree = "<group>"; };
-		E86EC93C271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCollectionViewCell.swift; sourceTree = "<group>"; };
+		E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		E86EC93F271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+fetchImageAsset.swift"; sourceTree = "<group>"; };
 		E86EC941271B32E700A7DD54 /* ImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResource.swift; sourceTree = "<group>"; };
 		E86EC943271B465300A7DD54 /* Combine+UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+UIControl.swift"; sourceTree = "<group>"; };
 		E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumUseCase.swift; sourceTree = "<group>"; };
+		E8AD75B02721A80C009A3432 /* PosterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterListViewController.swift; sourceTree = "<group>"; };
+		E8AD75B22721A817009A3432 /* PosterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterListViewModel.swift; sourceTree = "<group>"; };
+		E8AD75B42721BDE4009A3432 /* String+toAttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toAttributedText.swift"; sourceTree = "<group>"; };
+		E8AD75B82721CF36009A3432 /* PosterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterCell.swift; sourceTree = "<group>"; };
+		E8AD75BA2721D175009A3432 /* Collection+subscript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+subscript.swift"; sourceTree = "<group>"; };
+		E8AD75BC2723C834009A3432 /* PosterModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterModel.swift; sourceTree = "<group>"; };
+		E8AD763F27243139009A3432 /* PosterDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterDetailViewController.swift; sourceTree = "<group>"; };
+		E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterDetailViewModel.swift; sourceTree = "<group>"; };
+		E8AD7645272437CF009A3432 /* CommonLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonLayout.swift; sourceTree = "<group>"; };
+		E8AD764827248834009A3432 /* CommonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonText.swift; sourceTree = "<group>"; };
+		E8AD764A2724B1EE009A3432 /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +138,8 @@
 		9637665526EDD79E00E8E547 /* depromeet-10-5 */ = {
 			isa = PBXGroup;
 			children = (
+				E8AD7643272437A3009A3432 /* Constant */,
+				E86EC93E271B1FC800A7DD54 /* Extentions */,
 				96F0BBAF271AF939008013CA /* Coordinator */,
 				967549B52700AA9A007E4E95 /* Delegate */,
 				964EBDD5272418A60093AA76 /* depromeet-10-5.entitlements */,
@@ -144,11 +168,13 @@
 		967549AD2700A866007E4E95 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E8AD75B62721CF20009A3432 /* Cells */,
 				9610B3072702379B00539F99 /* LoginViewController.swift */,
 				E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */,
-				E86EC93C271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift */,
 				96F0BBB6271B0ED6008013CA /* CameraViewController.swift */,
 				9676E4C42725745B0068C979 /* SplashViewController.swift */,
+				E8AD75B02721A80C009A3432 /* PosterListViewController.swift */,
+				E8AD763F27243139009A3432 /* PosterDetailViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -166,6 +192,7 @@
 			children = (
 				9641DAE727133188001BE018 /* Auth */,
 				96F0BBC1271B3001008013CA /* UserDefaultKey.swift */,
+				E8AD75BC2723C834009A3432 /* PosterModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -175,6 +202,8 @@
 			children = (
 				9624B31127060B4A007CB5BA /* AuthViewModel.swift */,
 				E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */,
+				E8AD75B22721A817009A3432 /* PosterListViewModel.swift */,
+				E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -240,6 +269,9 @@
 				E86EC93F271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift */,
 				E86EC943271B465300A7DD54 /* Combine+UIControl.swift */,
 				E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */,
+				E8AD75B42721BDE4009A3432 /* String+toAttributedText.swift */,
+				E8AD75BA2721D175009A3432 /* Collection+subscript.swift */,
+				E8AD764A2724B1EE009A3432 /* Date+toString.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -250,6 +282,24 @@
 				E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		E8AD75B62721CF20009A3432 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */,
+				E8AD75B82721CF36009A3432 /* PosterCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		E8AD7643272437A3009A3432 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				E8AD764827248834009A3432 /* CommonText.swift */,
+				E8AD7645272437CF009A3432 /* CommonLayout.swift */,
+			);
+			path = Constant;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,29 +434,42 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8AD75BD2723C834009A3432 /* PosterModel.swift in Sources */,
 				E86EC940271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift in Sources */,
 				E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */,
-				E86EC93D271B1FAD00A7DD54 /* AlbumCollectionViewCell.swift in Sources */,
+				E86EC93D271B1FAD00A7DD54 /* PhotoCell.swift in Sources */,
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
 				E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */,
+				E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */,
 				9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */,
+				E8AD764027243139009A3432 /* PosterDetailViewController.swift in Sources */,
 				E86EC942271B32E700A7DD54 /* ImageResource.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */,
 				9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
+				E8AD75B92721CF36009A3432 /* PosterCell.swift in Sources */,
 				E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */,
 				9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */,
 				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
-				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
+				E8AD764B2724B1EE009A3432 /* Date+toString.swift in Sources */,
+				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
+
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
+				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
+				E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */,
 				96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */,
+				E8AD75BB2721D175009A3432 /* Collection+subscript.swift in Sources */,
+				E8AD75B12721A80C009A3432 /* PosterListViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
+				E8AD75B52721BDE4009A3432 /* String+toAttributedText.swift in Sources */,
+				E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */,
 				96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */,
 				96C481F52720396A00244296 /* CameraCoordinator.swift in Sources */,
 				96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */,
+				E8AD764927248834009A3432 /* CommonText.swift in Sources */,
 				9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */,
 				E86EC939271AD2B500A7DD54 /* AlbumViewController.swift in Sources */,
 			);
