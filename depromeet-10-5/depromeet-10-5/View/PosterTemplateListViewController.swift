@@ -62,6 +62,13 @@ extension PosterTemplateListViewController {
                 self?.selectButton.setTitle(title, for: .normal)
             }.store(in: &bag)
 
+        viewModel.moveToPosterEdit
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] type in
+                let detailVC = PosterDetailViewController(viewModel: PosterDetailViewModel(with: nil, mode: .editing, templateType: type))
+                self?.navigationController?.pushViewController(detailVC, animated: true)
+            }.store(in: &bag)
+
         selectButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.selectBtnTapped.send(())

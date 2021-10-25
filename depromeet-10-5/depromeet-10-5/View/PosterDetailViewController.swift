@@ -7,6 +7,7 @@ class PosterDetailViewController: UIViewController {
     private lazy var shareButton: UIButton = { createBottomButton() }()
     private lazy var completeButton: UIButton = { createBottomButton() }()
     private lazy var titleLabel: UILabel = { createTitleLabel() }()
+    private lazy var posterEditGuideView: PosterEditGuideView = { createPosterEditGuideView() }()
 
     private lazy var posterGuide = { createPosterLayoutGuide() }()
     private var posterWidthConstraint: NSLayoutConstraint?
@@ -58,6 +59,7 @@ extension PosterDetailViewController {
             }.store(in: &bag)
 
         viewModel.poster
+            .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] asset in
                 self?.posterImageView.fetchImageAsset(asset) { image, _ in
@@ -98,12 +100,15 @@ extension PosterDetailViewController {
 
     private func configure(with mode: PosterDetailContentMode) {
         bottomButtonContainer.arrangedSubviews.forEach { bottomButtonContainer.removeArrangedSubview($0) }
+        
         switch mode {
         case .general:
             bottomButtonContainer.addArrangedSubview(shareButton)
             shareButton.isEnabled = true
+            posterEditGuideView.isHidden = true
         case .editing:
             bottomButtonContainer.addArrangedSubview(completeButton)
+            posterEditGuideView.isHidden = false
         }
     }
 }
@@ -132,6 +137,7 @@ extension PosterDetailViewController {
         setTitleLabelLayout()
         setPosterLayout()
         setButtonContainerLayout()
+        setPosterEditGuideViewLayout()
     }
 
     // MARK: Create Views
@@ -143,7 +149,7 @@ extension PosterDetailViewController {
         navigationItem.titleView = view
         return view
     }
-    
+
     private func createPosterLayoutGuide() -> UILayoutGuide {
         let guide = UILayoutGuide()
         view.addLayoutGuide(guide)
@@ -179,6 +185,15 @@ extension PosterDetailViewController {
         self.view.addSubview(view)
         return view
     }
+    
+    private func createPosterEditGuideView() -> PosterEditGuideView {
+        let view = PosterEditGuideView()
+        view.isHidden = true
+        view.backgroundColor = UIColor(rgb: 0xF7F7F7)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.insertSubview(view, aboveSubview: posterImageView)
+        return view
+    }
 
     // MARK: Set Layouts
     private func setTitleLabelLayout() {
@@ -206,7 +221,7 @@ extension PosterDetailViewController {
             posterImageView.centerXAnchor.constraint(equalTo: posterGuide.centerXAnchor),
             posterImageView.centerYAnchor.constraint(equalTo: posterGuide.centerYAnchor)
         ])
-        
+
         posterWidthConstraint = posterImageView.widthAnchor.constraint(equalTo: posterGuide.widthAnchor)
         posterHeightConstraint = posterImageView.heightAnchor.constraint(equalTo: posterGuide.heightAnchor)
     }
@@ -223,6 +238,15 @@ extension PosterDetailViewController {
         ])
     }
     
+    private func setPosterEditGuideViewLayout() {
+        NSLayoutConstraint.activate([
+            posterEditGuideView.leadingAnchor.constraint(equalTo: posterImageView.leadingAnchor),
+            posterEditGuideView.trailingAnchor.constraint(equalTo: posterImageView.trailingAnchor),
+            posterEditGuideView.bottomAnchor.constraint(equalTo: posterImageView.bottomAnchor),
+            posterEditGuideView.topAnchor.constraint(equalTo: posterImageView.topAnchor)
+        ])
+    }
+
     private func updatePosterLayout() {
         let posterSize = PosterModel.defaultSize
         let containerSize = posterGuide.layoutFrame.size
@@ -231,3 +255,5 @@ extension PosterDetailViewController {
         posterHeightConstraint?.isActive = !cond
     }
 }
+
+

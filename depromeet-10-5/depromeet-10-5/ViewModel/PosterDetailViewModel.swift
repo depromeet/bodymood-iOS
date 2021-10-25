@@ -5,9 +5,10 @@ import UIKit
 protocol PosterDetailViewModelType {
     // Inputs
     var shareBtnTapped: PassthroughSubject<Void, Never> { get }
+    var completeBtnTapped: PassthroughSubject<Void, Never> { get }
     
     // Outputs
-    var poster: CurrentValueSubject<PHAsset, Never> { get }
+    var poster: CurrentValueSubject<PHAsset?, Never> { get }
     var title: CurrentValueSubject<String, Never> { get }
     var shareBtnTitle: CurrentValueSubject<String, Never> { get }
     var showShareBottomSheet: PassthroughSubject<Void, Never> { get }
@@ -18,8 +19,9 @@ protocol PosterDetailViewModelType {
 class PosterDetailViewModel: PosterDetailViewModelType {
 
     let shareBtnTapped = PassthroughSubject<Void, Never>()
+    let completeBtnTapped = PassthroughSubject<Void, Never>()
 
-    let poster: CurrentValueSubject<PHAsset, Never>
+    let poster: CurrentValueSubject<PHAsset?, Never>
     let title: CurrentValueSubject<String, Never>
     let shareBtnTitle: CurrentValueSubject<String, Never>
     let showShareBottomSheet = PassthroughSubject<Void, Never>()
@@ -27,10 +29,13 @@ class PosterDetailViewModel: PosterDetailViewModelType {
 
     private var bag = Set<AnyCancellable>()
 
-    init(with asset: PHAsset, mode: PosterDetailContentMode) {
+    init(with asset: PHAsset? = nil, mode: PosterDetailContentMode, templateType: PosterTemplate.TemplateType? = nil) {
         poster = .init(asset)
+        switch mode {
+        case .general: title = .init(asset?.creationDate?.toString() ?? Date().toString())
+        case .editing: title = .init(CommonText.posterEditTitle)
+        }
         shareBtnTitle = .init(CommonText.shareBtnText)
-        title = .init(asset.creationDate?.toString() ?? "")
         contentMode = .init(mode)
         bind()
     }

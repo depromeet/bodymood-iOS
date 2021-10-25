@@ -11,7 +11,7 @@ protocol PosterTemplateListViewModelType {
     var templates: CurrentValueSubject<[PosterTemplate], Never> { get }
     var title: CurrentValueSubject<String, Never> { get }
     var selectBtnTitle: CurrentValueSubject<String, Never> { get }
-    var moveToPosterEdit: PassthroughSubject<Void, Never> { get }
+    var moveToPosterEdit: PassthroughSubject<PosterTemplate.TemplateType, Never> { get }
 }
 
 class PosterTemplateListViewModel: PosterTemplateListViewModelType {
@@ -21,7 +21,7 @@ class PosterTemplateListViewModel: PosterTemplateListViewModelType {
     let templates: CurrentValueSubject<[PosterTemplate], Never>
     let title: CurrentValueSubject<String, Never>
     let selectBtnTitle: CurrentValueSubject<String, Never>
-    let moveToPosterEdit = PassthroughSubject<Void, Never>()
+    let moveToPosterEdit = PassthroughSubject<PosterTemplate.TemplateType, Never>()
 
     private var bag = Set<AnyCancellable>()
 
@@ -44,8 +44,12 @@ class PosterTemplateListViewModel: PosterTemplateListViewModelType {
     private func bind() {
         selectBtnTapped.combineLatest(templateSelected)
             .map { $0.1 }
-            .sink { index in
-                Log.debug(index, "template selected")
+            .sink { [weak self] index in
+                guard
+                    let self = self,
+                    let type = self.templates.value[safe: index]?.type
+                else { return }
+                self.moveToPosterEdit.send(type)
             }.store(in: &bag)
     }
 }
