@@ -341,6 +341,16 @@ extension CameraViewController {
                 isFlash = true
                 flashButton.setImage(UIImage(named: "flash_on"), for: .normal)
             }
+        } else {
+            if isFlash {
+                isFlash = false
+                flashButton.setImage(UIImage(named: "flash_off"), for: .normal)
+                flashView.backgroundColor = .white
+            } else {
+                isFlash = true
+                flashButton.setImage(UIImage(named: "flash_on"), for: .normal)
+                flashView.backgroundColor = .black
+            }
         }
     }
 
@@ -362,6 +372,9 @@ extension CameraViewController {
                 completion: nil)
 
             isBackCamera = false
+
+            flashButton.setImage(UIImage(named: "flash_off"), for: .normal)
+            isFlash = false
         } else {
             captureSession.removeInput(frontCameraInput)
             captureSession.addInput(backCameraInput)
@@ -372,6 +385,9 @@ extension CameraViewController {
                 animations: nil,
                 completion: nil)
             isBackCamera = true
+
+            flashButton.setImage(UIImage(named: "flash_off"), for: .normal)
+            isFlash = false
         }
         cameraOutput.connections.first?.videoOrientation = .portrait
         cameraOutput.connections.first?.isVideoMirrored = !isBackCamera
