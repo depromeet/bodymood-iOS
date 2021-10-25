@@ -2,11 +2,15 @@ import UIKit
 import Combine
 
 class PosterDetailViewController: UIViewController {
-    private lazy var scrollView: UIScrollView = { createScrollView() }()
-    private lazy var stackView: UIStackView = { createStackView() }()
+    private lazy var bottomButtonContainer: UIStackView = { createHorizontalStackView() }()
     private lazy var posterImageView: UIImageView = { createPosterImageView() }()
-    private lazy var shareButton: UIButton = { createShareButton() }()
+    private lazy var shareButton: UIButton = { createBottomButton() }()
+    private lazy var completeButton: UIButton = { createBottomButton() }()
     private lazy var titleLabel: UILabel = { createTitleLabel() }()
+
+    private lazy var posterGuide = { createPosterLayoutGuide() }()
+    private var posterWidthConstraint: NSLayoutConstraint?
+    private var posterHeightConstraint: NSLayoutConstraint?
 
     private let viewModel: PosterDetailViewModelType
     private var bag = Set<AnyCancellable>()
@@ -37,11 +41,22 @@ class PosterDetailViewController: UIViewController {
         super.viewDidAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        updatePosterLayout()
+    }
 }
 
 // MARK: - Bind ViewModel
 extension PosterDetailViewController {
     private func bind() {
+        viewModel.contentMode
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] mode in
+                self?.configure(with: mode)
+            }.store(in: &bag)
+
         viewModel.poster
             .receive(on: DispatchQueue.main)
             .sink { [weak self] asset in
@@ -80,14 +95,26 @@ extension PosterDetailViewController {
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &bag)
     }
+
+    private func configure(with mode: PosterDetailContentMode) {
+        bottomButtonContainer.arrangedSubviews.forEach { bottomButtonContainer.removeArrangedSubview($0) }
+        switch mode {
+        case .general:
+            bottomButtonContainer.addArrangedSubview(shareButton)
+            shareButton.isEnabled = true
+        case .editing:
+            bottomButtonContainer.addArrangedSubview(completeButton)
+        }
+    }
 }
 
 // MARK: - Definitions
 extension PosterDetailViewController {
     private enum Layout {
         static let horizontalInset = CommonLayout.horizontalInset
-        static let shareBtnHeight: CGFloat = 56
+        static let btnHeight: CGFloat = 56
         static let contentInset: CGFloat = 24
+        static let contentBottomInset: CGFloat = 58
     }
 }
 
@@ -103,35 +130,11 @@ extension PosterDetailViewController {
 
     private func layout() {
         setTitleLabelLayout()
-        setContentViewLayout()
-        setPosterImageViewLayout()
-        setShareButtonLayout()
+        setPosterLayout()
+        setButtonContainerLayout()
     }
 
     // MARK: Create Views
-    private func createScrollView() -> UIScrollView {
-        let view = UIScrollView()
-        view.showsVerticalScrollIndicator = false
-        view.showsHorizontalScrollIndicator = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(view)
-        return view
-    }
-
-    private func createStackView() -> UIStackView {
-        let view = UIStackView()
-        view.axis = .vertical
-        view.isLayoutMarginsRelativeArrangement = true
-        view.translatesAutoresizingMaskIntoConstraints = false
-        let inset = Layout.contentInset
-        view.layoutMargins = UIEdgeInsets(top: inset,
-                                          left: inset,
-                                          bottom: inset * 2 + Layout.shareBtnHeight,
-                                          right: inset)
-        scrollView.addSubview(view)
-        return view
-    }
-
     private func createTitleLabel() -> UILabel {
         let view = UILabel()
         view.textAlignment = .center
@@ -140,24 +143,38 @@ extension PosterDetailViewController {
         navigationItem.titleView = view
         return view
     }
+    
+    private func createPosterLayoutGuide() -> UILayoutGuide {
+        let guide = UILayoutGuide()
+        view.addLayoutGuide(guide)
+        return guide
+    }
 
     private func createPosterImageView() -> UIImageView {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
         view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        stackView.addArrangedSubview(view)
+        self.view.addSubview(view)
         return view
     }
 
-    private func createShareButton() -> UIButton {
+    private func createBottomButton() -> UIButton {
         let view = UIButton()
         view.titleLabel?.font = .systemFont(ofSize: 16)
-        view.layer.cornerRadius = Layout.shareBtnHeight / 3
+        view.layer.cornerRadius = Layout.btnHeight / 3
         view.clipsToBounds = true
-        view.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1098039216, alpha: 1)
-        view.setTitleColor(#colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0), for: .normal)
-        view.setTitleColor(#colorLiteral(red: 0.7333333333, green: 0.7333333333, blue: 0.7333333333, alpha: 1), for: .highlighted)
+        view.setBackgroundColor(.init(rgb: 0xAAAAAA), for: [.disabled])
+        view.setBackgroundColor(.init(rgb: 0x1C1C1C), for: [.normal, .highlighted])
+        view.setTitleColor(.white, for: .normal)
+        view.setTitleColor(.init(rgb: 0xAAAAAA), for: .highlighted)
+        view.isEnabled = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }
+
+    private func createHorizontalStackView() -> UIStackView {
+        let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
         return view
@@ -172,40 +189,45 @@ extension PosterDetailViewController {
         ])
     }
 
-    private func setContentViewLayout() {
-        NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-
-        NSLayoutConstraint.activate([
-            stackView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-            stackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor)
-        ])
-    }
-
-    private func setPosterImageViewLayout() {
+    private func setPosterLayout() {
         let size = PosterModel.defaultSize
         let ratio = size.height / size.width
+        
         NSLayoutConstraint.activate([
-            posterImageView.heightAnchor.constraint(equalTo: posterImageView.widthAnchor, multiplier: ratio)
+            posterGuide.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                       constant: Layout.contentInset),
+            posterGuide.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                           constant: Layout.contentInset),
+            posterGuide.trailingAnchor.constraint(equalTo: view.trailingAnchor
+                                            ,constant: -Layout.contentInset),
+            posterGuide.bottomAnchor.constraint(equalTo: bottomButtonContainer.topAnchor,
+                                          constant: -Layout.contentBottomInset),
+            posterImageView.heightAnchor.constraint(equalTo: posterImageView.widthAnchor, multiplier: ratio),
+            posterImageView.centerXAnchor.constraint(equalTo: posterGuide.centerXAnchor),
+            posterImageView.centerYAnchor.constraint(equalTo: posterGuide.centerYAnchor)
         ])
+        
+        posterWidthConstraint = posterImageView.widthAnchor.constraint(equalTo: posterGuide.widthAnchor)
+        posterHeightConstraint = posterImageView.heightAnchor.constraint(equalTo: posterGuide.heightAnchor)
     }
 
-    private func setShareButtonLayout() {
+    private func setButtonContainerLayout() {
         NSLayoutConstraint.activate([
-            shareButton.heightAnchor.constraint(equalToConstant: Layout.shareBtnHeight),
-            shareButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                constant: -Layout.contentInset),
-            shareButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                 constant: Layout.contentInset),
-            shareButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                  constant: -Layout.contentInset)
+            bottomButtonContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                     constant: Layout.contentInset),
+            bottomButtonContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor
+                                                      ,constant: -Layout.contentInset),
+            bottomButtonContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                                                    constant: -Layout.contentInset),
+            bottomButtonContainer.heightAnchor.constraint(equalToConstant: Layout.btnHeight)
         ])
+    }
+    
+    private func updatePosterLayout() {
+        let posterSize = PosterModel.defaultSize
+        let containerSize = posterGuide.layoutFrame.size
+        let cond = posterSize.width / posterSize.height > containerSize.width / containerSize.height
+        posterWidthConstraint?.isActive = cond
+        posterHeightConstraint?.isActive = !cond
     }
 }

@@ -60,7 +60,7 @@ extension PosterListViewController {
         viewModel.moveToDetail
             .receive(on: DispatchQueue.main)
             .sink { [weak self] asset in
-                let detailVC = PosterDetailViewController(viewModel: PosterDetailViewModel(with: asset))
+                let detailVC = PosterDetailViewController(viewModel: PosterDetailViewModel(with: asset, mode: .general))
                 self?.navigationController?.pushViewController(detailVC, animated: true)
             }.store(in: &subscriptions)
 
@@ -69,6 +69,7 @@ extension PosterListViewController {
             .sink { [weak self] _ in
                 let templateVM = PosterTemplateListViewModel()
                 let templateVC = PosterTemplateListViewController(viewModel: templateVM)
+                self?.navigationController?.setNavigationBarHidden(false, animated: false)
                 self?.navigationController?.pushViewController(templateVC, animated: true)
             }.store(in: &subscriptions)
 
