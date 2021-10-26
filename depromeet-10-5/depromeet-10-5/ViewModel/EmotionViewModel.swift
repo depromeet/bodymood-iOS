@@ -18,8 +18,8 @@ class EmotionViewModel: EmotionViewModelType {
     private var subscriptions = Set<AnyCancellable>()
     private var fetchSubscription: AnyCancellable?
     private var emotionSubject = CurrentValueSubject<[EmotionDataResponse], Never>(.init())
-    
-    var emotions: AnyPublisher<[EmotionDataResponse], Never> { emotionSubject.prefix(16).eraseToAnyPublisher()}
+
+    var emotions: [EmotionResponse] = []
 
     init(service: EmotionServiceType) {
         self.emotionService = service
@@ -30,7 +30,6 @@ class EmotionViewModel: EmotionViewModelType {
     }
 
     func emotionCategories() -> AnyPublisher<[EmotionDataResponse], Never> {
-        
         fetchSubscription = emotionService.emotionCategories().sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
@@ -46,5 +45,4 @@ class EmotionViewModel: EmotionViewModelType {
 
         return emotionSubject.eraseToAnyPublisher()
     }
-    
 }

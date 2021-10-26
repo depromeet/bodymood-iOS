@@ -14,8 +14,10 @@ struct EmotionResponse: Decodable {
 }
 
 struct EmotionDataResponse: Decodable {
-    let title: String?
-    let description: String?
+    let type: String?
+    let englishTitle: String?
+    let koreanTitle: String?
     let startColor: String?
     let endColor: String?
+    let fontColor: String?
 }

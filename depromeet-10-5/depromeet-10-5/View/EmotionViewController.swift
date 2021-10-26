@@ -12,13 +12,14 @@ class EmotionViewController: UIViewController {
     private lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = { createCollectionViewFlowLayout() }()
     private lazy var collectionView: UICollectionView = { createCollectionView() }()
     private lazy var contentView: UIView = { createContentView() }()
-    
-    private var emotionArray: [EmotionDataResponse]?
+
+    private var emotionData: [EmotionDataResponse] = []
     private var emotionViewModel: EmotionViewModelType
     private var subscriptions: Set<AnyCancellable> = []
-    
+    private var fetchSubscription: AnyCancellable?
+
     private lazy var cellID = "EmotionCell"
-    
+
     init(viewModel: EmotionViewModelType) {
         self.emotionViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -33,12 +34,15 @@ class EmotionViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        style()
-        layout()
+        self.style()
+        self.layout()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.dataSource = self
+        collectionView.delegate = self
+
         bind()
     }
 
@@ -46,15 +50,23 @@ class EmotionViewController: UIViewController {
         let emotionCategories =
         emotionViewModel.emotionCategories()
 
-        emotionCategories.receive(on: DispatchQueue.main).sink {response in
-            Log.debug("success bind method")
-
-            for value in response {
-                Log.debug(value)
-                self.emotionArray?.append(value)
-            }
-
+        emotionCategories.receive(on: DispatchQueue.main)
+            .sink { [weak self] response in
+                Log.debug("success bind method in view")
+                self?.uploadEmotions(emotions: response)
         }.store(in: &subscriptions)
+    }
+
+    func uploadEmotions(emotions: [EmotionDataResponse]) {
+        for index in 0..<emotions.count {
+            emotionData.insert(emotions[index], at: index)
+        }
+
+        for emotion in emotions {
+            Log.debug(emotion)
+        }
+
+        collectionView.reloadData()
     }
 }
 
@@ -77,8 +89,6 @@ extension EmotionViewController {
     }
 
     func style() {
-        collectionView.dataSource = self
-        collectionView.delegate = self
         navigationController?.isNavigationBarHidden = false
         view.backgroundColor = .white
     }
@@ -109,34 +119,22 @@ extension EmotionViewController {
 
 extension EmotionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 16
+        return emotionData.count
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath)
     -> UICollectionViewCell {
-
+        Log.debug("cell \(indexPath.row) is updating")
         guard let cell =  collectionView.dequeueReusableCell(
             withReuseIdentifier: cellID,
             for: indexPath) as? EmotionCell else {
             return UICollectionViewCell()
         }
 
-        cell.backgroundColor = .red
-
-        let titleString = emotionArray?[indexPath.row].title
-        let emotionTitle = UILabel(frame: CGRect(x: 0, y: 0, width: 32, height: 27))
-        emotionTitle.text = titleString
-        emotionTitle.textColor = .black
-
-        cell.contentView.addSubview(emotionTitle)
-
-        NSLayoutConstraint.activate([
-            emotionTitle.centerXAnchor.constraint(equalTo: cell.centerXAnchor),
-            emotionTitle.centerYAnchor.constraint(equalTo: cell.centerYAnchor)
-        ])
-
+        cell.koreanTitleLabel.text = emotionData[indexPath.row].koreanTitle
+        cell.englishTitleLabel.text = emotionData[indexPath.row].englishTitle
         return cell
     }
 }
@@ -167,6 +165,6 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int)
     -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 0, bottom: 23, right: 0)
+        return UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
     }
 }
