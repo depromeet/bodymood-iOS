@@ -41,6 +41,11 @@ class LoginViewController: UIViewController, Coordinating {
         style()
         layout()
         bind()
+
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+            let viewController = EmotionViewController(viewModel: EmotionViewModel(service: EmotionService()))
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
 
     private func bind() {
@@ -136,10 +141,6 @@ extension LoginViewController {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
-
-        DispatchQueue.main.asyncAfter(
-            deadline: .now()+0.1) { self.authViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
-        }
     }
 }
 
@@ -166,6 +167,9 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             Log.debug("User ID: \(userIdentifier)")
             Log.debug("User full name: \(String(describing: fullName))")
             Log.debug("User email: \(String(describing: email))")
+
+            self.authViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
+
         default:
             break
         }

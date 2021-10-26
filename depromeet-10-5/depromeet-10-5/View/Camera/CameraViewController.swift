@@ -30,6 +30,9 @@ class CameraViewController: UIViewController, Coordinating {
     private lazy var shutterButton: UIButton = { createShutterButton() }()
     private lazy var cameraFlipButton: UIButton = {  createCameraFlipButton() }()
     private lazy var focusGesture: UITapGestureRecognizer = { createfocusGesture() }()
+    private lazy var outputStackView: UIStackView = { createOutputStackView() }()
+    private lazy var saveButton: UIButton = { createSaveButton() }()
+    private lazy var retakeButton: UIButton = { createRetakePhotoButton() }()
 
     deinit {
         Log.debug(Self.self, #function)
@@ -37,6 +40,7 @@ class CameraViewController: UIViewController, Coordinating {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        outputStackView.isHidden = true
         style()
     }
 
@@ -176,8 +180,8 @@ extension CameraViewController {
 
     private func createClearButton() -> UIButton {
         let button = UIButton()
-        button.setImage(UIImage(named: "clear"), for: UIControl.State.normal)
-        button.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+        button.setImage(UIImage(named: "clear"), for: .normal)
+        button.addTarget(self, action: #selector(clearButtonDidTap), for: .touchUpInside)
         return button
     }
 
@@ -223,6 +227,31 @@ extension CameraViewController {
         instance.numberOfTapsRequired = 1
         instance.numberOfTouchesRequired = 1
         return instance
+    }
+
+    private func createSaveButton() -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("저장", for: .normal)
+        return button
+    }
+
+    private func createRetakePhotoButton() -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = .white
+        button.setTitleColor(.black, for: .normal)
+        button.setTitle("다시찍기", for: .normal)
+        button.addTarget(self, action: #selector(retakeButtonDidTap), for: .touchUpInside)
+        return button
+    }
+
+    private func createOutputStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [saveButton, retakeButton])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0.0
+        return stackView
     }
 
     private func style() {
@@ -303,12 +332,26 @@ extension CameraViewController {
             cameraFlipButton.widthAnchor.constraint(equalToConstant: 28),
             cameraFlipButton.heightAnchor.constraint(equalToConstant: 28)
         ])
+
+        view.addSubview(outputStackView)
+
+        let outputStackViewGuide = self.contentView.safeAreaLayoutGuide
+        outputStackView.translatesAutoresizingMaskIntoConstraints = false
+        retakeButton.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            outputStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            outputStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            outputStackView.bottomAnchor.constraint(equalTo: outputStackViewGuide.bottomAnchor),
+            outputStackView.heightAnchor.constraint(equalToConstant: 56)
+        ])
     }
 }
 
 // MARK: - Configure Actions
 extension CameraViewController {
-    @objc func backButtonDidTap() {
+    @objc func clearButtonDidTap() {
         navigationController?.popViewController(animated: true)
     }
 
@@ -442,6 +485,11 @@ extension CameraViewController {
             )
         }
     }
+
+    @objc func retakeButtonDidTap() {
+        bottomView.isHidden = false
+        outputStackView.isHidden = true
+    }
 }
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
@@ -456,8 +504,8 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         imageView.contentMode = .scaleAspectFill
         imageView.frame = self.view.bounds
         self.contentView.addSubview(imageView)
-
-        self.bottomView.isHidden = true
+        bottomView.isHidden = true
+        outputStackView.isHidden = false
     }
 
     func photoOutput(
