@@ -39,7 +39,7 @@ class SelectPhotoGuideView: UIView {
     }
 
     private func style() {
-        backgroundColor = .red
+        backgroundColor = .yellow
     }
     
     private func layout() {
@@ -50,9 +50,9 @@ class SelectPhotoGuideView: UIView {
         ])
         
         NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor)
+            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
 
         NSLayoutConstraint.activate([

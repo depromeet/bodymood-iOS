@@ -185,9 +185,9 @@ extension PosterDetailViewController {
         self.view.addSubview(view)
         return view
     }
-    
+
     private func createPosterEditGuideView() -> PosterEditGuideView {
-        let view = PosterEditGuideView()
+        let view = PosterEditGuideView(with: PosterEditViewModel())
         view.isHidden = true
         view.backgroundColor = UIColor(rgb: 0xF7F7F7)
         view.translatesAutoresizingMaskIntoConstraints = false

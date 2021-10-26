@@ -73,7 +73,7 @@ class AlbumViewController: UIViewController {
 
 		navigationItem.leftBarButtonItem?.tap
 			.sink { [weak self] _ in
-				self?.viewModel.backBtnTapped.send()
+                self?.navigationController?.popViewController(animated: true)
 			}.store(in: &subscriptions)
 
 		nextButton.publisher(for: .touchUpInside)

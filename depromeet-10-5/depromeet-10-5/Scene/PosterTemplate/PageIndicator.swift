@@ -67,7 +67,7 @@ class PageIndicator: UIView {
                 guard let self = self else { return }
                 self.bar.frame.origin.x = self.frame.width * offsetX
             }.store(in: &bag)
-        
+
         moveToPage
             .receive(on: DispatchQueue.main)
             .sink { [weak self] idx in

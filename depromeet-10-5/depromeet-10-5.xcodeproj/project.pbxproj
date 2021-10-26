@@ -76,6 +76,8 @@
 		E8B3518F2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518E2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift */; };
 		E8B351912727D01100A9C54D /* DefaultBottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351902727D01100A9C54D /* DefaultBottomButtonView.swift */; };
 		E8B351942728212700A9C54D /* FirstDepthCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351932728212700A9C54D /* FirstDepthCategoryCell.swift */; };
+		E8B351972728398F00A9C54D /* PosterEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351962728398F00A9C54D /* PosterEditViewController.swift */; };
+		E8B35199272839B100A9C54D /* PosterEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B35198272839B100A9C54D /* PosterEditViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -153,6 +155,8 @@
 		E8B3518E2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addDiagonalGradiant.swift"; sourceTree = "<group>"; };
 		E8B351902727D01100A9C54D /* DefaultBottomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBottomButtonView.swift; sourceTree = "<group>"; };
 		E8B351932728212700A9C54D /* FirstDepthCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDepthCategoryCell.swift; sourceTree = "<group>"; };
+		E8B351962728398F00A9C54D /* PosterEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterEditViewController.swift; sourceTree = "<group>"; };
+		E8B35198272839B100A9C54D /* PosterEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterEditViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -393,6 +397,8 @@
 		E8B3517527279A1B00A9C54D /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				E8B3519A27283A5400A9C54D /* PosterTemplate */,
+				E8B35195272830C600A9C54D /* PosterEdit */,
 				E8B3517627279A4500A9C54D /* ExerciseRecord */,
 			);
 			path = Scene;
@@ -462,6 +468,30 @@
 				E8B3518327279BD900A9C54D /* SecondDepthCategoryCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		E8B35195272830C600A9C54D /* PosterEdit */ = {
+			isa = PBXGroup;
+			children = (
+				E8B351962728398F00A9C54D /* PosterEditViewController.swift */,
+				E8B35198272839B100A9C54D /* PosterEditViewModel.swift */,
+				E8B351492726D94A00A9C54D /* PosterEditGuideView.swift */,
+				E8B3514F2726F81900A9C54D /* SelectPhotoGuideView.swift */,
+				E8B3514D2726F80400A9C54D /* SelectExerciseGuideView.swift */,
+				E8B3514B2726F7EA00A9C54D /* SelectMoodGuideView.swift */,
+			);
+			path = PosterEdit;
+			sourceTree = "<group>";
+		};
+		E8B3519A27283A5400A9C54D /* PosterTemplate */ = {
+			isa = PBXGroup;
+			children = (
+				E8B351422725EB8600A9C54D /* PosterTemplateCell.swift */,
+				E8AD764C27254509009A3432 /* PosterTemplateListViewController.swift */,
+				E864150927257D9600D58B3E /* PosterTemplateListViewModel.swift */,
+				E83C14CF2725CD9A007B2E11 /* PageIndicator.swift */,
+			);
+			path = PosterTemplate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -609,6 +639,7 @@
 				E83C14D02725CD9A007B2E11 /* PageIndicator.swift in Sources */,
 				E8B351912727D01100A9C54D /* DefaultBottomButtonView.swift in Sources */,
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
+				E8B351972728398F00A9C54D /* PosterEditViewController.swift in Sources */,
 				E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */,
 				E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */,
 				E864150A27257D9600D58B3E /* PosterTemplateListViewModel.swift in Sources */,
@@ -633,6 +664,7 @@
 				E8B3518D2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift in Sources */,
 				E8B351432725EB8600A9C54D /* PosterTemplateCell.swift in Sources */,
 				9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */,
+				E8B35199272839B100A9C54D /* PosterEditViewModel.swift in Sources */,
 				E8B351502726F81900A9C54D /* SelectPhotoGuideView.swift in Sources */,
 				E8B351452725ED6F00A9C54D /* PosterTemplate.swift in Sources */,
 				E8AD764F272552BD009A3432 /* UIButton+setBackgroundColor.swift in Sources */,

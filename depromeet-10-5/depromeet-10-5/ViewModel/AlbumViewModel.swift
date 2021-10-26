@@ -9,7 +9,6 @@ protocol AlbumViewModelType {
 	var nextBtnTitle: AnyPublisher<String, Never> { get }
 
 	var nextBtnTapped: PassthroughSubject<IndexPath, Never> { get }
-	var backBtnTapped: PassthroughSubject<Void, Never> { get }
 
 	func loadImage() -> AnyPublisher<Bool, Never>
 }
@@ -26,7 +25,6 @@ class AlbumViewModel: AlbumViewModelType {
 	var nextBtnTitle: AnyPublisher<String, Never> { Just("Next").eraseToAnyPublisher() }
 
 	let nextBtnTapped = PassthroughSubject<IndexPath, Never>()
-	let backBtnTapped = PassthroughSubject<Void, Never>()
 
 	@discardableResult
 	func loadImage() -> AnyPublisher<Bool, Never> {
@@ -56,12 +54,6 @@ class AlbumViewModel: AlbumViewModelType {
 				guard let self = self else { return }
 				let selectedItem = self.photosSubject.value[indexPath.item]
 				Log.debug("nextBtnTapped", indexPath, selectedItem)
-			}.store(in: &subscriptions)
-
-		backBtnTapped
-			.sink { _ in
-				// TODO: 뒤로가기 버튼 액션 처리 (ex. dismiss)
-				Log.debug("backBtnTapped")
 			}.store(in: &subscriptions)
 	}
 }

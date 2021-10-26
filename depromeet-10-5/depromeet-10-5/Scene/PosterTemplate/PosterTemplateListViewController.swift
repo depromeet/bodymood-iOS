@@ -65,8 +65,9 @@ extension PosterTemplateListViewController {
         viewModel.moveToPosterEdit
             .receive(on: DispatchQueue.main)
             .sink { [weak self] type in
-                let detailVC = PosterDetailViewController(viewModel: PosterDetailViewModel(with: nil, mode: .editing, templateType: type))
-                self?.navigationController?.pushViewController(detailVC, animated: true)
+                let editVM = PosterEditViewModel(with: nil, templateType: type)
+                let editVC = PosterEditViewController(viewModel: editVM)
+                self?.navigationController?.pushViewController(editVC, animated: true)
             }.store(in: &bag)
 
         selectButton.publisher(for: .touchUpInside)
