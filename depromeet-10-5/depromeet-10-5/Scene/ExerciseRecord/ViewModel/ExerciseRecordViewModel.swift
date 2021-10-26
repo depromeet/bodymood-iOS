@@ -5,14 +5,14 @@ import UIKit
 protocol ExerciseRecordViewModelType: ExerciseListViewModelType {
     // Outputs
     var categories: CurrentValueSubject<[ExerciseCategoryModel], Never> { get }
+    var firstDepthCategories: CurrentValueSubject<[ExerciseItemModel], Never> { get }
     var buttonTitle: CurrentValueSubject<String, Never> { get }
     var canEnableButton: CurrentValueSubject<Bool, Never> { get }
     var canShowButton: CurrentValueSubject<Bool, Never> { get }
-    
+    var currentIdxOfFirstDepth: CurrentValueSubject<Int, Never> { get }
 
     // Inputs
     var selectBtnTapped: PassthroughSubject<Void, Never> { get }
-    var currentIdxOfFirstDepth: CurrentValueSubject<Int, Never> { get }
 }
 
 protocol ExerciseListViewModelType {
@@ -23,6 +23,7 @@ protocol ExerciseListViewModelType {
 }
 
 class ExerciseRecordViewModel: ExerciseRecordViewModelType {
+    
 
     private let maxNumOfExercise = 3
     private let useCase: ExerciseRecordUseCaseType
@@ -37,6 +38,7 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
     let canEnableButton = CurrentValueSubject<Bool, Never>(false)
     let canShowButton = CurrentValueSubject<Bool, Never>(true)
     let bgColorHexPair: CurrentValueSubject<(Int, Int), Never>
+    let firstDepthCategories = CurrentValueSubject<[ExerciseItemModel], Never>([])
 
     let selectBtnTapped = PassthroughSubject<Void, Never>()
     let currentIdxOfFirstDepth = CurrentValueSubject<Int, Never>(0)
@@ -88,6 +90,7 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
     private func fetchCategories() {
         fetchSubscription = useCase.fetch().sink { [weak self] list in
             self?.categories.send(list)
+            self?.firstDepthCategories.send(list.map { .init(english: $0.name, korean: $0.description) })
         }
     }
 }

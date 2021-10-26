@@ -5,32 +5,39 @@ class ExerciseCategoryPageViewController: UIPageViewController {
     private var vcList: [UIViewController] = []
     private let viewModel: ExerciseRecordViewModelType
     private var bag = Set<AnyCancellable>()
+    
+    private var previousPage = 0
 
     init(with viewModel: ExerciseRecordViewModelType) {
         self.viewModel = viewModel
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
-        
         delegate = self
         dataSource = self
-        
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         bind()
     }
-    
-    
+
     private func bind() {
         viewModel.categories
             .receive(on: DispatchQueue.main)
             .sink { [weak self] list in
                 self?.update(with: list)
+            }.store(in: &bag)
+        
+        viewModel.currentIdxOfFirstDepth
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] idx in
+                guard let self = self else { return }
+                let direction: UIPageViewController.NavigationDirection = self.previousPage < idx ? .forward : .reverse
+                self.setViewControllers([self.vcList[idx]], direction: direction, animated: true, completion: nil)
+                self.previousPage = idx
             }.store(in: &bag)
     }
 
@@ -77,4 +84,3 @@ extension ExerciseCategoryPageViewController: UIPageViewControllerDelegate {
         viewModel.currentIdxOfFirstDepth.send(currentIndex)
     }
 }
-

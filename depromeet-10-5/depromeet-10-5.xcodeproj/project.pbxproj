@@ -68,13 +68,14 @@
 		E8B3517D27279AD700A9C54D /* ExerciseCategory.json in Resources */ = {isa = PBXBuildFile; fileRef = E8B3517C27279AD700A9C54D /* ExerciseCategory.json */; };
 		E8B3518027279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3517F27279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift */; };
 		E8B3518227279BC700A9C54D /* ExerciseCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518127279BC700A9C54D /* ExerciseCategoryModel.swift */; };
-		E8B3518427279BD900A9C54D /* ExerciseItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518327279BD900A9C54D /* ExerciseItemCell.swift */; };
+		E8B3518427279BD900A9C54D /* SecondDepthCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518327279BD900A9C54D /* SecondDepthCategoryCell.swift */; };
 		E8B3518627279FBA00A9C54D /* ExerciseRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518527279FBA00A9C54D /* ExerciseRecordViewModel.swift */; };
 		E8B351892727A09A00A9C54D /* ExerciseRecordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351882727A09A00A9C54D /* ExerciseRecordUseCase.swift */; };
 		E8B3518B2727A87900A9C54D /* UIViewController+embed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518A2727A87900A9C54D /* UIViewController+embed.swift */; };
 		E8B3518D2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518C2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift */; };
 		E8B3518F2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518E2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift */; };
 		E8B351912727D01100A9C54D /* DefaultBottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351902727D01100A9C54D /* DefaultBottomButtonView.swift */; };
+		E8B351942728212700A9C54D /* FirstDepthCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351932728212700A9C54D /* FirstDepthCategoryCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -144,13 +145,14 @@
 		E8B3517C27279AD700A9C54D /* ExerciseCategory.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExerciseCategory.json; sourceTree = "<group>"; };
 		E8B3517F27279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategoryAPIResponseModel.swift; sourceTree = "<group>"; };
 		E8B3518127279BC700A9C54D /* ExerciseCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategoryModel.swift; sourceTree = "<group>"; };
-		E8B3518327279BD900A9C54D /* ExerciseItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseItemCell.swift; sourceTree = "<group>"; };
+		E8B3518327279BD900A9C54D /* SecondDepthCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondDepthCategoryCell.swift; sourceTree = "<group>"; };
 		E8B3518527279FBA00A9C54D /* ExerciseRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRecordViewModel.swift; sourceTree = "<group>"; };
 		E8B351882727A09A00A9C54D /* ExerciseRecordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRecordUseCase.swift; sourceTree = "<group>"; };
 		E8B3518A2727A87900A9C54D /* UIViewController+embed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+embed.swift"; sourceTree = "<group>"; };
 		E8B3518C2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategoryPageViewController.swift; sourceTree = "<group>"; };
 		E8B3518E2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addDiagonalGradiant.swift"; sourceTree = "<group>"; };
 		E8B351902727D01100A9C54D /* DefaultBottomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBottomButtonView.swift; sourceTree = "<group>"; };
+		E8B351932728212700A9C54D /* FirstDepthCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDepthCategoryCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -411,10 +413,10 @@
 		E8B3517727279A6100A9C54D /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E8B351922728211500A9C54D /* Cell */,
 				E8B3517927279A9200A9C54D /* ExerciseRecordViewController.swift */,
 				E8B3518C2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift */,
 				E8B35151272706E600A9C54D /* ExerciseListViewController.swift */,
-				E8B3518327279BD900A9C54D /* ExerciseItemCell.swift */,
 				E8B351902727D01100A9C54D /* DefaultBottomButtonView.swift */,
 			);
 			path = View;
@@ -451,6 +453,15 @@
 				E8B351882727A09A00A9C54D /* ExerciseRecordUseCase.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		E8B351922728211500A9C54D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E8B351932728212700A9C54D /* FirstDepthCategoryCell.swift */,
+				E8B3518327279BD900A9C54D /* SecondDepthCategoryCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -592,7 +603,7 @@
 				E8B3518027279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift in Sources */,
 				E8B3514E2726F80400A9C54D /* SelectExerciseGuideView.swift in Sources */,
 				E86EC940271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift in Sources */,
-				E8B3518427279BD900A9C54D /* ExerciseItemCell.swift in Sources */,
+				E8B3518427279BD900A9C54D /* SecondDepthCategoryCell.swift in Sources */,
 				E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */,
 				E86EC93D271B1FAD00A7DD54 /* PhotoCell.swift in Sources */,
 				E83C14D02725CD9A007B2E11 /* PageIndicator.swift in Sources */,
@@ -631,6 +642,7 @@
 				E86415082725755000D58B3E /* UIColor+init.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
+				E8B351942728212700A9C54D /* FirstDepthCategoryCell.swift in Sources */,
 				E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */,
 				965EC52C27279FA600ED0420 /* EmotionViewModel.swift in Sources */,
 				96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */,

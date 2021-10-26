@@ -200,8 +200,8 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
 		super.viewDidAppear(animated)
 		DispatchQueue.main.async {
 //			presentAlbumVC(on: self)
-//            presentPosterListVC(on: self)
-            presentExerciseRecordVC(on: self)
+            presentPosterListVC(on: self)
+//            presentExerciseRecordVC(on: self)
 		}
 	}
 }

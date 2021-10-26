@@ -1,21 +1,21 @@
 import UIKit
 
-class ExerciseItemCell: UICollectionViewCell {
-
+class SecondDepthCategoryCell: UICollectionViewCell {
+    
     lazy var titleLabel: UILabel = {
         let view = UILabel()
         view.font = .boldSystemFont(ofSize: 14)
         view.textColor = .white
         return view
     }()
-
+    
     lazy var descLabel: UILabel = {
         let view = UILabel()
         view.font = .systemFont(ofSize: 12)
         view.textColor = .white
         return view
     }()
-
+    
     lazy var stackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [titleLabel, descLabel])
         view.axis = .vertical
@@ -25,7 +25,7 @@ class ExerciseItemCell: UICollectionViewCell {
         contentView.addSubview(view)
         return view
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         layout()
@@ -38,7 +38,7 @@ class ExerciseItemCell: UICollectionViewCell {
     func update(with model: ExerciseItemModel, parentBgColor: UIColor) {
         titleLabel.text = model.english
         descLabel.text = model.korean
-
+        
         let textColor: UIColor = parentBgColor.isDarkColor ? .white : .black
         titleLabel.textColor = textColor
         descLabel.textColor = textColor
@@ -60,4 +60,3 @@ class ExerciseItemCell: UICollectionViewCell {
         ])
     }
 }
-

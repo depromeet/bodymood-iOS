@@ -3,6 +3,7 @@ import Combine
 
 class PageIndicator: UIView {
     let offsetX = PassthroughSubject<CGFloat, Never>()
+    let moveToPage = PassthroughSubject<Int, Never>()
     private var bag = Set<AnyCancellable>()
 
     var numberOfPages: Int {
@@ -65,6 +66,13 @@ class PageIndicator: UIView {
             .sink { [weak self] offsetX in
                 guard let self = self else { return }
                 self.bar.frame.origin.x = self.frame.width * offsetX
+            }.store(in: &bag)
+        
+        moveToPage
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] idx in
+                guard let self = self else { return }
+                self.bar.frame.origin.x = self.frame.width * CGFloat(idx) / CGFloat(self.numberOfPages)
             }.store(in: &bag)
     }
 }

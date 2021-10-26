@@ -10,8 +10,8 @@ class ExerciseListViewController: UIViewController {
     private var bag = Set<AnyCancellable>()
     private let viewModel: ExerciseListViewModelType
 
-    let itemList: [ExerciseItemModel]
-    
+    private let itemList: [ExerciseItemModel]
+
     init(with itemList: [ExerciseItemModel], viewModel: ExerciseListViewModelType) {
         self.itemList = itemList
         self.viewModel = viewModel
@@ -29,7 +29,6 @@ class ExerciseListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateList(with: itemList)
-        style()
         layout()
     }
 
@@ -37,7 +36,7 @@ class ExerciseListViewController: UIViewController {
         super.viewWillAppear(animated)
         bind()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         bag = []
@@ -85,10 +84,6 @@ extension ExerciseListViewController: UICollectionViewDelegate {
 // MARK: - Configure UI
 extension ExerciseListViewController {
 
-    private func style() {
-
-    }
-
     private func layout() {
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -102,8 +97,8 @@ extension ExerciseListViewController {
     private func createCollectionView() -> UICollectionView {
         let view = UICollectionView(frame: .zero, collectionViewLayout: collectionViewLayout)
         view.backgroundColor = .clear
+        view.showsVerticalScrollIndicator = false
         view.showsHorizontalScrollIndicator = false
-        view.isDirectionalLockEnabled = true
         view.allowsMultipleSelection = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.delegate = self
@@ -152,7 +147,7 @@ extension ExerciseListViewController {
 extension ExerciseListViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, ExerciseItemModel>
     typealias SnapShot = NSDiffableDataSourceSnapshot<Section, ExerciseItemModel>
-    typealias CellRegistration = UICollectionView.CellRegistration<ExerciseItemCell, ExerciseItemModel>
+    typealias CellRegistration = UICollectionView.CellRegistration<SecondDepthCategoryCell, ExerciseItemModel>
 
     enum Section {
         case main
