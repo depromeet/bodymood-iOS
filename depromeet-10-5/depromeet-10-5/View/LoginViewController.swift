@@ -187,4 +187,21 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         Log.debug("login error")
     }
+            }, receiveValue: {
+                Log.debug("====\($0.accessToken)====")
+                self.accessToken = $0.accessToken
+            }).store(in: &subscription)
+
+    }
+	
+	
+	// TODO: 제거할 것
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		DispatchQueue.main.async {
+//			presentAlbumVC(on: self)
+//            presentPosterListVC(on: self)
+            presentExerciseRecordVC(on: self)
+		}
+	}
 }

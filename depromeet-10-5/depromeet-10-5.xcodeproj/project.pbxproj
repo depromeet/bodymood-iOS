@@ -63,6 +63,18 @@
 		E8B3514C2726F7EA00A9C54D /* SelectMoodGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3514B2726F7EA00A9C54D /* SelectMoodGuideView.swift */; };
 		E8B3514E2726F80400A9C54D /* SelectExerciseGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3514D2726F80400A9C54D /* SelectExerciseGuideView.swift */; };
 		E8B351502726F81900A9C54D /* SelectPhotoGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3514F2726F81900A9C54D /* SelectPhotoGuideView.swift */; };
+		E8B35152272706E600A9C54D /* ExerciseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B35151272706E600A9C54D /* ExerciseListViewController.swift */; };
+		E8B3517A27279A9200A9C54D /* ExerciseRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3517927279A9200A9C54D /* ExerciseRecordViewController.swift */; };
+		E8B3517D27279AD700A9C54D /* ExerciseCategory.json in Resources */ = {isa = PBXBuildFile; fileRef = E8B3517C27279AD700A9C54D /* ExerciseCategory.json */; };
+		E8B3518027279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3517F27279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift */; };
+		E8B3518227279BC700A9C54D /* ExerciseCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518127279BC700A9C54D /* ExerciseCategoryModel.swift */; };
+		E8B3518427279BD900A9C54D /* ExerciseItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518327279BD900A9C54D /* ExerciseItemCell.swift */; };
+		E8B3518627279FBA00A9C54D /* ExerciseRecordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518527279FBA00A9C54D /* ExerciseRecordViewModel.swift */; };
+		E8B351892727A09A00A9C54D /* ExerciseRecordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351882727A09A00A9C54D /* ExerciseRecordUseCase.swift */; };
+		E8B3518B2727A87900A9C54D /* UIViewController+embed.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518A2727A87900A9C54D /* UIViewController+embed.swift */; };
+		E8B3518D2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518C2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift */; };
+		E8B3518F2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3518E2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift */; };
+		E8B351912727D01100A9C54D /* DefaultBottomButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351902727D01100A9C54D /* DefaultBottomButtonView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -127,6 +139,18 @@
 		E8B3514B2726F7EA00A9C54D /* SelectMoodGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMoodGuideView.swift; sourceTree = "<group>"; };
 		E8B3514D2726F80400A9C54D /* SelectExerciseGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectExerciseGuideView.swift; sourceTree = "<group>"; };
 		E8B3514F2726F81900A9C54D /* SelectPhotoGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoGuideView.swift; sourceTree = "<group>"; };
+		E8B35151272706E600A9C54D /* ExerciseListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseListViewController.swift; sourceTree = "<group>"; };
+		E8B3517927279A9200A9C54D /* ExerciseRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRecordViewController.swift; sourceTree = "<group>"; };
+		E8B3517C27279AD700A9C54D /* ExerciseCategory.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExerciseCategory.json; sourceTree = "<group>"; };
+		E8B3517F27279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategoryAPIResponseModel.swift; sourceTree = "<group>"; };
+		E8B3518127279BC700A9C54D /* ExerciseCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategoryModel.swift; sourceTree = "<group>"; };
+		E8B3518327279BD900A9C54D /* ExerciseItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseItemCell.swift; sourceTree = "<group>"; };
+		E8B3518527279FBA00A9C54D /* ExerciseRecordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRecordViewModel.swift; sourceTree = "<group>"; };
+		E8B351882727A09A00A9C54D /* ExerciseRecordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseRecordUseCase.swift; sourceTree = "<group>"; };
+		E8B3518A2727A87900A9C54D /* UIViewController+embed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+embed.swift"; sourceTree = "<group>"; };
+		E8B3518C2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCategoryPageViewController.swift; sourceTree = "<group>"; };
+		E8B3518E2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addDiagonalGradiant.swift"; sourceTree = "<group>"; };
+		E8B351902727D01100A9C54D /* DefaultBottomButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultBottomButtonView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +209,8 @@
 				E86EC945271B640200A7DD54 /* UseCase */,
 				967549AD2700A866007E4E95 /* View */,
 				967549B02700A879007E4E95 /* ViewModel */,
+				E86EC945271B640200A7DD54 /* UseCase */,
+				E8B3517527279A1B00A9C54D /* Scene */,
 			);
 			path = "depromeet-10-5";
 			sourceTree = "<group>";
@@ -328,6 +354,8 @@
 				E8AD764A2724B1EE009A3432 /* Date+toString.swift */,
 				E8AD764E272552BD009A3432 /* UIButton+setBackgroundColor.swift */,
 				E86415072725755000D58B3E /* UIColor+init.swift */,
+				E8B3518A2727A87900A9C54D /* UIViewController+embed.swift */,
+				E8B3518E2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -358,6 +386,71 @@
 				E8AD7645272437CF009A3432 /* CommonLayout.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		E8B3517527279A1B00A9C54D /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				E8B3517627279A4500A9C54D /* ExerciseRecord */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		E8B3517627279A4500A9C54D /* ExerciseRecord */ = {
+			isa = PBXGroup;
+			children = (
+				E8B351872727A04C00A9C54D /* UseCase */,
+				E8B3517827279A6C00A9C54D /* ViewModel */,
+				E8B3517727279A6100A9C54D /* View */,
+				E8B3517E27279B3200A9C54D /* Model */,
+				E8B3517B27279AB400A9C54D /* Dummy */,
+			);
+			path = ExerciseRecord;
+			sourceTree = "<group>";
+		};
+		E8B3517727279A6100A9C54D /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E8B3517927279A9200A9C54D /* ExerciseRecordViewController.swift */,
+				E8B3518C2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift */,
+				E8B35151272706E600A9C54D /* ExerciseListViewController.swift */,
+				E8B3518327279BD900A9C54D /* ExerciseItemCell.swift */,
+				E8B351902727D01100A9C54D /* DefaultBottomButtonView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E8B3517827279A6C00A9C54D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E8B3518527279FBA00A9C54D /* ExerciseRecordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E8B3517B27279AB400A9C54D /* Dummy */ = {
+			isa = PBXGroup;
+			children = (
+				E8B3517C27279AD700A9C54D /* ExerciseCategory.json */,
+			);
+			path = Dummy;
+			sourceTree = "<group>";
+		};
+		E8B3517E27279B3200A9C54D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E8B3517F27279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift */,
+				E8B3518127279BC700A9C54D /* ExerciseCategoryModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		E8B351872727A04C00A9C54D /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				E8B351882727A09A00A9C54D /* ExerciseRecordUseCase.swift */,
+			);
+			path = UseCase;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -423,6 +516,8 @@
 				9676E4CA2725899B0068C979 /* LaunchScreen.storyboard in Resources */,
 				E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */,
 				9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */,
+				E8B3517D27279AD700A9C54D /* ExerciseCategory.json in Resources */,
+				9637665E26EDD79E00E8E547 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,16 +587,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E8B3518B2727A87900A9C54D /* UIViewController+embed.swift in Sources */,
 				E8AD75BD2723C834009A3432 /* PosterModel.swift in Sources */,
+				E8B3518027279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift in Sources */,
 				E8B3514E2726F80400A9C54D /* SelectExerciseGuideView.swift in Sources */,
 				E86EC940271B1FD900A7DD54 /* UIImageView+fetchImageAsset.swift in Sources */,
+				E8B3518427279BD900A9C54D /* ExerciseItemCell.swift in Sources */,
 				E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */,
 				E86EC93D271B1FAD00A7DD54 /* PhotoCell.swift in Sources */,
 				E83C14D02725CD9A007B2E11 /* PageIndicator.swift in Sources */,
+				E8B351912727D01100A9C54D /* DefaultBottomButtonView.swift in Sources */,
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
 				E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */,
 				E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */,
 				E864150A27257D9600D58B3E /* PosterTemplateListViewModel.swift in Sources */,
+				E8B3518627279FBA00A9C54D /* ExerciseRecordViewModel.swift in Sources */,
 				9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */,
 				E8AD764027243139009A3432 /* PosterDetailViewController.swift in Sources */,
 				965EC52A27279EEE00ED0420 /* EmotionService.swift in Sources */,
@@ -519,6 +619,7 @@
 				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
 				96DAF9CE2726D83000B21E08 /* CameraOutputViewController.swift in Sources */,
 				E8B3514C2726F7EA00A9C54D /* SelectMoodGuideView.swift in Sources */,
+				E8B3518D2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift in Sources */,
 				E8B351432725EB8600A9C54D /* PosterTemplateCell.swift in Sources */,
 				9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */,
 				E8B351502726F81900A9C54D /* SelectPhotoGuideView.swift in Sources */,
@@ -533,12 +634,17 @@
 				E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */,
 				965EC52C27279FA600ED0420 /* EmotionViewModel.swift in Sources */,
 				96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */,
+				E8B3518F2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift in Sources */,
+				E8B3517A27279A9200A9C54D /* ExerciseRecordViewController.swift in Sources */,
 				E8AD75BB2721D175009A3432 /* Collection+subscript.swift in Sources */,
 				E8B3514A2726D94A00A9C54D /* PosterEditGuideView.swift in Sources */,
+				E8B351892727A09A00A9C54D /* ExerciseRecordUseCase.swift in Sources */,
+				E8B3518227279BC700A9C54D /* ExerciseCategoryModel.swift in Sources */,
 				E8AD75B12721A80C009A3432 /* PosterListViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */,
 				965EC52E27280E1E00ED0420 /* EmotionCell.swift in Sources */,
+				E8B35152272706E600A9C54D /* ExerciseListViewController.swift in Sources */,
 				E8AD764D27254509009A3432 /* PosterTemplateListViewController.swift in Sources */,
 				E8AD75B52721BDE4009A3432 /* String+toAttributedText.swift in Sources */,
 				E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */,
