@@ -26,13 +26,14 @@ class EmotionCell: UICollectionViewCell {
     func setUpCell() {
         koreanTitleLabel = UILabel()
         contentView.addSubview(koreanTitleLabel)
-        
+
         koreanTitleLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            koreanTitleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            koreanTitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
-            koreanTitleLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
+            koreanTitleLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 23),
+            koreanTitleLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            koreanTitleLabel.widthAnchor.constraint(equalToConstant: 32),
+            koreanTitleLabel.heightAnchor.constraint(equalToConstant: 27)
         ])
 
         englishTitleLabel = UILabel()
@@ -42,15 +43,21 @@ class EmotionCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate([
             englishTitleLabel.topAnchor.constraint(equalTo: koreanTitleLabel.bottomAnchor, constant: 5),
-            englishTitleLabel.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: 23),
-            englishTitleLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
+            englishTitleLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            koreanTitleLabel.widthAnchor.constraint(equalToConstant: 44),
+            koreanTitleLabel.heightAnchor.constraint(equalToConstant: 16)
         ])
     }
 
     func setupLabel() {
         koreanTitleLabel.font = UIFont.systemFont(ofSize: 18)
         koreanTitleLabel.textAlignment = .center
+        koreanTitleLabel.textColor = .white
+        koreanTitleLabel.alpha = 0.5
+
         englishTitleLabel.font = UIFont.systemFont(ofSize: 12)
         englishTitleLabel.textAlignment = .center
+        englishTitleLabel.textColor = .white
+        englishTitleLabel.alpha = 0.5
     }
 }

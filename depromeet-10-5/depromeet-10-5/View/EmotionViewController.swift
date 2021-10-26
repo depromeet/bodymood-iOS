@@ -12,6 +12,7 @@ class EmotionViewController: UIViewController {
     private lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = { createCollectionViewFlowLayout() }()
     private lazy var collectionView: UICollectionView = { createCollectionView() }()
     private lazy var contentView: UIView = { createContentView() }()
+    private lazy var selectButton: UIButton = { createSelectButton() }()
 
     private var emotionData: [EmotionDataResponse] = []
     private var emotionViewModel: EmotionViewModelType
@@ -78,19 +79,32 @@ extension EmotionViewController {
 
     private func createCollectionView() -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
-        collectionView.backgroundColor = .yellow
+        collectionView.backgroundColor = .clear
         return collectionView
     }
 
     private func createContentView() -> UIView {
         let view = UIView()
-        view.backgroundColor = .green
+        view.backgroundColor = .clear
         return view
+    }
+
+    private func createSelectButton() -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = .black
+        button.setTitleColor(.white, for: .normal)
+        button.setTitle("선택 완료", for: .normal)
+        return button
     }
 
     func style() {
         navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backgroundColor = .clear
         view.backgroundColor = .white
+        view.addDiagonalGradient(
+            startColor: UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0)),
+            endColor: UIColor(cgColor: CGColor(red: 151/255, green: 151/255, blue: 151/255, alpha: 1.0))
+        )
     }
 
     func layout() {
@@ -114,6 +128,15 @@ extension EmotionViewController {
         ])
 
         collectionView.register(EmotionCell.self, forCellWithReuseIdentifier: cellID)
+
+        view.addSubview(selectButton)
+        selectButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            selectButton.widthAnchor.constraint(equalTo: view.widthAnchor),
+            selectButton.heightAnchor.constraint(equalToConstant: 64),
+            selectButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 }
 
@@ -133,6 +156,7 @@ extension EmotionViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
 
+        cell.backgroundColor = .clear
         cell.koreanTitleLabel.text = emotionData[indexPath.row].koreanTitle
         cell.englishTitleLabel.text = emotionData[indexPath.row].englishTitle
         return cell
@@ -165,6 +189,27 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int)
     -> UIEdgeInsets {
-        return UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+        return UIEdgeInsets(top: 10, left: 0, bottom: 23, right: 0)
+    }
+}
+
+// TODO: 기현님 코드 삭제할 것
+extension UIView {
+    func addDiagonalGradient(startColor: UIColor, endColor: UIColor) {
+        let gradientLayerName = "gradientLayer"
+
+        if let oldLayer = layer.sublayers?.filter({$0.name == gradientLayerName}).first {
+            oldLayer.removeFromSuperlayer()
+        }
+
+        let gardientLayer = CAGradientLayer()
+        gardientLayer.colors = [startColor.cgColor, endColor.cgColor]
+        gardientLayer.locations = [0, 1]
+        gardientLayer.startPoint = .init(x: 0, y:0)
+        gardientLayer.endPoint = .init(x: 1, y: 1)
+        gardientLayer.frame = bounds
+        gardientLayer.name = gradientLayerName
+
+        layer.insertSublayer(gardientLayer, at: 0)
     }
 }
