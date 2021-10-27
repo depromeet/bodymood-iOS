@@ -6,7 +6,7 @@ protocol AlbumViewModelType {
 	var numOfItemsPerRow: Int { get }
 	var photos: AnyPublisher<[PHAsset], Never> { get }
 	var title: AnyPublisher<String, Never> { get }
-	var nextBtnTitle: AnyPublisher<String, Never> { get }
+	var selectBtnTitle: AnyPublisher<String, Never> { get }
 
 	var nextBtnTapped: PassthroughSubject<IndexPath, Never> { get }
 
@@ -14,15 +14,16 @@ protocol AlbumViewModelType {
 }
 
 class AlbumViewModel: AlbumViewModelType {
+    private let resultReceiver: PassthroughSubject<PHAsset, Never>
 	private let useCase: AlbumUseCaseType
 	private let photosSubject = CurrentValueSubject<[PHAsset], Never>(.init())
 	private var subscriptions = Set<AnyCancellable>()
 	private var fetchSubscription: AnyCancellable?
 
-	let numOfItemsPerRow = 3
+	let numOfItemsPerRow = 4
 	var photos: AnyPublisher<[PHAsset], Never> { photosSubject.eraseToAnyPublisher() }
 	var title: AnyPublisher<String, Never> { Just("앨범").eraseToAnyPublisher() }
-	var nextBtnTitle: AnyPublisher<String, Never> { Just("Next").eraseToAnyPublisher() }
+	var selectBtnTitle: AnyPublisher<String, Never> { Just("선택").eraseToAnyPublisher() }
 
 	let nextBtnTapped = PassthroughSubject<IndexPath, Never>()
 
@@ -37,7 +38,8 @@ class AlbumViewModel: AlbumViewModelType {
 		return finished.eraseToAnyPublisher()
 	}
 
-	init(useCase: AlbumUseCaseType) {
+    init(useCase: AlbumUseCaseType, resultReciever: PassthroughSubject<PHAsset, Never>) {
+        self.resultReceiver = resultReciever
 		self.useCase = useCase
 		bind()
 		loadImage()
@@ -50,10 +52,9 @@ class AlbumViewModel: AlbumViewModelType {
 	private func bind() {
 		nextBtnTapped
 			.sink { [weak self] indexPath in
-				// TODO: 다음 버튼 액션 처리 (ex.VC 전환)
 				guard let self = self else { return }
 				let selectedItem = self.photosSubject.value[indexPath.item]
-				Log.debug("nextBtnTapped", indexPath, selectedItem)
+                self.resultReceiver.send(selectedItem)
 			}.store(in: &subscriptions)
 	}
 }

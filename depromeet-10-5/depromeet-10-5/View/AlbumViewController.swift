@@ -12,20 +12,15 @@ class AlbumViewController: UIViewController {
 	}
 
 	enum Layout {
-		static let listViewHorizontalInset: CGFloat = 16
-		static let listViewTopInset: CGFloat = 10
-		static let listViewBottomInset: CGFloat = 56
-		static let itemSpacing: CGFloat = 10
+		static let itemSpacing: CGFloat = 1
 
-		static let btnHorizontalInset: CGFloat = 20
-		static let btnBottomInset: CGFloat = 30
 		static let btnHeight: CGFloat = 56
 	}
 
 	private lazy var collectionView: UICollectionView = { createCollectionView() }()
 	private lazy var dataSource: DataSource = { createDataSource() }()
 	private let refreshControl = UIRefreshControl()
-	private lazy var nextButton: UIButton = { createNextButton() }()
+	private lazy var selectButton: DefaultBottomButton = { createSelectButton() }()
 	private var subscriptions = Set<AnyCancellable>()
 	private let viewModel: AlbumViewModelType
 
@@ -59,10 +54,10 @@ class AlbumViewController: UIViewController {
 				self?.updatePhotos(photos)
 			}.store(in: &subscriptions)
 
-		viewModel.nextBtnTitle
+		viewModel.selectBtnTitle
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] title in
-				self?.nextButton.setTitle(title, for: .normal)
+                self?.selectButton.label.text = title
 			}.store(in: &subscriptions)
 
 		viewModel.title
@@ -76,13 +71,14 @@ class AlbumViewController: UIViewController {
                 self?.navigationController?.popViewController(animated: true)
 			}.store(in: &subscriptions)
 
-		nextButton.publisher(for: .touchUpInside)
+		selectButton.publisher(for: .touchUpInside)
 			.sink { [weak self] _ in
 				guard
 					let self = self,
 					let indexPath = self.collectionView.indexPathsForSelectedItems?.first
 				else { return }
 				self.viewModel.nextBtnTapped.send(indexPath)
+                self.navigationController?.popViewController(animated: true)
 			}.store(in: &subscriptions)
 
 		refreshControl.publisher(for: .valueChanged)
@@ -93,6 +89,7 @@ class AlbumViewController: UIViewController {
 			.receive(on: DispatchQueue.main)
 			.sink { [weak self] _ in
 				self?.refreshControl.endRefreshing()
+                self?.selectButton.isEnabled = false
 			}.store(in: &subscriptions)
 	}
 
@@ -106,13 +103,11 @@ class AlbumViewController: UIViewController {
 
 // MARK: - Configure UI
 extension AlbumViewController {
-	private func createNextButton() -> UIButton {
-		let view = UIButton()
-		view.backgroundColor = #colorLiteral(red: 0.2196078431, green: 0.7215686275, blue: 1, alpha: 1)
-		view.setTitleColor(.white, for: .normal)
-		view.titleLabel?.font = .boldSystemFont(ofSize: 18)
-		view.layer.cornerRadius = 12
-		view.layer.masksToBounds = true
+	private func createSelectButton() -> DefaultBottomButton {
+        let view = DefaultBottomButton()
+        view.isEnabled = false
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
 		return view
 	}
 
@@ -121,6 +116,8 @@ extension AlbumViewController {
 		view.backgroundColor = .clear
 		view.refreshControl = refreshControl
 		view.delegate = self
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
 		return view
 	}
 
@@ -153,10 +150,6 @@ extension AlbumViewController {
 
 			let section = NSCollectionLayoutSection(group: group)
 			section.interGroupSpacing = Layout.itemSpacing
-			section.contentInsets = .init(top: Layout.listViewTopInset,
-										  leading: 0,
-										  bottom: Layout.listViewBottomInset,
-										  trailing: 0)
 			return section
 		}
 		return layout
@@ -169,52 +162,36 @@ extension AlbumViewController {
 			.font: UIFont.systemFont(ofSize: 16),
 			.foregroundColor: UIColor.black
 		]
-		let backIcon = ImageResource.leftArrow?.withTintColor(#colorLiteral(red: 0.6509803922, green: 0.6549019608, blue: 0.6509803922, alpha: 1), renderingMode: .alwaysOriginal)
+		let backIcon = ImageResource.leftArrow?.withTintColor(#colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1098039216, alpha: 1), renderingMode: .alwaysOriginal)
 		navigationItem.leftBarButtonItem = .init(image: backIcon, style: .plain, target: nil, action: nil)
 	}
 
 	private func layout() {
-		view.addSubview(collectionView)
-		collectionView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			collectionView.topAnchor.constraint(equalTo: view.topAnchor),
-			collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-													constant: Layout.listViewHorizontalInset),
-			collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-													 constant: -Layout.listViewHorizontalInset),
-			collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+			collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: selectButton.topAnchor)
 		])
 
-		view.addSubview(nextButton)
-		nextButton.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
-			nextButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-												constant: Layout.btnHorizontalInset),
-			nextButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-												 constant: -Layout.btnHorizontalInset),
-			nextButton.heightAnchor.constraint(equalToConstant: Layout.btnHeight),
-			nextButton.bottomAnchor.constraint(equalTo: view.bottomAnchor,
-											   constant: -Layout.btnBottomInset)
+			selectButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			selectButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			selectButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
 	}
 }
 
 extension AlbumViewController: UICollectionViewDelegate {
 	func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        let shouldSelect: Bool
 		if collectionView.cellForItem(at: indexPath)?.isSelected ?? false {
 			collectionView.deselectItem(at: indexPath, animated: false)
-			return false
+			shouldSelect = false
 		} else {
-			return true
+            shouldSelect = true
 		}
+        selectButton.isEnabled = shouldSelect
+        return shouldSelect
 	}
-}
-
-// TODO: 테스트 용 코드, 추후 제거할 것
-func presentAlbumVC(on viewController: UIViewController) {
-	let vc = AlbumViewController(viewModel: AlbumViewModel(useCase: AlbumUseCase()))
-	let nav = UINavigationController(rootViewController: vc)
-	nav.overrideUserInterfaceStyle = .light
-	nav.modalPresentationStyle = .fullScreen
-	viewController.present(nav, animated: true, completion: nil)
 }

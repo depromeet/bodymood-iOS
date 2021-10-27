@@ -12,6 +12,11 @@ class ExerciseRecordViewController: UIViewController {
     private let viewModel: ExerciseRecordViewModelType
     private var bag = Set<AnyCancellable>()
 
+    private lazy var blendedBGColor: UIColor = {
+        let colorPair = self.viewModel.bgColorHexPair.value
+        return UIColor(rgb: colorPair.0).add(UIColor(rgb: colorPair.1))
+    }()
+
     init(with viewModel: ExerciseRecordViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -28,6 +33,10 @@ class ExerciseRecordViewController: UIViewController {
         bind()
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return blendedBGColor.isDarkColor ? .lightContent : .darkContent
+    }
+
     private func bind() {
         viewModel.firstDepthCategories
             .receive(on: DispatchQueue.main)
@@ -42,12 +51,6 @@ class ExerciseRecordViewController: UIViewController {
                 guard let self = self else { return }
                 self.pageIndicator.moveToPage.send(idx)
                 self.menuBar.selectItem(at: [0, idx], animated: true, scrollPosition: .left)
-            }.store(in: &bag)
-
-        viewModel.bgColorHexPair
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] first, second in
-                self?.view.addDiagonalGradiant(startColor: UIColor(rgb: first), endColor: UIColor(rgb: second))
             }.store(in: &bag)
 
         viewModel.canShowButton
@@ -73,8 +76,10 @@ class ExerciseRecordViewController: UIViewController {
             }.store(in: &bag)
 
         bottomButton.publisher(for: .touchUpInside)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.viewModel.selectBtnTapped.send(())
+                self?.navigationController?.popViewController(animated: true)
             }.store(in: &bag)
 
         navigationItem.leftBarButtonItem?.tap
@@ -92,6 +97,7 @@ class ExerciseRecordViewController: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension ExerciseRecordViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.currentIdxOfFirstDepth.send(indexPath.item)
@@ -101,13 +107,14 @@ extension ExerciseRecordViewController: UICollectionViewDelegate {
 // MARK: - Configure UI
 extension ExerciseRecordViewController {
     private func style() {
+        let pair = viewModel.bgColorHexPair.value
+        view.addDiagonalGradiant(startColor: UIColor(rgb: pair.0), endColor: UIColor(rgb: pair.1))
+
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.isTranslucent = true
         navigationController?.view.backgroundColor = UIColor.clear
-        let colorPair = self.viewModel.bgColorHexPair.value
-        let blendedColor = UIColor(rgb: colorPair.0).add(UIColor(rgb: colorPair.1))
-        let backIcon = ImageResource.leftArrow?.withTintColor(blendedColor.isDarkColor ? .white : .black,
+        let backIcon = ImageResource.leftArrow?.withTintColor(blendedBGColor.isDarkColor ? .white : .black,
                                                               renderingMode: .alwaysOriginal)
         navigationItem.leftBarButtonItem = .init(image: backIcon, style: .plain, target: nil, action: nil)
     }
@@ -133,9 +140,7 @@ extension ExerciseRecordViewController {
     private func createDataSource() -> DataSource {
         let registration = CellRegistration { [weak self] cell, _, item in
             guard let self = self else { return }
-            let colorPair = self.viewModel.bgColorHexPair.value
-            let blendedColor = UIColor(rgb: colorPair.0).add(UIColor(rgb: colorPair.1))
-            cell.update(with: item, parentBgColor: blendedColor)
+            cell.update(with: item, parentBgColor: self.blendedBGColor)
         }
 
         return DataSource(collectionView: menuBar) { collectionView, indexPath, item -> UICollectionViewCell? in
@@ -254,13 +259,4 @@ extension ExerciseRecordViewController {
         static let itemMinWidth: CGFloat = 44
         static let spacing: CGFloat = 30
     }
-}
-
-// TODO: 테스트 용 코드, 추후 제거할 것
-func presentExerciseRecordVC(on viewController: UIViewController) {
-    let vc = ExerciseRecordViewController(with: ExerciseRecordViewModel(useCase: ExerciseRecordUseCase(), bgColorHexPair: ((0xAA2900, 0x221E47))))
-    let nav = UINavigationController(rootViewController: vc)
-    nav.overrideUserInterfaceStyle = .light
-    nav.modalPresentationStyle = .fullScreen
-    viewController.present(nav, animated: true, completion: nil)
 }

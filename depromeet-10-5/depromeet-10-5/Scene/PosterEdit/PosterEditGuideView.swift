@@ -10,30 +10,30 @@ class PosterEditGuideView: UIView {
         return view
     }()
 
-    lazy var layoutGuide: UILayoutGuide = {
-        let guide = UILayoutGuide()
-        addLayoutGuide(guide)
-        return guide
+    lazy var stackView: UIStackView = {
+        let view = UIStackView(arrangedSubviews: [selectPhotoGuideView,
+                                                  selectExerciseGuideView,
+                                                  selectMoodGuideView])
+        view.axis = .vertical
+        view.distribution = .fillEqually
+        view.spacing = 24
+        view.translatesAutoresizingMaskIntoConstraints = false
+        insertSubview(view, aboveSubview: posterImageView)
+        return view
     }()
 
     lazy var selectPhotoGuideView: SelectPhotoGuideView = {
         let view = SelectPhotoGuideView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        insertSubview(view, aboveSubview: posterImageView)
         return view
     }()
 
     lazy var selectExerciseGuideView: SelectExerciseGuideView = {
         let view = SelectExerciseGuideView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        insertSubview(view, aboveSubview: posterImageView)
         return view
     }()
 
     lazy var selectMoodGuideView: SelectMoodGuideView = {
         let view = SelectMoodGuideView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        insertSubview(view, aboveSubview: posterImageView)
         return view
     }()
 
@@ -50,6 +50,12 @@ class PosterEditGuideView: UIView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        stackView.arrangedSubviews.forEach {
+            $0.addDashedBorder(with: #colorLiteral(red: 0.3137254902, green: 0.3137254902, blue: 0.3137254902, alpha: 1).withAlphaComponent(0.5), lineWidth: 1, cornerRadius: 0)
+        }
     }
 
     private func bind() {
@@ -83,10 +89,7 @@ extension PosterEditGuideView {
 
     private func layout() {
         setPosterImageViewLayout()
-        setLayoutGuideLayout()
-        setSelectPhotoGuideViewLayout()
-        setSelectExerciseGuideViewLayout()
-        setSelectMoodGuideViewLayout()
+        setStackViewLayout()
     }
 
     private func setPosterImageViewLayout() {
@@ -97,38 +100,13 @@ extension PosterEditGuideView {
             posterImageView.topAnchor.constraint(equalTo: topAnchor)
         ])
     }
-
-    private func setLayoutGuideLayout() {
+    
+    private func setStackViewLayout() {
         NSLayoutConstraint.activate([
-            layoutGuide.widthAnchor.constraint(equalToConstant: Layout.guideViewSize.width),
-            layoutGuide.heightAnchor.constraint(equalToConstant: Layout.guideViewSize.height),
-            layoutGuide.centerXAnchor.constraint(equalTo: posterImageView.centerXAnchor),
-            layoutGuide.centerYAnchor.constraint(equalTo: posterImageView.centerYAnchor)
-        ])
-    }
-
-    private func setSelectPhotoGuideViewLayout() {
-        NSLayoutConstraint.activate([
-            selectPhotoGuideView.topAnchor.constraint(equalTo: layoutGuide.topAnchor,
-                                                      constant: 62),
-            selectPhotoGuideView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor)
-        ])
-    }
-
-    private func setSelectExerciseGuideViewLayout() {
-        NSLayoutConstraint.activate([
-            selectExerciseGuideView.topAnchor.constraint(equalTo: selectPhotoGuideView.bottomAnchor,
-                                                         constant: 47),
-            selectExerciseGuideView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor)
-        ])
-    }
-
-    private func setSelectMoodGuideViewLayout() {
-        NSLayoutConstraint.activate([
-            selectMoodGuideView.topAnchor.constraint(equalTo: selectExerciseGuideView.bottomAnchor,
-                                                     constant: 51),
-            selectMoodGuideView.centerXAnchor.constraint(equalTo: layoutGuide.centerXAnchor),
-            selectMoodGuideView.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: -48)
+            stackView.centerXAnchor.constraint(equalTo: posterImageView.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: posterImageView.centerYAnchor),
+            stackView.widthAnchor.constraint(equalToConstant: Layout.stackViewSize.width),
+            stackView.heightAnchor.constraint(equalToConstant: Layout.stackViewSize.height)
         ])
     }
 }
@@ -142,26 +120,6 @@ extension PosterEditGuideView {
     enum Layout {
         static let spacing: CGFloat = 50
         static let guideViewSize = CGSize(width: 327, height: 580)
-    }
-}
-
-extension UIView {
-    func addDashedBorder() {
-        let color = UIColor.red.cgColor
-        
-        let shapeLayer:CAShapeLayer = CAShapeLayer()
-        let frameSize = self.frame.size
-        let shapeRect = CGRect(x: 0, y: 0, width: frameSize.width, height: frameSize.height)
-        
-        shapeLayer.bounds = shapeRect
-        shapeLayer.position = CGPoint(x: frameSize.width/2, y: frameSize.height/2)
-        shapeLayer.fillColor = UIColor.clear.cgColor
-        shapeLayer.strokeColor = color
-        shapeLayer.lineWidth = 2
-        shapeLayer.lineJoin = CAShapeLayerLineJoin.round
-        shapeLayer.lineDashPattern = [6,3]
-        shapeLayer.path = UIBezierPath(roundedRect: shapeRect, cornerRadius: 5).cgPath
-        
-        self.layer.addSublayer(shapeLayer)
+        static let stackViewSize = CGSize(width: 250, height: 492)
     }
 }

@@ -78,6 +78,10 @@
 		E8B351942728212700A9C54D /* FirstDepthCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351932728212700A9C54D /* FirstDepthCategoryCell.swift */; };
 		E8B351972728398F00A9C54D /* PosterEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351962728398F00A9C54D /* PosterEditViewController.swift */; };
 		E8B35199272839B100A9C54D /* PosterEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B35198272839B100A9C54D /* PosterEditViewModel.swift */; };
+		E8B3730D2729828000833052 /* UIView+toImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3730C2729828000833052 /* UIView+toImage.swift */; };
+		E8B3730F2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3730E2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift */; };
+		E8B373112729C32500833052 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B373102729C32500833052 /* CheckBoxView.swift */; };
+		E8B373132729C58E00833052 /* UIView+addDashedBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -157,6 +161,10 @@
 		E8B351932728212700A9C54D /* FirstDepthCategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstDepthCategoryCell.swift; sourceTree = "<group>"; };
 		E8B351962728398F00A9C54D /* PosterEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterEditViewController.swift; sourceTree = "<group>"; };
 		E8B35198272839B100A9C54D /* PosterEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterEditViewModel.swift; sourceTree = "<group>"; };
+		E8B3730C2729828000833052 /* UIView+toImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+toImage.swift"; sourceTree = "<group>"; };
+		E8B3730E2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+removeAllArrangedSubviews.swift"; sourceTree = "<group>"; };
+		E8B373102729C32500833052 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
+		E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addDashedBorder.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,6 +370,9 @@
 				E86415072725755000D58B3E /* UIColor+init.swift */,
 				E8B3518A2727A87900A9C54D /* UIViewController+embed.swift */,
 				E8B3518E2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift */,
+				E8B3730C2729828000833052 /* UIView+toImage.swift */,
+				E8B3730E2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift */,
+				E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -479,6 +490,7 @@
 				E8B3514F2726F81900A9C54D /* SelectPhotoGuideView.swift */,
 				E8B3514D2726F80400A9C54D /* SelectExerciseGuideView.swift */,
 				E8B3514B2726F7EA00A9C54D /* SelectMoodGuideView.swift */,
+				E8B373102729C32500833052 /* CheckBoxView.swift */,
 			);
 			path = PosterEdit;
 			sourceTree = "<group>";
@@ -665,12 +677,14 @@
 				E8B351432725EB8600A9C54D /* PosterTemplateCell.swift in Sources */,
 				9641DAE92713319C001BE018 /* KakaoLoginRequest.swift in Sources */,
 				E8B35199272839B100A9C54D /* PosterEditViewModel.swift in Sources */,
+				E8B373112729C32500833052 /* CheckBoxView.swift in Sources */,
 				E8B351502726F81900A9C54D /* SelectPhotoGuideView.swift in Sources */,
 				E8B351452725ED6F00A9C54D /* PosterTemplate.swift in Sources */,
 				E8AD764F272552BD009A3432 /* UIButton+setBackgroundColor.swift in Sources */,
 				9641DAEB271331A2001BE018 /* KakaoLoginResponse.swift in Sources */,
 				E8AD764B2724B1EE009A3432 /* Date+toString.swift in Sources */,
 				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
+				E8B3730F2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift in Sources */,
 				E86415082725755000D58B3E /* UIColor+init.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
@@ -689,9 +703,11 @@
 				96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */,
 				965EC52E27280E1E00ED0420 /* EmotionCell.swift in Sources */,
 				E8B35152272706E600A9C54D /* ExerciseListViewController.swift in Sources */,
+				E8B373132729C58E00833052 /* UIView+addDashedBorder.swift in Sources */,
 				E8AD764D27254509009A3432 /* PosterTemplateListViewController.swift in Sources */,
 				E8AD75B52721BDE4009A3432 /* String+toAttributedText.swift in Sources */,
 				E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */,
+				E8B3730D2729828000833052 /* UIView+toImage.swift in Sources */,
 				96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */,
 				96C481F52720396A00244296 /* CameraCoordinator.swift in Sources */,
 				96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */,

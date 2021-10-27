@@ -6,15 +6,10 @@ class SelectPhotoGuideView: UIView {
     lazy var albumButton: UIButton  = { createButton(with: ImageResource.addPhoteFromAlbum) }()
     lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.text = "Take a Photo"
-        view.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(view)
-        return view
-    }()
-
-    lazy var buttonContainer: UIStackView = {
-        let view = UIStackView(arrangedSubviews: [cameraButton, albumButton])
-        view.distribution = .equalSpacing
+        view.text = "사진을 선택하세요."
+        view.textAlignment = .center
+        view.font = .boldSystemFont(ofSize: 16)
+        view.textColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         return view
@@ -22,8 +17,10 @@ class SelectPhotoGuideView: UIView {
     
     private func createButton(with image: UIImage?) -> UIButton {
         let view = UIButton()
-        view.setImage(image?.withTintColor(.white, renderingMode: .alwaysTemplate), for: .normal)
+        view.backgroundColor = #colorLiteral(red: 0.3137254902, green: 0.3137254902, blue: 0.3137254902, alpha: 1).withAlphaComponent(0.3)
+        view.setImage(image?.withTintColor(.white, renderingMode: .alwaysOriginal), for: .normal)
         view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
         return view
     }
 
@@ -33,36 +30,35 @@ class SelectPhotoGuideView: UIView {
         style()
         layout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func style() {
-        backgroundColor = .yellow
+        backgroundColor = #colorLiteral(red: 0.3137254902, green: 0.3137254902, blue: 0.3137254902, alpha: 1).withAlphaComponent(0.4)
     }
-    
+
     private func layout() {
-        translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: Layout.size.width),
-            heightAnchor.constraint(equalToConstant: Layout.size.height)
-        ])
-        
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor,
+                                            constant: Layout.titleLabelTopInset),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
+        
+        let guide = UILayoutGuide()
+        addLayoutGuide(guide)
 
         NSLayoutConstraint.activate([
-            buttonContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
-            buttonContainer.trailingAnchor.constraint(equalTo: trailingAnchor),
-            buttonContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
-            buttonContainer.heightAnchor.constraint(equalToConstant: Layout.btnSize.height)
-        ])
-
-        NSLayoutConstraint.activate([
+            guide.centerXAnchor.constraint(equalTo: centerXAnchor),
+            guide.widthAnchor.constraint(equalToConstant: 32),
+            guide.heightAnchor.constraint(equalToConstant: 16),
+            guide.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            cameraButton.trailingAnchor.constraint(equalTo: guide.leadingAnchor),
+            cameraButton.topAnchor.constraint(equalTo: guide.bottomAnchor),
+            albumButton.leadingAnchor.constraint(equalTo: guide.trailingAnchor),
+            albumButton.topAnchor.constraint(equalTo: guide.bottomAnchor),
             cameraButton.widthAnchor.constraint(equalToConstant: Layout.btnSize.width),
             cameraButton.heightAnchor.constraint(equalToConstant: Layout.btnSize.height),
             albumButton.widthAnchor.constraint(equalToConstant: Layout.btnSize.width),
@@ -71,7 +67,7 @@ class SelectPhotoGuideView: UIView {
     }
     
     enum Layout {
-        static let size = CGSize(width: 279, height: 138)
+        static let titleLabelTopInset: CGFloat = 36
         static let btnSize = CGSize(width: 40, height: 40)
     }
 }

@@ -9,13 +9,25 @@ class PhotoCell: UICollectionViewCell {
 		let view = UIImageView()
 		view.contentMode = .scaleAspectFill
 		view.clipsToBounds = true
-		view.layer.borderColor = #colorLiteral(red: 0, green: 0.4745098039, blue: 0.7411764706, alpha: 1)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
 		return view
 	}()
+    
+    private lazy var effetView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white.withAlphaComponent(0.5)
+        view.layer.borderColor = #colorLiteral(red: 0.2588235294, green: 0.8666666667, blue: 1, alpha: 1)
+        view.layer.borderWidth = 3
+        view.isHidden = true
+        view.translatesAutoresizingMaskIntoConstraints = false
+        insertSubview(view, aboveSubview: imageView)
+        return view
+    }()
 
 	override var isSelected: Bool {
 		didSet {
-			imageView.layer.borderWidth = isSelected ? 3 : 0
+            effetView.isHidden = !isSelected
 		}
 	}
 
@@ -43,13 +55,18 @@ class PhotoCell: UICollectionViewCell {
 	}
 
 	private func layout() {
-		contentView.addSubview(imageView)
-		imageView.translatesAutoresizingMaskIntoConstraints = false
 		NSLayoutConstraint.activate([
 			imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
 			imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
 			imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
 			imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
 		])
+        
+        NSLayoutConstraint.activate([
+            effetView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            effetView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            effetView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            effetView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
 	}
 }

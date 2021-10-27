@@ -2,11 +2,8 @@ import UIKit
 
 extension UIView {
     func addDiagonalGradiant(startColor: UIColor, endColor: UIColor) {
-        let gradientLayerName = "gradientLayer"
-
-        if let oldlayer = layer.sublayers?.filter({$0.name == gradientLayerName}).first {
-            oldlayer.removeFromSuperlayer()
-        }
+        let name = "\(#function)"
+        layer.sublayers?.filter({$0.name == name}).first?.removeFromSuperlayer()
 
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
@@ -14,7 +11,7 @@ extension UIView {
         gradientLayer.startPoint = .init(x: 0, y: 0)
         gradientLayer.endPoint = .init(x: 1, y: 1)
         gradientLayer.frame = bounds
-        gradientLayer.name = gradientLayerName
+        gradientLayer.name = name
 
         layer.insertSublayer(gradientLayer, at: 0)
     }

@@ -23,17 +23,11 @@ class SelectMoodGuideView: UIButton {
     }
 
     private func style() {
-        setTitle("Choose your mood", for: .normal)
-        backgroundColor = .blue
+        setTitle("감정을 선택하세요", for: .normal)
+        backgroundColor = #colorLiteral(red: 0.3137254902, green: 0.3137254902, blue: 0.3137254902, alpha: 1).withAlphaComponent(0.4)
     }
     
     private func layout() {
-        translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: Layout.size.width),
-            heightAnchor.constraint(equalToConstant: Layout.size.height)
-        ])
-
         NSLayoutConstraint.activate([
             editButton.widthAnchor.constraint(equalToConstant: Layout.btnSize.width),
             editButton.heightAnchor.constraint(equalToConstant: Layout.btnSize.height),
@@ -41,7 +35,6 @@ class SelectMoodGuideView: UIButton {
     }
     
     enum Layout {
-        static let size = CGSize(width: 207, height: 86)
         static let btnSize = CGSize(width: 40, height: 40)
     }
 }

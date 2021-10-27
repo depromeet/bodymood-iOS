@@ -10,7 +10,7 @@ protocol ExerciseRecordViewModelType: ExerciseListViewModelType {
     var canEnableButton: CurrentValueSubject<Bool, Never> { get }
     var canShowButton: CurrentValueSubject<Bool, Never> { get }
     var currentIdxOfFirstDepth: CurrentValueSubject<Int, Never> { get }
-
+    
     // Inputs
     var selectBtnTapped: PassthroughSubject<Void, Never> { get }
 }
@@ -23,13 +23,13 @@ protocol ExerciseListViewModelType {
 }
 
 class ExerciseRecordViewModel: ExerciseRecordViewModelType {
-    
 
     private let maxNumOfExercise = 3
     private let useCase: ExerciseRecordUseCaseType
     private var fetchSubscription: AnyCancellable?
     private var bag = Set<AnyCancellable>()
     private let selectedExerciseList = CurrentValueSubject<[IndexPath], Never>([])
+    private let resultReciever: CurrentValueSubject<[ExerciseItemModel], Never>
 
     let categories = CurrentValueSubject<[ExerciseCategoryModel], Never>([])
     let buttonTitle = CurrentValueSubject<String, Never>("")
@@ -44,8 +44,11 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
     let currentIdxOfFirstDepth = CurrentValueSubject<Int, Never>(0)
     let itemTapped = PassthroughSubject<Int, Never>()
 
-    init(useCase: ExerciseRecordUseCaseType, bgColorHexPair: (Int, Int) = (0xffffff, 0xffffff)) {
+    init(useCase: ExerciseRecordUseCaseType,
+         bgColorHexPair: (Int, Int) = (0xffffff, 0xffffff),
+         resultReciever: CurrentValueSubject<[ExerciseItemModel], Never>) {
         self.useCase = useCase
+        self.resultReciever = resultReciever
 
         self.bgColorHexPair = .init(bgColorHexPair)
         fetchCategories()
@@ -82,8 +85,12 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
             }.store(in: &bag)
 
         selectBtnTapped
-            .sink { _ in
-                print("selectBtnTapped")
+            .sink { [weak self] _ in
+                guard let self = self else { return }
+                let list = self.selectedExerciseList.value.compactMap {
+                    self.categories.value[safe: $0.section]?.children?[safe: $0.item]
+                }.map { ExerciseItemModel(english: $0.name, korean: $0.description) }
+                self.resultReciever.send(list)
             }.store(in: &bag)
     }
 

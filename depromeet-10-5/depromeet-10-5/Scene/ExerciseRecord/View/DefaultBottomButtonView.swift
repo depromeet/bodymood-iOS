@@ -33,7 +33,10 @@ class DefaultBottomButton: UIButton {
             label.textColor = isHighlighted ? Style.highlightedTextColor : Style.normalTextColor
         }
     }
-    
+
+    @available(*, unavailable, message: "set title using label property")
+    override func setTitle(_ title: String?, for state: UIControl.State) {}
+
     private func style() {
         setBackgroundColor(Style.disabledBGColor, for: [.disabled])
         setBackgroundColor(Style.normalBGColor, for: [.normal, .highlighted])

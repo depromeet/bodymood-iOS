@@ -99,7 +99,7 @@ extension PosterDetailViewController {
     }
 
     private func configure(with mode: PosterDetailContentMode) {
-        bottomButtonContainer.arrangedSubviews.forEach { bottomButtonContainer.removeArrangedSubview($0) }
+        bottomButtonContainer.removeAllArrangedSubviews()
         
         switch mode {
         case .general:
