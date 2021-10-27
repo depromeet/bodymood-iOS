@@ -53,11 +53,14 @@ class EmotionCell: UICollectionViewCell {
         koreanTitleLabel.font = UIFont.systemFont(ofSize: 18)
         koreanTitleLabel.textAlignment = .center
         koreanTitleLabel.textColor = .white
-        koreanTitleLabel.alpha = 0.5
 
         englishTitleLabel.font = UIFont.systemFont(ofSize: 12)
         englishTitleLabel.textAlignment = .center
         englishTitleLabel.textColor = .white
-        englishTitleLabel.alpha = 0.5
+    }
+    
+    func setLabelColor(color: UIColor) {
+        koreanTitleLabel.textColor = color
+        englishTitleLabel.textColor = color
     }
 }
