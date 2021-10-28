@@ -19,7 +19,7 @@ class CameraViewController: UIViewController, Coordinating {
     private var takePicture = false
     private var isBackCamera = true
     private var isFlash = false
-    private var outputImageView : UIImageView!
+    private var outputImageView: UIImageView!
 
     private lazy var contentView: UIView = { createContentView() }()
     private lazy var flashView: UIView = { createFlashView() }()
@@ -31,6 +31,8 @@ class CameraViewController: UIViewController, Coordinating {
     private lazy var shutterButton: UIButton = { createShutterButton() }()
     private lazy var cameraFlipButton: UIButton = {  createCameraFlipButton() }()
     private lazy var focusGesture: UITapGestureRecognizer = { createfocusGesture() }()
+    
+    weak var delegate: PosterEditDelegate?
 
     deinit {
         Log.debug(Self.self, #function)
@@ -445,11 +447,11 @@ extension CameraViewController {
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
-        guard let data = photo.fileDataRepresentation() else {
-            return
-        }
-
-        let image = UIImage(data: data)
+        guard
+            let data = photo.fileDataRepresentation(),
+            let image = UIImage(data: data)
+        else { return }
+        delegate?.photo(image: image)
 
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill

@@ -247,15 +247,6 @@ extension PosterListViewController: UIGestureRecognizerDelegate {
     }
 }
 
-// TODO: 테스트 용 코드, 추후 제거할 것
-func presentPosterListVC(on viewController: UIViewController) {
-    let vc = PosterListViewController(viewModel: PosterListViewModel(useCase: AlbumUseCase()))
-    let nav = MainNavigationController(rootViewController: vc)
-    nav.overrideUserInterfaceStyle = .light
-    nav.modalPresentationStyle = .fullScreen
-    viewController.present(nav, animated: true, completion: nil)
-}
-
 class MainNavigationController: UINavigationController {
     override var childForStatusBarStyle: UIViewController? {
         topViewController

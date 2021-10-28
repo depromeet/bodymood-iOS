@@ -23,6 +23,8 @@ class EmotionViewController: UIViewController {
     private var fetchSubscription: AnyCancellable?
     private var selectedIndex: Int = 17
     private var isDark: Bool = false
+    
+    weak var delegate: PosterEditDelegate?
 
     var selectedEmotion: EmotionDataResponse!
 
@@ -135,6 +137,7 @@ extension EmotionViewController {
         button.backgroundColor = UIColor(cgColor: CGColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0))
         button.setTitleColor(.white, for: .normal)
         button.setTitle("감정 선택", for: .normal)
+        button.addTarget(self, action: #selector(selectButtonDidTap), for: .touchUpInside)
         button.isEnabled = false
         return button
     }
@@ -271,9 +274,15 @@ extension EmotionViewController {
     }
 }
 
+
 // - MARK: Configure actions
 extension EmotionViewController {
     @objc func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func selectButtonDidTap() {
+        delegate?.emotion(emotion: selectedEmotion)
         navigationController?.popViewController(animated: true)
     }
 }

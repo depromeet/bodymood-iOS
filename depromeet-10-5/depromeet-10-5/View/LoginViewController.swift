@@ -26,7 +26,7 @@ class LoginViewController: UIViewController, Coordinating {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     deinit {
         Log.debug(Self.self, #function)
     }
@@ -45,10 +45,10 @@ class LoginViewController: UIViewController, Coordinating {
         layout()
         bind()
 
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-            let viewController = EmotionViewController(viewModel: EmotionViewModel(service: EmotionService()))
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
+//            let viewController = EmotionViewController(viewModel: EmotionViewModel(service: EmotionService()))
+//            self.navigationController?.pushViewController(viewController, animated: true)
+//        }
     }
 
     private func bind() {
@@ -115,25 +115,36 @@ extension LoginViewController {
 
 extension LoginViewController {
     @objc func kakaoLoginButtonDidTap() {
+        // TODO: 배포시 제거할 것
+        moveToPosterList()
+        return
+        
+
         let kakaoLogin = authViewModel.kakaoLoginAvailable()
 
-        kakaoLogin.sink( receiveCompletion: { completion in
+        kakaoLogin.sink( receiveCompletion: { [weak self] completion in
+            guard let self = self else { return }
             switch completion {
             case .finished:
                 self.authViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
 
                 if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-                    let cameraViewController = CameraViewController()
-                    self.navigationController?.pushViewController(cameraViewController, animated: true)
+                    self.moveToPosterList()
                 }
 
             case .failure(let error):
                 Log.debug(error)
             }
-        }, receiveValue: {
-            Log.debug("====\($0.accessToken)====")
-            self.kakaoAccessToken = $0.accessToken
+        }, receiveValue: { [weak self] result in
+            Log.debug("====\(result.accessToken)====")
+            self?.kakaoAccessToken = result.accessToken
         }).store(in: &subscriptions)
+    }
+
+    func moveToPosterList() {
+        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
+        let mainVC = PosterListViewController(viewModel: mainVM)
+        self.navigationController?.pushViewController(mainVC, animated: true)
     }
 
     @objc func appleLoginDidTap() {
@@ -187,21 +198,4 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         Log.debug("login error")
     }
-            }, receiveValue: {
-                Log.debug("====\($0.accessToken)====")
-                self.accessToken = $0.accessToken
-            }).store(in: &subscription)
-
-    }
-	
-	
-	// TODO: 제거할 것
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		DispatchQueue.main.async {
-//			presentAlbumVC(on: self)
-            presentPosterListVC(on: self)
-//            presentExerciseRecordVC(on: self)
-		}
-	}
 }

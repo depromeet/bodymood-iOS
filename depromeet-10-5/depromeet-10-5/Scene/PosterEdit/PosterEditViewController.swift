@@ -1,7 +1,28 @@
 import UIKit
 import Combine
 
+protocol PosterEditDelegate: NSObject {
+    func photo(image: UIImage)
+    func emotion(emotion: EmotionDataResponse)
+}
+
+extension PosterEditViewController: PosterEditDelegate {
+    func emotion(emotion: EmotionDataResponse) {
+//        self.posterEditGuideView.selectExerciseGuideView.update(with: list.map { $0.english })
+        self.updateCheckBox(index: 2)
+        selectedEmotion = emotion
+    }
+    
+    func photo(image: UIImage) {
+        posterEditGuideView.posterImageView.image = image
+        posterEditGuideView.selectPhotoGuideView.backgroundColor = .clear
+        updateCheckBox(index: 0)
+    }
+}
+
+
 class PosterEditViewController: UIViewController {
+    
     private lazy var checkBoxContainer: UIStackView = { createCheckBoxContainer() }()
     private lazy var scrollView: UIScrollView = { createScrollView() }()
     private lazy var titleLabel: UILabel = { createTitleLabel() }()
@@ -9,6 +30,8 @@ class PosterEditViewController: UIViewController {
 
     private let viewModel: PosterEditViewModelType
     private var bag = Set<AnyCancellable>()
+    
+    private var selectedEmotion: EmotionDataResponse?
 
     init(viewModel: PosterEditViewModelType) {
         self.viewModel = viewModel
@@ -80,15 +103,28 @@ extension PosterEditViewController {
         viewModel.moveToCamera
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-
+                guard let self = self else { return }
+                let cameraViewController = CameraViewController()
+                cameraViewController.delegate = self
+                self.navigationController?.pushViewController(cameraViewController, animated: true)
             }.store(in: &bag)
 
         viewModel.moveToExerciseCategory
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
+                
+                let pair: (Int, Int)
+                if var start = self.selectedEmotion?.startColor,
+                   var end = self.selectedEmotion?.endColor {
+                    let value1 = UInt32(start.dropFirst(), radix: 16) ?? 0
+                    let value2 = UInt32(end.dropFirst(), radix: 16) ?? 0
+                    pair = (Int(value1), Int(value2))
+                } else {
+                    pair = (0xffffff, 0xffffff)
+                }
                 let categoryVM = ExerciseRecordViewModel(useCase: ExerciseRecordUseCase(),
-                                                         bgColorHexPair: ((0xAA2900, 0x221E47)),
+                                                         bgColorHexPair: pair,
                                                          resultReciever: self.viewModel.exerciseSelected)
                 let categoryVC = ExerciseRecordViewController(with: categoryVM)
                 self.navigationController?.pushViewController(categoryVC, animated: true)
@@ -97,7 +133,11 @@ extension PosterEditViewController {
         viewModel.moveToMoodList
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-
+                guard let self = self else { return }
+                let emotionVM = EmotionViewModel(service: EmotionService())
+                let emotionVC = EmotionViewController(viewModel: emotionVM)
+                emotionVC.delegate = self
+                self.navigationController?.pushViewController(emotionVC, animated: true)
             }.store(in: &bag)
 
         viewModel.photoSelectedFromAlbum
