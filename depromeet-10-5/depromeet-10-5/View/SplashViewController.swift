@@ -8,8 +8,12 @@
 import UIKit
 class SplashViewController: UIViewController, Coordinating {
     var coordinator: Coordinator?
-    
+
     private lazy var imageView: UIImageView = { createSplashImageView() }()
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

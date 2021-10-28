@@ -93,12 +93,12 @@ class AuthViewModel: AuthViewModelType {
             }
         })
     }
-    
+
     private func bind() {
         kakaoBtnTapped.sink { _ in
             Log.debug("kakaoButton Tapped")
         }
-        
+
         appleBtnTapped.sink {_ in
             Log.debug("ApplButton Tapped")
         }

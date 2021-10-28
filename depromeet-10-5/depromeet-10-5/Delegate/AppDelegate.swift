@@ -36,8 +36,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Log.debug("Revoked Notification")
             // 로그인 페이지 이동
         }
-        
-        let navVC = UINavigationController()
+
+        let navVC = EmotionNavigationController()
 
         let coordinator = AuthCoordinator()
         coordinator.navigationController = navVC
