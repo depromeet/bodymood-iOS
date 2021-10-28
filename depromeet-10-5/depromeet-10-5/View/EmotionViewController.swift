@@ -15,12 +15,16 @@ class EmotionViewController: UIViewController {
     private lazy var collectionView: UICollectionView = { createCollectionView() }()
     private lazy var contentView: UIView = { createContentView() }()
     private lazy var selectButton: UIButton = { createSelectButton() }()
+    private lazy var oldGradientLayer: CAGradientLayer = { createGradientLayer() }()
 
     private var emotionData: [EmotionDataResponse] = []
     private var emotionViewModel: EmotionViewModelType
     private var subscriptions: Set<AnyCancellable> = []
     private var fetchSubscription: AnyCancellable?
     private var selectedIndex: Int = 17
+    private var statusBarStyle: UIStatusBarStyle = .default
+
+    var selectedEmotion: EmotionDataResponse!
 
     private lazy var cellID = "EmotionCell"
 
@@ -41,22 +45,21 @@ class EmotionViewController: UIViewController {
         style()
         layout()
     }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
 
+        overrideUserInterfaceStyle = .light
+        setNeedsStatusBarAppearanceUpdate()
+
         bind()
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        lightMode()
+        overrideUserInterfaceStyle = .light
     }
 
     private func bind() {
@@ -132,6 +135,11 @@ extension EmotionViewController {
         return button
     }
 
+    private func createGradientLayer() -> CAGradientLayer {
+        let gradientLayer = CAGradientLayer()
+        return gradientLayer
+    }
+
     func style() {
         navigationController?.isNavigationBarHidden = false
         navigationController?.navigationBar.backgroundColor = .clear
@@ -152,24 +160,38 @@ extension EmotionViewController {
         navigationItem.leftBarButtonItem?.tintColor = .white
 
         view.backgroundColor = .white
-        view.addDiagonalGradient(
-            startColor: UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0)),
-            endColor: UIColor(cgColor: CGColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0))
-        )
+
+        let startColor =  UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0))
+        let endColor = UIColor(cgColor: CGColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0))
+
+        gradientLocation(startColor: startColor, endColor: endColor)
+
+        oldGradientLayer.colors = [startColor, endColor]
     }
 
-    func darkMode() {
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .dark
-            setNeedsStatusBarAppearanceUpdate()
-        }
-    }
+    func gradientLocation(startColor: UIColor, endColor: UIColor) {
+        let gradientLayerName = "gradientLayer"
 
-    func lightMode() {
-        if #available(iOS 13.0, *) {
-            overrideUserInterfaceStyle = .light
-            setNeedsStatusBarAppearanceUpdate()
+        if let oldLayer = view.layer.sublayers?.filter({$0.name == gradientLayerName}).first {
+            oldLayer.removeFromSuperlayer()
         }
+
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
+        gradientLayer.locations = [0, 1]
+        gradientLayer.startPoint = .init(x: 0, y: 0)
+        gradientLayer.endPoint = .init(x: 1, y: 1)
+        gradientLayer.frame = view.bounds
+        gradientLayer.name = gradientLayerName
+
+        view.layer.insertSublayer(gradientLayer, at: 0)
+
+        let gradientAnimation = CABasicAnimation(keyPath: "locations")
+        gradientAnimation.fromValue = [0, 0.1]
+        gradientAnimation.toValue = [0, 1.0]
+        gradientAnimation.duration = 2.0
+        gradientAnimation.repeatCount = 1
+        gradientLayer.add(gradientAnimation, forKey: nil)
     }
 
     func layout() {
@@ -223,18 +245,18 @@ extension EmotionViewController {
     }
 
     func hexStringToUIColor(hex: String) -> UIColor {
-        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+        var upperString: String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
-        if (cString.hasPrefix("#")) {
-            cString.remove(at: cString.startIndex)
+        if upperString.hasPrefix("#") {
+            upperString.remove(at: upperString.startIndex)
         }
 
-        if ((cString.count) != 6) {
+        if upperString.count != 6 {
             return UIColor.gray
         }
 
-        var rgbValue:UInt64 = 0
-        Scanner(string: cString).scanHexInt64(&rgbValue)
+        var rgbValue: UInt64 = 0
+        Scanner(string: upperString).scanHexInt64(&rgbValue)
 
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
@@ -275,39 +297,81 @@ extension EmotionViewController: UICollectionViewDataSource {
             hex: emotionData[selectedIndex == 17 ? 0: selectedIndex].fontColor ?? "#FFFFFF")
         )
 
-        if indexPath.row == selectedIndex {
-            cell.koreanTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-            cell.englishTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
-        } else {
-            cell.koreanTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
-            cell.englishTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        }
+        if selectedIndex != 17 {
+            if indexPath.row == selectedIndex {
+                cell.koreanTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+                cell.koreanTitleLabel.layer.shadowColor = UIColor.black.cgColor
+                cell.koreanTitleLabel.layer.shadowRadius = 1.0
+                cell.koreanTitleLabel.layer.shadowOpacity = 0.25
+                cell.koreanTitleLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+                cell.koreanTitleLabel.layer.masksToBounds = false
+                cell.koreanTitleLabel.alpha = 1
 
+                cell.englishTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+                cell.englishTitleLabel.layer.shadowColor = UIColor.black.cgColor
+                cell.englishTitleLabel.layer.shadowRadius = 1.0
+                cell.englishTitleLabel.layer.shadowOpacity = 0.25
+                cell.englishTitleLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
+                cell.englishTitleLabel.layer.masksToBounds = false
+                cell.englishTitleLabel.alpha = 1
+
+            } else {
+                cell.koreanTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+                cell.koreanTitleLabel.layer.shadowRadius = 0.0
+                cell.koreanTitleLabel.layer.shadowOpacity = 0.0
+                cell.koreanTitleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+                cell.koreanTitleLabel.layer.masksToBounds = false
+                cell.koreanTitleLabel.alpha = 0.5
+
+                cell.englishTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+                cell.englishTitleLabel.layer.shadowRadius = 0.0
+                cell.englishTitleLabel.layer.shadowOpacity = 0.0
+                cell.englishTitleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
+                cell.englishTitleLabel.layer.masksToBounds = false
+                cell.englishTitleLabel.alpha = 0.5
+            }
+        }
         return cell
     }
 }
 
 extension EmotionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let startColor = hexStringToUIColor(hex: emotionData[indexPath.row].startColor ?? "#C1C1C1")
-        let endColor = hexStringToUIColor(hex: emotionData[indexPath.row].endColor ?? "#979797")
-        view.addDiagonalGradient(startColor: startColor, endColor: endColor)
 
         selectedIndex = indexPath.row
+        selectedEmotion = emotionData[selectedIndex]
+
         firstTitleLabel.isHidden = true
         secondTitleLabel.isHidden = true
+
+        let startColor = hexStringToUIColor(
+            hex: emotionData[selectedIndex == 17 ? 0: selectedIndex].startColor ?? "#C1C1C1"
+        )
+        let endColor = hexStringToUIColor(
+            hex: emotionData[selectedIndex == 17 ? 0: selectedIndex].endColor ?? "#979797"
+        )
+
+        gradientLocation(startColor: startColor, endColor: endColor)
+
+        selectButton.backgroundColor = .black
+        selectButton.setTitle("선택 완료", for: .normal)
+        selectButton.isEnabled = true
 
         let backButton = UIButton(type: .custom)
 
         let fontColor = emotionData[indexPath.row].fontColor ?? "#ffffff"
 
         if fontColor == "#ffffff" {
-            lightMode()
+            overrideUserInterfaceStyle = .dark
+            setNeedsStatusBarAppearanceUpdate()
+
             if let image = UIImage(named: "back") {
                 backButton.setImage(image, for: .normal)
             }
         } else if fontColor == "#000000" {
-            darkMode()
+            overrideUserInterfaceStyle = .light
+            setNeedsStatusBarAppearanceUpdate()
+
             if let image = UIImage(named: "back_black") {
                 backButton.setImage(image, for: .normal)
             }
@@ -315,6 +379,7 @@ extension EmotionViewController: UICollectionViewDelegate {
 
         backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+
         let leftBarButton = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = leftBarButton
 
@@ -345,26 +410,5 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         insetForSectionAt section: Int)
     -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 23, right: 0)
-    }
-}
-
-// TODO: 기현님 코드 삭제할 것
-extension UIView {
-    func addDiagonalGradient(startColor: UIColor, endColor: UIColor) {
-        let gradientLayerName = "gradientLayer"
-
-        if let oldLayer = layer.sublayers?.filter({$0.name == gradientLayerName}).first {
-            oldLayer.removeFromSuperlayer()
-        }
-
-        let gardientLayer = CAGradientLayer()
-        gardientLayer.colors = [startColor.cgColor, endColor.cgColor]
-        gardientLayer.locations = [0, 1]
-        gardientLayer.startPoint = .init(x: 0, y: 0)
-        gardientLayer.endPoint = .init(x: 1, y: 1)
-        gardientLayer.frame = bounds
-        gardientLayer.name = gradientLayerName
-
-        layer.insertSublayer(gardientLayer, at: 0)
     }
 }
