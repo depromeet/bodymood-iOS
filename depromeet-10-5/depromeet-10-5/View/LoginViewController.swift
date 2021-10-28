@@ -10,7 +10,7 @@ class LoginViewController: UIViewController, Coordinating {
     var coordinator: Coordinator?
 
     private lazy var kakaoLoginButton: UIButton = { createKakaoButton() }()
-    private lazy var appleLoginButton: ASAuthorizationAppleIDButton = { createAppleButton() }()
+    private lazy var appleLoginButton: UIButton = { createAppleButton() }()
     private lazy var stackView: UIStackView = { createStackView() }()
     private var authViewModel: AuthViewModelType
 
@@ -31,13 +31,16 @@ class LoginViewController: UIViewController, Coordinating {
         Log.debug(Self.self, #function)
     }
 
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Log.debug("login view")
         style()
         layout()
         bind()
@@ -59,15 +62,16 @@ class LoginViewController: UIViewController, Coordinating {
 extension LoginViewController {
     private func createKakaoButton() -> UIButton {
         let button = UIButton()
-        button.setTitleColor(.white, for: .normal)
-        button.setImage(UIImage(named: "kakao_login_large_wide"), for: .normal)
+        button.setImage(UIImage(named: "kakao_login"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
         return button
     }
 
-    private func createAppleButton() -> ASAuthorizationAppleIDButton {
-        let button = ASAuthorizationAppleIDButton(type: .signIn, style: .black)
+    private func createAppleButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "apple_login"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(appleLoginDidTap), for: .touchUpInside)
         return button
     }
@@ -169,6 +173,11 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             Log.debug("User email: \(String(describing: email))")
 
             self.authViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
+
+            if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
+                let cameraViewController = CameraViewController()
+                self.navigationController?.pushViewController(cameraViewController, animated: true)
+            }
 
         default:
             break

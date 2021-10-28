@@ -22,7 +22,7 @@ class EmotionViewController: UIViewController {
     private var subscriptions: Set<AnyCancellable> = []
     private var fetchSubscription: AnyCancellable?
     private var selectedIndex: Int = 17
-    private var statusBarStyle: UIStatusBarStyle = .default
+    private var isDark: Bool = false
 
     var selectedEmotion: EmotionDataResponse!
 
@@ -39,6 +39,10 @@ class EmotionViewController: UIViewController {
 
     deinit {
         Log.debug(Self.self, #function)
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return isDark ? .darkContent : .lightContent
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -362,14 +366,14 @@ extension EmotionViewController: UICollectionViewDelegate {
         let fontColor = emotionData[indexPath.row].fontColor ?? "#ffffff"
 
         if fontColor == "#ffffff" {
-            overrideUserInterfaceStyle = .dark
+            isDark = false
             setNeedsStatusBarAppearanceUpdate()
 
             if let image = UIImage(named: "back") {
                 backButton.setImage(image, for: .normal)
             }
         } else if fontColor == "#000000" {
-            overrideUserInterfaceStyle = .light
+            isDark = true
             setNeedsStatusBarAppearanceUpdate()
 
             if let image = UIImage(named: "back_black") {
@@ -410,5 +414,11 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         insetForSectionAt section: Int)
     -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 23, right: 0)
+    }
+}
+
+class EmotionNavigationController: UINavigationController {
+    override var childForStatusBarStyle: UIViewController? {
+        topViewController
     }
 }

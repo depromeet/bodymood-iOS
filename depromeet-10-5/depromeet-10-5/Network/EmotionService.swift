@@ -20,9 +20,6 @@ class EmotionService: EmotionServiceType {
         urlRequest.httpMethod = "GET"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-//        let httpBody = try? JSONSerialization.data(withJSONObject: [], options: [])
-//
-//        urlRequest.httpBody = httpBody
         return URLSession.shared.dataTaskPublisher(for: urlRequest)
             .map { $0.data }
             .decode(

@@ -19,6 +19,7 @@ class CameraViewController: UIViewController, Coordinating {
     private var takePicture = false
     private var isBackCamera = true
     private var isFlash = false
+    private var outputImageView : UIImageView!
 
     private lazy var contentView: UIView = { createContentView() }()
     private lazy var flashView: UIView = { createFlashView() }()
@@ -30,9 +31,6 @@ class CameraViewController: UIViewController, Coordinating {
     private lazy var shutterButton: UIButton = { createShutterButton() }()
     private lazy var cameraFlipButton: UIButton = {  createCameraFlipButton() }()
     private lazy var focusGesture: UITapGestureRecognizer = { createfocusGesture() }()
-    private lazy var outputStackView: UIStackView = { createOutputStackView() }()
-    private lazy var saveButton: UIButton = { createSaveButton() }()
-    private lazy var retakeButton: UIButton = { createRetakePhotoButton() }()
 
     deinit {
         Log.debug(Self.self, #function)
@@ -40,7 +38,6 @@ class CameraViewController: UIViewController, Coordinating {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        outputStackView.isHidden = true
         style()
     }
 
@@ -62,8 +59,6 @@ class CameraViewController: UIViewController, Coordinating {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        overrideUserInterfaceStyle = .light
-        setNeedsStatusBarAppearanceUpdate()
     }
 
     private func checkCameraPermission() {
@@ -229,31 +224,6 @@ extension CameraViewController {
         return instance
     }
 
-    private func createSaveButton() -> UIButton {
-        let button = UIButton()
-        button.backgroundColor = .black
-        button.setTitleColor(.white, for: .normal)
-        button.setTitle("저장", for: .normal)
-        return button
-    }
-
-    private func createRetakePhotoButton() -> UIButton {
-        let button = UIButton()
-        button.backgroundColor = .white
-        button.setTitleColor(.black, for: .normal)
-        button.setTitle("다시찍기", for: .normal)
-        button.addTarget(self, action: #selector(retakeButtonDidTap), for: .touchUpInside)
-        return button
-    }
-
-    private func createOutputStackView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [saveButton, retakeButton])
-        stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.spacing = 0.0
-        return stackView
-    }
-
     private func style() {
         navigationController?.isNavigationBarHidden = true
         overrideUserInterfaceStyle = .dark
@@ -331,20 +301,6 @@ extension CameraViewController {
             cameraFlipButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
             cameraFlipButton.widthAnchor.constraint(equalToConstant: 28),
             cameraFlipButton.heightAnchor.constraint(equalToConstant: 28)
-        ])
-
-        view.addSubview(outputStackView)
-
-        let outputStackViewGuide = self.contentView.safeAreaLayoutGuide
-        outputStackView.translatesAutoresizingMaskIntoConstraints = false
-        retakeButton.translatesAutoresizingMaskIntoConstraints = false
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-
-        NSLayoutConstraint.activate([
-            outputStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            outputStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            outputStackView.bottomAnchor.constraint(equalTo: outputStackViewGuide.bottomAnchor),
-            outputStackView.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
 }
@@ -485,11 +441,6 @@ extension CameraViewController {
             )
         }
     }
-
-    @objc func retakeButtonDidTap() {
-        bottomView.isHidden = false
-        outputStackView.isHidden = true
-    }
 }
 
 extension CameraViewController: AVCapturePhotoCaptureDelegate {
@@ -503,9 +454,10 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFill
         imageView.frame = self.view.bounds
-        self.contentView.addSubview(imageView)
-        bottomView.isHidden = true
-        outputStackView.isHidden = false
+        outputImageView = imageView
+
+        // TODO: 여기에 다른 페이지 이동하는 코드 작성하면 될 듯!
+//        self.contentView.addSubview(imageView)
     }
 
     func photoOutput(
