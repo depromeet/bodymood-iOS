@@ -86,8 +86,6 @@ class SelectMoodGuideView: UIButton {
         stackView.addArrangedSubview(koreanTitleLabel)
 
         let startColor = hexStringToUIColor(hex: value.startColor!)
-//        let endColor = hexStringToUIColor(hex: value.endColor!)
-//        gradientLocation(startColor: startColor, endColor: endColor)
         colorView.backgroundColor = startColor
         colorView.layer.opacity = 0.8
         colorView.backgroundColor = .clear

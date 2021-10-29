@@ -198,6 +198,9 @@ extension PosterEditViewController {
 
 // MARK: - Configure UI
 extension PosterEditViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
 
     private func style() {
         view.backgroundColor = .white

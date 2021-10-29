@@ -127,7 +127,10 @@ extension PosterDetailViewController {
 
 // MARK: - Configure UI
 extension PosterDetailViewController {
-
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     private func style() {
         view.backgroundColor = .white
 

@@ -110,6 +110,9 @@ extension PosterTemplateListViewController: UICollectionViewDelegate {
 
 // MARK: - Configure UI
 extension PosterTemplateListViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
 
     private func style() {
         view.backgroundColor = .white
