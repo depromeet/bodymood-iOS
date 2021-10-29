@@ -6,7 +6,7 @@ protocol PosterEditViewModelType: PosterEditGuideViewModelType {
     // Inputs
     var completeBtnTapped: PassthroughSubject<Void, Never> { get }
     var itemSelected: PassthroughSubject<Int, Never> { get }
-    
+
     // Outputs
     var poster: CurrentValueSubject<PHAsset?, Never> { get }
     var title: CurrentValueSubject<String, Never> { get }
@@ -19,6 +19,7 @@ protocol PosterEditViewModelType: PosterEditGuideViewModelType {
     // Mediators
     var photoSelectedFromAlbum: PassthroughSubject<PHAsset, Never> { get }
     var exerciseSelected: CurrentValueSubject<[ExerciseItemModel], Never> { get }
+    var emotionSelected: CurrentValueSubject<EmotionDataResponse?, Never> { get }
 }
 
 protocol PosterEditGuideViewModelType {
@@ -46,6 +47,7 @@ class PosterEditViewModel: PosterEditViewModelType {
     let activateCompleteButton = PassthroughSubject<Bool, Never>()
     let photoSelectedFromAlbum = PassthroughSubject<PHAsset, Never>()
     let exerciseSelected = CurrentValueSubject<[ExerciseItemModel], Never>([])
+    let emotionSelected =  CurrentValueSubject<EmotionDataResponse?, Never>(nil)
 
     private var bag = Set<AnyCancellable>()
     private var isSelected = Array(repeating: false, count: 3)
@@ -85,7 +87,7 @@ class PosterEditViewModel: PosterEditViewModelType {
             .sink { [weak self] _ in
                 self?.moveToMoodList.send()
             }.store(in: &bag)
-        
+
         itemSelected
             .sink { [weak self] idx in
                 guard let self = self else { return }
