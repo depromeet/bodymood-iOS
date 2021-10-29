@@ -50,11 +50,11 @@ class EmotionCell: UICollectionViewCell {
     }
 
     func setupLabel() {
-        koreanTitleLabel.font = UIFont.systemFont(ofSize: 18)
+        koreanTitleLabel.font = UIFont(name: "Pretendard-Regular", size: 18)
         koreanTitleLabel.textAlignment = .center
         koreanTitleLabel.textColor = .white
 
-        englishTitleLabel.font = UIFont.systemFont(ofSize: 12)
+        englishTitleLabel.font = UIFont(name: "PlayfairDisplay-Regular", size: 12)
         englishTitleLabel.textAlignment = .center
         englishTitleLabel.textColor = .white
     }

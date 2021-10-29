@@ -107,7 +107,7 @@ extension EmotionViewController {
         label.numberOfLines = 0
         label.textColor = .white
         label.text = "오늘은 어떤 색상의"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
         label.textAlignment = .center
 
         return label
@@ -118,7 +118,7 @@ extension EmotionViewController {
         label.numberOfLines = 0
         label.textColor = .white
         label.text = "감정을 느끼셨나요?"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
         label.textAlignment = .center
 
         return label
@@ -307,7 +307,7 @@ extension EmotionViewController: UICollectionViewDataSource {
 
         if selectedIndex != 17 {
             if indexPath.row == selectedIndex {
-                cell.koreanTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+                cell.koreanTitleLabel.font = UIFont(name: "Pretendard-ExtraBold", size: 18)
                 cell.koreanTitleLabel.layer.shadowColor = UIColor.black.cgColor
                 cell.koreanTitleLabel.layer.shadowRadius = 1.0
                 cell.koreanTitleLabel.layer.shadowOpacity = 0.25
@@ -315,7 +315,7 @@ extension EmotionViewController: UICollectionViewDataSource {
                 cell.koreanTitleLabel.layer.masksToBounds = false
                 cell.koreanTitleLabel.alpha = 1
 
-                cell.englishTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+                cell.englishTitleLabel.font = UIFont(name: "PlayfairDisplay-Bold", size: 12)
                 cell.englishTitleLabel.layer.shadowColor = UIColor.black.cgColor
                 cell.englishTitleLabel.layer.shadowRadius = 1.0
                 cell.englishTitleLabel.layer.shadowOpacity = 0.25
@@ -324,14 +324,14 @@ extension EmotionViewController: UICollectionViewDataSource {
                 cell.englishTitleLabel.alpha = 1
 
             } else {
-                cell.koreanTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+                cell.koreanTitleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
                 cell.koreanTitleLabel.layer.shadowRadius = 0.0
                 cell.koreanTitleLabel.layer.shadowOpacity = 0.0
                 cell.koreanTitleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
                 cell.koreanTitleLabel.layer.masksToBounds = false
                 cell.koreanTitleLabel.alpha = 0.5
 
-                cell.englishTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+                cell.englishTitleLabel.font = UIFont(name: "PlayfairDisplay-Regular", size: 12)
                 cell.englishTitleLabel.layer.shadowRadius = 0.0
                 cell.englishTitleLabel.layer.shadowOpacity = 0.0
                 cell.englishTitleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
