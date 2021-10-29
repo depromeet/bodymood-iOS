@@ -6,14 +6,12 @@ protocol PosterDetailViewModelType {
     // Inputs
     var shareBtnTapped: PassthroughSubject<Void, Never> { get }
     var completeBtnTapped: PassthroughSubject<Void, Never> { get }
-    
     // Outputs
     var poster: CurrentValueSubject<PHAsset?, Never> { get }
     var makePoster: CurrentValueSubject<(UIImage, [ExerciseItemModel], EmotionDataResponse)?, Never> { get }
     var title: CurrentValueSubject<String, Never> { get }
     var shareBtnTitle: CurrentValueSubject<String, Never> { get }
     var showShareBottomSheet: PassthroughSubject<Void, Never> { get }
-    
     var contentMode: CurrentValueSubject<PosterDetailContentMode, Never> { get }
 }
 

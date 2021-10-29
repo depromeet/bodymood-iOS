@@ -71,7 +71,7 @@ extension PosterDetailViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image, exercises, emotion in
                 self?.posterImageView.makePoster(image, exercises, emotion)
-                
+
                 let value1 = Int(UInt32(emotion.startColor?.dropFirst() ?? "", radix: 16) ?? 0)
                 let value2 = Int(UInt32(emotion.endColor?.dropFirst() ?? "", radix: 16) ?? 0)
                 self?.view.addDiagonalGradiant(startColor: UIColor(rgb: value1).withAlphaComponent(0.2),
@@ -113,10 +113,6 @@ extension PosterDetailViewController {
         bottomButtonContainer.removeAllArrangedSubviews()
         bottomButtonContainer.addArrangedSubview(shareButton)
     }
-    
-    
-    
-    
 }
 
 // MARK: - Definitions

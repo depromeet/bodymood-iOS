@@ -22,7 +22,7 @@ class PosterView: UIView {
 
     private func createExerciseLabel() -> UILabel {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 36)
+        view.font = UIFont(name: "PlayfairDisplay-Bold", size: 36)
         view.textColor = .white
         return view
     }
@@ -38,7 +38,7 @@ class PosterView: UIView {
 
     private lazy var emotionGuideLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 18)
+        view.font = UIFont(name: "PlayfairDisplay-Bold", size: 18)
         view.textColor = #colorLiteral(red: 0.7333333333, green: 0.7333333333, blue: 0.7333333333, alpha: 1)
         view.text = "Today's Bodymood"
         return view
@@ -46,7 +46,7 @@ class PosterView: UIView {
 
     private lazy var emotionLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 24)
+        view.font = UIFont(name: "PlayfairDisplay-Bold", size: 24)
         view.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         return view
     }()
@@ -69,12 +69,12 @@ class PosterView: UIView {
         exerciseStackView.isHidden = false
         emotionStackView.isHidden = false
         imageView.image = image
-        
+
         exercises.enumerated().forEach { idx, model in
             (exerciseStackView.arrangedSubviews[safe: idx] as? UILabel)?.text = model.english
         }
         emotionLabel.text = emotion.englishTitle
-
+        
         updateFonts()
     }
 
