@@ -97,6 +97,7 @@ extension PosterListViewController {
 
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage()

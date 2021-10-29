@@ -25,7 +25,6 @@
 		9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9676E4C42725745B0068C979 /* SplashViewController.swift */; };
 		9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9676E4C627257C110068C979 /* SplashCoordinator.swift */; };
 		9676E4CA2725899B0068C979 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9676E4C92725899B0068C979 /* LaunchScreen.storyboard */; };
-		96C481F52720396A00244296 /* CameraCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96C481F42720396A00244296 /* CameraCoordinator.swift */; };
 		96DAF9CE2726D83000B21E08 /* CameraOutputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DAF9CD2726D83000B21E08 /* CameraOutputViewController.swift */; };
 		96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DAF9CF2727017100B21E08 /* EmotionViewController.swift */; };
 		96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBB6271B0ED6008013CA /* CameraViewController.swift */; };
@@ -107,7 +106,6 @@
 		9676E4C42725745B0068C979 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		9676E4C627257C110068C979 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		9676E4C92725899B0068C979 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		96C481F42720396A00244296 /* CameraCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraCoordinator.swift; sourceTree = "<group>"; };
 		96DAF9CD2726D83000B21E08 /* CameraOutputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOutputViewController.swift; sourceTree = "<group>"; };
 		96DAF9CF2727017100B21E08 /* EmotionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionViewController.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -335,7 +333,6 @@
 				96F0BBBF271B1704008013CA /* Coordinator.swift */,
 				9676E4C627257C110068C979 /* SplashCoordinator.swift */,
 				96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */,
-				96C481F42720396A00244296 /* CameraCoordinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -699,7 +696,6 @@
 				E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */,
 				E8B3730D2729828000833052 /* UIView+toImage.swift in Sources */,
 				96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */,
-				96C481F52720396A00244296 /* CameraCoordinator.swift in Sources */,
 				96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */,
 				E8AD764927248834009A3432 /* CommonText.swift in Sources */,
 				9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */,

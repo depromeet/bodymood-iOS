@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         let navVC = EmotionNavigationController()
+        navVC.navigationBar.backgroundColor = .clear
 
         let coordinator = AuthCoordinator()
         coordinator.navigationController = navVC

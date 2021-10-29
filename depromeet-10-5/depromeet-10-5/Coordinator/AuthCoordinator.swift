@@ -13,7 +13,6 @@ class AuthCoordinator: Coordinator {
                 cameraVC.coordinator = self
                 return cameraVC
             }
-
             navigationController?.pushViewController(cameraVC, animated: true)
         }
     }
