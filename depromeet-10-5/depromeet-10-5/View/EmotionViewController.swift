@@ -330,6 +330,11 @@ extension EmotionViewController: UICollectionViewDataSource {
                 cell.englishTitleLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
                 cell.englishTitleLabel.layer.masksToBounds = false
                 cell.englishTitleLabel.alpha = 1
+                
+                let startColor = hexStringToUIColor(hex: emotionData[selectedIndex].startColor!)
+                let endColor = hexStringToUIColor(hex: emotionData[selectedIndex].endColor!)
+
+                gradientLocation(startColor: startColor, endColor: endColor)
 
             } else {
                 cell.koreanTitleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
@@ -360,15 +365,6 @@ extension EmotionViewController: UICollectionViewDelegate {
 
         firstTitleLabel.isHidden = true
         secondTitleLabel.isHidden = true
-
-        let startColor = hexStringToUIColor(
-            hex: emotionData[selectedIndex == 17 ? 0: selectedIndex].startColor ?? "#C1C1C1"
-        )
-        let endColor = hexStringToUIColor(
-            hex: emotionData[selectedIndex == 17 ? 0: selectedIndex].endColor ?? "#979797"
-        )
-
-        gradientLocation(startColor: startColor, endColor: endColor)
 
         let backButton = UIButton(type: .custom)
 
