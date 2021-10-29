@@ -6,13 +6,27 @@
 //
 
 import UIKit
+import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let _ = (scene as? UIWindowScene) else { return }
+ func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+         guard let windowScene = (scene as? UIWindowScene) else { return }
+     
+         let navVC = EmotionNavigationController()
+
+         let coordinator = SplashCoordinator()
+         coordinator.navigationController = navVC
+
+         let window = UIWindow(windowScene: windowScene)
+         window.rootViewController = navVC
+         window.makeKeyAndVisible()
+
+         self.window = window
+
+         coordinator.start()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -41,6 +55,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+    }
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let url = URLContexts.first?.url {
+            if(AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
+            }
+        }
     }
 
 }

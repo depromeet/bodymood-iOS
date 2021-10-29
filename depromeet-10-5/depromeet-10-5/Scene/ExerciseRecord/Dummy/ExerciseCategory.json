@@ -1,0 +1,489 @@
+{
+  "code": "0000",
+  "message": "성공",
+  "data": [
+    {
+      "categoryId": 5,
+      "name": "Shoulder",
+      "description": "어깨 운동",
+      "depth": 1,
+      "children": [
+        {
+          "categoryId": 6,
+          "name": "Rear delt row",
+          "description": "리어 델트 로우",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 7,
+          "name": "Back fly",
+          "description": "백 플라이",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 8,
+          "name": "Rear lateral raise",
+          "description": "리어 레터널 레이즈",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 9,
+          "name": "Behind neek press",
+          "description": "비하인드 넥프레스",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 10,
+          "name": "Side lateral raise",
+          "description": "사이드 레터럴 레이즈",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 11,
+          "name": "Shoulder press",
+          "description": "숄더 프레스",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 12,
+          "name": "Upright row",
+          "description": "업라이트 로우",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 13,
+          "name": "Rotation",
+          "description": "로테이션",
+          "depth": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "categoryId": 14,
+      "name": "Chest",
+      "description": "가슴 운동",
+      "depth": 1,
+      "children": [
+        {
+          "categoryId": 15,
+          "name": "Dips",
+          "description": "딥스",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 16,
+          "name": "Bench press",
+          "description": "벤치 프레스",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 17,
+          "name": "Chest press",
+          "description": "체스트 프레스",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 18,
+          "name": "Push up",
+          "description": "푸시업",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 19,
+          "name": "Pull over",
+          "description": "풀오버",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 20,
+          "name": "Fly",
+          "description": "플라이",
+          "depth": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "categoryId": 21,
+      "name": "Back/Waist",
+      "description": "등/허리",
+      "depth": 1,
+      "children": [
+        {
+          "categoryId": 23,
+          "name": "Good morning",
+          "description": "굿모닝",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 24,
+          "name": "Deadlift",
+          "description": "데드리프트",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 25,
+          "name": "Rack pool",
+          "description": "랙풀",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 26,
+          "name": "Rack pool down",
+          "description": "랫풀다운",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 27,
+          "name": "Low",
+          "description": "로우",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 28,
+          "name": "Arm pull down",
+          "description": "암풀다운",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 29,
+          "name": "Chin-up",
+          "description": "친업",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 30,
+          "name": "Pull-up",
+          "description": "풀업",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 31,
+          "name": "Back extension",
+          "description": "백 익스텐션",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 32,
+          "name": "Superman",
+          "description": "슈퍼맨",
+          "depth": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "categoryId": 33,
+      "name": "Triceps/Biceps",
+      "description": "삼두/이두",
+      "depth": 1,
+      "children": [
+        {
+          "categoryId": 34,
+          "name": "Dips",
+          "description": "딥스",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 35,
+          "name": "Kickback",
+          "description": "킥백",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 36,
+          "name": "Triceps extension",
+          "description": "트라이셉스 익스텐션",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 37,
+          "name": "Push down",
+          "description": "푸시다운",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 38,
+          "name": "Push up",
+          "description": "푸시업",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 39,
+          "name": "Dumbbell curls",
+          "description": "덤벨 컬",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 40,
+          "name": "Barbell curls",
+          "description": "바벨 컬",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 41,
+          "name": "Concentration curl",
+          "description": "컨센츄레이션 컬",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 42,
+          "name": "Cable curl",
+          "description": "케이블 컬",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 43,
+          "name": "Hammer curl",
+          "description": "해머 컬",
+          "depth": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "categoryId": 44,
+      "name": "Abdomen",
+      "description": "복부",
+      "depth": 1,
+      "children": [
+        {
+          "categoryId": 45,
+          "name": "L-sit",
+          "description": "L-sit",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 46,
+          "name": "Leg raise",
+          "description": "레그 레이즈",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 47,
+          "name": "Rollout",
+          "description": "롤 아웃",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 48,
+          "name": "Sit-up",
+          "description": "싯업",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 49,
+          "name": "Air bike",
+          "description": "에어 바이크",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 50,
+          "name": "Crunch",
+          "description": "크런치",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 51,
+          "name": "Plank",
+          "description": "플랭크",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 52,
+          "name": "Hanging leg raises",
+          "description": "행잉 레그 레이즈",
+          "depth": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "categoryId": 53,
+      "name": "Hips/Legs",
+      "description": "엉덩이/하체",
+      "depth": 1,
+      "children": [
+        {
+          "categoryId": 54,
+          "name": "Back extension",
+          "description": "백 익스텐션",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 55,
+          "name": "Hip thrust",
+          "description": "힙 스러스트",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 56,
+          "name": "Hip Abduction",
+          "description": "힙 어브덕션",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 57,
+          "name": "Back Extension",
+          "description": "익스텐션",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 58,
+          "name": "Lunge",
+          "description": "런지",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 59,
+          "name": "Leg curl",
+          "description": "레그 컬",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 60,
+          "name": "Leg press",
+          "description": "레그프레스",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 61,
+          "name": "Squat",
+          "description": "스쿼트",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 62,
+          "name": "Inner thigh",
+          "description": "이너 싸이",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 63,
+          "name": "Outer thugh",
+          "description": "아우터 싸이",
+          "depth": 2,
+          "children": []
+        }
+      ]
+    },
+    {
+      "categoryId": 64,
+      "name": "Aerobic",
+      "description": "유산소",
+      "depth": 1,
+      "children": [
+        {
+          "categoryId": 65,
+          "name": "Walking",
+          "description": "걷기",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 66,
+          "name": "Running",
+          "description": "런닝",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 67,
+          "name": "Rowing machine",
+          "description": "로잉 머신",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 68,
+          "name": "Mountain climber",
+          "description": "마운틴 클라이머",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 69,
+          "name": "Cycle",
+          "description": "사이클",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 70,
+          "name": "Stepper",
+          "description": "스태퍼",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 71,
+          "name": "Elliptical machine",
+          "description": "일립티컬 머신",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 72,
+          "name": "Jumping jack",
+          "description": "점핑잭",
+          "depth": 2,
+          "children": []
+        },
+        {
+          "categoryId": 73,
+          "name": "Jump rope",
+          "description": "줄넘기",
+          "depth": 2,
+          "children": []
+        }
+      ]
+    }
+  ]
+}
