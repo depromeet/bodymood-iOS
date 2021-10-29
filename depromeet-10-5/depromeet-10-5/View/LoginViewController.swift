@@ -144,7 +144,9 @@ extension LoginViewController {
     func moveToPosterList() {
         let mainVM = PosterListViewModel(useCase: AlbumUseCase())
         let mainVC = PosterListViewController(viewModel: mainVM)
-        self.navigationController?.pushViewController(mainVC, animated: true)
+        let nav = MainNavigationController(rootViewController: mainVC)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
 
     @objc func appleLoginDidTap() {

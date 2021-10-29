@@ -10,7 +10,7 @@ class PhotoCell: UICollectionViewCell {
 		view.contentMode = .scaleAspectFill
 		view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(view)
+        contentView.addSubview(view)
 		return view
 	}()
     
@@ -21,7 +21,7 @@ class PhotoCell: UICollectionViewCell {
         view.layer.borderWidth = 3
         view.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        insertSubview(view, aboveSubview: imageView)
+        contentView.insertSubview(view, aboveSubview: imageView)
         return view
     }()
 
