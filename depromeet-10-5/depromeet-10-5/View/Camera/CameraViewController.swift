@@ -452,14 +452,7 @@ extension CameraViewController: AVCapturePhotoCaptureDelegate {
             let image = UIImage(data: data)
         else { return }
         delegate?.photo(image: image)
-
-        let imageView = UIImageView(image: image)
-        imageView.contentMode = .scaleAspectFill
-        imageView.frame = self.view.bounds
-        outputImageView = imageView
-
-        // TODO: 여기에 다른 페이지 이동하는 코드 작성하면 될 듯!
-//        self.contentView.addSubview(imageView)
+        navigationController?.popViewController(animated: true)
     }
 
     func photoOutput(

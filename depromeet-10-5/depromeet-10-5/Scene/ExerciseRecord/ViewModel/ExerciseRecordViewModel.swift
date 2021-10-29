@@ -39,7 +39,7 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
     let canShowButton = CurrentValueSubject<Bool, Never>(true)
     let bgColorHexPair: CurrentValueSubject<(Int, Int), Never>
     let firstDepthCategories = CurrentValueSubject<[ExerciseItemModel], Never>([])
-
+ 
     let selectBtnTapped = PassthroughSubject<Void, Never>()
     let currentIdxOfFirstDepth = CurrentValueSubject<Int, Never>(0)
     let itemTapped = PassthroughSubject<Int, Never>()

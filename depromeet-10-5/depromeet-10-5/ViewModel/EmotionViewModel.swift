@@ -48,6 +48,8 @@ class EmotionViewModel: EmotionViewModelType {
             self?.buttonTitle.send("선택 완료")
             self?.canEnableButton.send(true)
         }.store(in: &subscriptions)
+        
+        
     }
 
     func emotionCategories() -> AnyPublisher<[EmotionDataResponse], Never> {

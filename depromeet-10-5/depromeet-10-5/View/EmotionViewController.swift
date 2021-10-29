@@ -78,7 +78,7 @@ class EmotionViewController: UIViewController {
         bottomButton.publisher(for: .touchUpInside)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.emotionViewModel.selectButtonDidTap.send(())
+                self?.delegate?.emotion(emotion: (self?.selectedEmotion)!)
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &subscriptions)
     }
@@ -330,7 +330,7 @@ extension EmotionViewController: UICollectionViewDataSource {
                 cell.englishTitleLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
                 cell.englishTitleLabel.layer.masksToBounds = false
                 cell.englishTitleLabel.alpha = 1
-                
+
                 let startColor = hexStringToUIColor(hex: emotionData[selectedIndex].startColor!)
                 let endColor = hexStringToUIColor(hex: emotionData[selectedIndex].endColor!)
 
