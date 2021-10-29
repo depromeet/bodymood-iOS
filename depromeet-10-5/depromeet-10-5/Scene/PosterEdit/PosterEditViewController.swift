@@ -12,7 +12,7 @@ extension PosterEditViewController: PosterEditDelegate {
         self.updateCheckBox(index: 2)
         selectedEmotion = emotion
     }
-    
+
     func photo(image: UIImage) {
         posterEditGuideView.posterImageView.image = image
         posterEditGuideView.selectPhotoGuideView.backgroundColor = .clear
@@ -20,9 +20,8 @@ extension PosterEditViewController: PosterEditDelegate {
     }
 }
 
-
 class PosterEditViewController: UIViewController {
-    
+
     private lazy var checkBoxContainer: UIStackView = { createCheckBoxContainer() }()
     private lazy var scrollView: UIScrollView = { createScrollView() }()
     private lazy var titleLabel: UILabel = { createTitleLabel() }()
@@ -30,7 +29,7 @@ class PosterEditViewController: UIViewController {
 
     private let viewModel: PosterEditViewModelType
     private var bag = Set<AnyCancellable>()
-    
+
     private var selectedEmotion: EmotionDataResponse?
 
     init(viewModel: PosterEditViewModelType) {
@@ -81,7 +80,7 @@ extension PosterEditViewController {
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &bag)
-        
+
         navigationItem.rightBarButtonItem?.tap
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -122,10 +121,10 @@ extension PosterEditViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                
+
                 let pair: (Int, Int)
-                if var start = self.selectedEmotion?.startColor,
-                   var end = self.selectedEmotion?.endColor {
+                if let start = self.selectedEmotion?.startColor,
+                   let end = self.selectedEmotion?.endColor {
                     let value1 = UInt32(start.dropFirst(), radix: 16) ?? 0
                     let value2 = UInt32(end.dropFirst(), radix: 16) ?? 0
                     pair = (Int(value1), Int(value2))
@@ -170,7 +169,7 @@ extension PosterEditViewController {
                 self.updateCheckBox(index: 1)
             }.store(in: &bag)
     }
-    
+
     private func updateCheckBox(index: Int) {
         viewModel.itemSelected.send(index)
         (checkBoxContainer.arrangedSubviews[safe: index] as? CheckBoxView)?.tintColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1098039216, alpha: 1)
@@ -229,7 +228,8 @@ extension PosterEditViewController {
     private func createTitleLabel() -> UILabel {
         let view = UILabel()
         view.textAlignment = .center
-        view.font = .systemFont(ofSize: 16)
+        view.font = UIFont(name: "Pretended-Regular", size: 16)
+        view.textColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
         navigationItem.titleView = view
         return view

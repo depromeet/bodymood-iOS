@@ -1,10 +1,3 @@
-//
-//  EmotionViewController.swift
-//  depromeet-10-5
-//
-//  Created by 허예은 on 2021/10/26.
-//
-
 import UIKit
 import Combine
 
@@ -14,7 +7,7 @@ class EmotionViewController: UIViewController {
     private lazy var secondTitleLabel: UILabel = { createSecondTitleLabel() }()
     private lazy var collectionView: UICollectionView = { createCollectionView() }()
     private lazy var contentView: UIView = { createContentView() }()
-    private lazy var selectButton: UIButton = { createSelectButton() }()
+    private lazy var bottomButton: DefaultBottomButton = { createBottomButtonView() }()
     private lazy var oldGradientLayer: CAGradientLayer = { createGradientLayer() }()
 
     private var emotionData: [EmotionDataResponse] = []
@@ -23,7 +16,7 @@ class EmotionViewController: UIViewController {
     private var fetchSubscription: AnyCancellable?
     private var selectedIndex: Int = 17
     private var isDark: Bool = false
-    
+
     weak var delegate: PosterEditDelegate?
 
     var selectedEmotion: EmotionDataResponse!
@@ -56,16 +49,11 @@ class EmotionViewController: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-
-        overrideUserInterfaceStyle = .light
-        setNeedsStatusBarAppearanceUpdate()
-
         bind()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        overrideUserInterfaceStyle = .light
     }
 
     private func bind() {
@@ -77,6 +65,22 @@ class EmotionViewController: UIViewController {
                 Log.debug("success bind method in view")
                 self?.uploadEmotions(emotions: response)
         }.store(in: &subscriptions)
+
+        emotionViewModel.canEnableButton.receive(on: DispatchQueue.main).sink { [weak self] canEnable in
+            Log.debug(canEnable)
+            self?.bottomButton.isEnabled = canEnable
+        }.store(in: &subscriptions)
+
+        emotionViewModel.buttonTitle.receive(on: DispatchQueue.main).sink { [weak self] title in
+            self?.bottomButton.label.text = title
+        }.store(in: &subscriptions)
+
+        bottomButton.publisher(for: .touchUpInside)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.delegate?.emotion(emotion: (self?.selectedEmotion)!)
+                self?.navigationController?.popViewController(animated: true)
+            }.store(in: &subscriptions)
     }
 
     func uploadEmotions(emotions: [EmotionDataResponse]) {
@@ -103,7 +107,7 @@ extension EmotionViewController {
         label.numberOfLines = 0
         label.textColor = .white
         label.text = "오늘은 어떤 색상의"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
         label.textAlignment = .center
 
         return label
@@ -114,7 +118,7 @@ extension EmotionViewController {
         label.numberOfLines = 0
         label.textColor = .white
         label.text = "감정을 느끼셨나요?"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
         label.textAlignment = .center
 
         return label
@@ -123,6 +127,7 @@ extension EmotionViewController {
     private func createCollectionView() -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = false
         return collectionView
     }
 
@@ -132,14 +137,12 @@ extension EmotionViewController {
         return view
     }
 
-    private func createSelectButton() -> UIButton {
-        let button = UIButton()
-        button.backgroundColor = UIColor(cgColor: CGColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0))
-        button.setTitleColor(.white, for: .normal)
-        button.setTitle("감정 선택", for: .normal)
-        button.addTarget(self, action: #selector(selectButtonDidTap), for: .touchUpInside)
-        button.isEnabled = false
-        return button
+    private func createBottomButtonView() -> DefaultBottomButton {
+        let view = DefaultBottomButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.isEnabled = false
+        self.view.addSubview(view)
+        return view
     }
 
     private func createGradientLayer() -> CAGradientLayer {
@@ -148,13 +151,11 @@ extension EmotionViewController {
     }
 
     func style() {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.navigationBar.backgroundColor = .clear
-
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 16),
-            .foregroundColor: UIColor.black
-        ]
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        self.navigationController?.navigationBar.backgroundColor = .clear
 
         let backButton = UIButton(type: .custom)
         if let image = UIImage(named: "back") {
@@ -201,20 +202,24 @@ extension EmotionViewController {
         gradientLayer.add(gradientAnimation, forKey: nil)
     }
 
-    func layout() {
-        view.addSubview(selectButton)
-        selectButton.translatesAutoresizingMaskIntoConstraints = false
+    override func viewWillLayoutSubviews() {
+        let startColor =  UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0))
+        let endColor = UIColor(cgColor: CGColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0))
 
+        gradientLocation(startColor: startColor, endColor: endColor)
+    }
+
+    func layout() {
         NSLayoutConstraint.activate([
-            selectButton.widthAnchor.constraint(equalTo: view.widthAnchor),
-            selectButton.heightAnchor.constraint(equalToConstant: 64),
-            selectButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            bottomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
         view.addSubview(firstTitleLabel)
         firstTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            firstTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 74),
+            firstTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             firstTitleLabel.widthAnchor.constraint(equalToConstant: 139),
             firstTitleLabel.heightAnchor.constraint(equalToConstant: 27),
             firstTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -232,10 +237,10 @@ extension EmotionViewController {
         view.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentView.topAnchor.constraint(equalTo: secondTitleLabel.bottomAnchor, constant: 67),
-            contentView.widthAnchor.constraint(equalToConstant: 304),
-            contentView.heightAnchor.constraint(equalToConstant: 448)
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
+            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -92),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35)
         ])
 
         contentView.addSubview(collectionView)
@@ -274,13 +279,12 @@ extension EmotionViewController {
     }
 }
 
-
 // - MARK: Configure actions
 extension EmotionViewController {
     @objc func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
     }
-    
+
     @objc func selectButtonDidTap() {
         delegate?.emotion(emotion: selectedEmotion)
         navigationController?.popViewController(animated: true)
@@ -296,7 +300,6 @@ extension EmotionViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath)
     -> UICollectionViewCell {
-        Log.debug("cell \(indexPath.row) is updating")
         guard let cell =  collectionView.dequeueReusableCell(
             withReuseIdentifier: cellID,
             for: indexPath) as? EmotionCell else {
@@ -312,7 +315,7 @@ extension EmotionViewController: UICollectionViewDataSource {
 
         if selectedIndex != 17 {
             if indexPath.row == selectedIndex {
-                cell.koreanTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+                cell.koreanTitleLabel.font = UIFont(name: "Pretendard-ExtraBold", size: 18)
                 cell.koreanTitleLabel.layer.shadowColor = UIColor.black.cgColor
                 cell.koreanTitleLabel.layer.shadowRadius = 1.0
                 cell.koreanTitleLabel.layer.shadowOpacity = 0.25
@@ -320,7 +323,7 @@ extension EmotionViewController: UICollectionViewDataSource {
                 cell.koreanTitleLabel.layer.masksToBounds = false
                 cell.koreanTitleLabel.alpha = 1
 
-                cell.englishTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+                cell.englishTitleLabel.font = UIFont(name: "PlayfairDisplay-Bold", size: 12)
                 cell.englishTitleLabel.layer.shadowColor = UIColor.black.cgColor
                 cell.englishTitleLabel.layer.shadowRadius = 1.0
                 cell.englishTitleLabel.layer.shadowOpacity = 0.25
@@ -328,15 +331,20 @@ extension EmotionViewController: UICollectionViewDataSource {
                 cell.englishTitleLabel.layer.masksToBounds = false
                 cell.englishTitleLabel.alpha = 1
 
+                let startColor = hexStringToUIColor(hex: emotionData[selectedIndex].startColor!)
+                let endColor = hexStringToUIColor(hex: emotionData[selectedIndex].endColor!)
+
+                gradientLocation(startColor: startColor, endColor: endColor)
+
             } else {
-                cell.koreanTitleLabel.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+                cell.koreanTitleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
                 cell.koreanTitleLabel.layer.shadowRadius = 0.0
                 cell.koreanTitleLabel.layer.shadowOpacity = 0.0
                 cell.koreanTitleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
                 cell.koreanTitleLabel.layer.masksToBounds = false
                 cell.koreanTitleLabel.alpha = 0.5
 
-                cell.englishTitleLabel.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+                cell.englishTitleLabel.font = UIFont(name: "PlayfairDisplay-Regular", size: 12)
                 cell.englishTitleLabel.layer.shadowRadius = 0.0
                 cell.englishTitleLabel.layer.shadowOpacity = 0.0
                 cell.englishTitleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
@@ -344,6 +352,7 @@ extension EmotionViewController: UICollectionViewDataSource {
                 cell.englishTitleLabel.alpha = 0.5
             }
         }
+
         return cell
     }
 }
@@ -356,19 +365,6 @@ extension EmotionViewController: UICollectionViewDelegate {
 
         firstTitleLabel.isHidden = true
         secondTitleLabel.isHidden = true
-
-        let startColor = hexStringToUIColor(
-            hex: emotionData[selectedIndex == 17 ? 0: selectedIndex].startColor ?? "#C1C1C1"
-        )
-        let endColor = hexStringToUIColor(
-            hex: emotionData[selectedIndex == 17 ? 0: selectedIndex].endColor ?? "#979797"
-        )
-
-        gradientLocation(startColor: startColor, endColor: endColor)
-
-        selectButton.backgroundColor = .black
-        selectButton.setTitle("선택 완료", for: .normal)
-        selectButton.isEnabled = true
 
         let backButton = UIButton(type: .custom)
 
@@ -397,6 +393,8 @@ extension EmotionViewController: UICollectionViewDelegate {
         navigationItem.leftBarButtonItem = leftBarButton
 
         collectionView.reloadData()
+        
+        emotionViewModel.itemTapped.send(indexPath.item)
     }
 }
 
@@ -406,7 +404,7 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath)
     -> CGSize {
-        return CGSize(width: 76, height: 94)
+        return CGSize(width: contentView.frame.width * (1/4), height: contentView.frame.height * (1/5))
     }
 
     func collectionView(

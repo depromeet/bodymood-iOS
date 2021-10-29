@@ -97,6 +97,7 @@ extension PosterListViewController {
 
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.backgroundColor = .clear
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -207,7 +208,7 @@ extension PosterListViewController {
             guideLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
-    
+
     private func setPosterListViewLayout() {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -251,7 +252,7 @@ class MainNavigationController: UINavigationController {
     override var childForStatusBarStyle: UIViewController? {
         topViewController
     }
-    
+
     override var childForStatusBarHidden: UIViewController? {
         topViewController
     }

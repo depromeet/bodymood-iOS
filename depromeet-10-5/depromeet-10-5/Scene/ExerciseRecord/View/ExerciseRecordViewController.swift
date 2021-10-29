@@ -88,7 +88,7 @@ class ExerciseRecordViewController: UIViewController {
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &bag)
     }
-    
+
     private func updateMenu(with items: [ExerciseItemModel], animatingDifferences: Bool = true) {
         var snapshot = SnapShot()
         snapshot.appendSections([.main])

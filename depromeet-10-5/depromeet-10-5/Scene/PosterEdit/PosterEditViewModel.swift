@@ -29,7 +29,6 @@ protocol PosterEditGuideViewModelType {
 }
 
 class PosterEditViewModel: PosterEditViewModelType {
-    
 
     let completeBtnTapped = PassthroughSubject<Void, Never>()
     let albumBtnTapped = PassthroughSubject<Void, Never>()
@@ -45,7 +44,6 @@ class PosterEditViewModel: PosterEditViewModelType {
     let moveToMoodList = PassthroughSubject<Void, Never>()
     let moveToExerciseCategory = PassthroughSubject<Void, Never>()
     let activateCompleteButton = PassthroughSubject<Bool, Never>()
-    
     let photoSelectedFromAlbum = PassthroughSubject<PHAsset, Never>()
     let exerciseSelected = CurrentValueSubject<[ExerciseItemModel], Never>([])
 
