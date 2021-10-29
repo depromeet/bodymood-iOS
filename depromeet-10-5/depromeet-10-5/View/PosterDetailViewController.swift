@@ -109,16 +109,17 @@ extension PosterDetailViewController {
         shareButton?.publisher(for: .touchUpInside)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                guard let image = self?.posterImageView.imageView.image else { return }
+                guard let self = self else { return }
+                let view = self.posterImageView
+                let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+                let image = renderer.image { ctx in
+                    view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+                }
+                
                 let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-                self?.present(activityVC, animated: true, completion: nil)
+                self.present(activityVC, animated: true, completion: nil)
             }.store(in: &bag)
         
-    }
-
-    private func configure(with mode: PosterDetailContentMode) {
-        bottomButtonContainer.removeAllArrangedSubviews()
-        bottomButtonContainer.addArrangedSubview(shareButton)
     }
 }
 
