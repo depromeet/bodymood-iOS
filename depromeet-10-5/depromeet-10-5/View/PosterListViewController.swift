@@ -92,6 +92,10 @@ extension PosterListViewController {
 
 // MARK: - Configure UI
 extension PosterListViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     private func style() {
         view.backgroundColor = .white
 
@@ -102,7 +106,7 @@ extension PosterListViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 25),
+            .font: UIFont(name: "PlayfairDisplay-Bold", size: 25),
             .foregroundColor: UIColor.black
         ]
     }
