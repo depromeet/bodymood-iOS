@@ -6,4 +6,6 @@ enum ImageResource {
     static let addPhoteFromAlbum = UIImage(named: "add_photo_alternate")
     static let edit = UIImage(named: "edit")
     static let check = UIImage(named: "check")
+    static let share = UIImage(named: "share")
+    static let viewModule = UIImage(named: "view_module")
 }

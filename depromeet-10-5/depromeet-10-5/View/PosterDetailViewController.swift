@@ -2,10 +2,9 @@ import UIKit
 import Combine
 
 class PosterDetailViewController: UIViewController {
-    private lazy var bottomButtonContainer: UIStackView = { createHorizontalStackView() }()
     private lazy var posterImageView: PosterView = { createPosterImageView() }()
     private lazy var shareButton: UIButton = { createBottomButton() }()
-    private lazy var completeButton: UIButton = { createBottomButton() }()
+    private lazy var bottomButtonView: BottomButtonListView = { createBottomButtonView() }()
     private lazy var titleLabel: UILabel = { createTitleLabel() }()
 
     private lazy var posterGuide = { createPosterLayoutGuide() }()
@@ -84,25 +83,6 @@ extension PosterDetailViewController {
                 self?.titleLabel.text = title
             }.store(in: &bag)
 
-        viewModel.shareBtnTitle
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] title in
-                self?.shareButton.setTitle(title, for: .normal)
-            }.store(in: &bag)
-
-        shareButton.publisher(for: .touchUpInside)
-            .sink { [weak self] _ in
-                self?.viewModel.shareBtnTapped.send()
-            }.store(in: &bag)
-
-        viewModel.showShareBottomSheet
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in
-                guard let image = self?.posterImageView.imageView.image else { return }
-                let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-                self?.present(activityVC, animated: true, completion: nil)
-            }.store(in: &bag)
-
         navigationItem.leftBarButtonItem?.tap
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
@@ -110,13 +90,31 @@ extension PosterDetailViewController {
     }
 
     private func configure(with mode: PosterDetailContentMode) {
-        bottomButtonContainer.removeAllArrangedSubviews()
-        bottomButtonContainer.addArrangedSubview(shareButton)
+        let shareButton: UIButton?
+        switch mode {
+        case .general:
+            bottomButtonView.setButtonImages([ImageResource.share?.withTintColor(.white, renderingMode: .alwaysOriginal)])
+            shareButton = bottomButtonView.buttons.first
+        case .editing:
+            bottomButtonView.setButtonImages([ImageResource.viewModule?.withTintColor(.white, renderingMode: .alwaysOriginal),
+                                              ImageResource.share?.withTintColor(.white, renderingMode: .alwaysOriginal)])
+            shareButton = bottomButtonView.buttons.last
+            bottomButtonView.buttons.first?.publisher(for: .touchUpInside)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }.store(in: &bag)
+        }
+        
+        shareButton?.publisher(for: .touchUpInside)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                guard let image = self?.posterImageView.imageView.image else { return }
+                let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+                self?.present(activityVC, animated: true, completion: nil)
+            }.store(in: &bag)
+        
     }
-    
-    
-    
-    
 }
 
 // MARK: - Definitions
@@ -182,6 +180,14 @@ extension PosterDetailViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
+    
+    private func createBottomButtonView() -> BottomButtonListView {
+        let view = BottomButtonListView()
+        view.backgroundColor = .init(rgb: 0x1C1C1C)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
+        return view
+    }
 
     private func createHorizontalStackView() -> UIStackView {
         let view = UIStackView()
@@ -219,7 +225,7 @@ extension PosterDetailViewController {
                                            constant: Layout.contentInset),
             posterGuide.trailingAnchor.constraint(equalTo: view.trailingAnchor,
                                             constant: -Layout.contentInset),
-            posterGuide.bottomAnchor.constraint(equalTo: bottomButtonContainer.topAnchor,
+            posterGuide.bottomAnchor.constraint(equalTo: bottomButtonView.topAnchor,
                                           constant: -Layout.contentBottomInset),
             posterImageView.heightAnchor.constraint(equalTo: posterImageView.widthAnchor, multiplier: ratio),
             posterImageView.centerXAnchor.constraint(equalTo: posterGuide.centerXAnchor),
@@ -232,13 +238,9 @@ extension PosterDetailViewController {
 
     private func setButtonContainerLayout() {
         NSLayoutConstraint.activate([
-            bottomButtonContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor,
-                                                     constant: Layout.contentInset),
-            bottomButtonContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                      constant: -Layout.contentInset),
-            bottomButtonContainer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                                                    constant: -Layout.contentInset),
-            bottomButtonContainer.heightAnchor.constraint(equalToConstant: Layout.btnHeight)
+            bottomButtonView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            bottomButtonView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            bottomButtonView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 

@@ -51,5 +51,62 @@ class DefaultBottomButton: UIButton {
             label.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
+}
 
+
+import UIKit
+
+class BottomButtonListView: UIView {
+    enum Style {
+        static let normalBGColor = UIColor(rgb: 0x1C1C1C)
+        static let disabledBGColor = UIColor(rgb: 0xAAAAAA)
+        static let highlightedTextColor = UIColor(rgb: 0xAAAAAA)
+        static let normalTextColor = UIColor.white
+    }
+    
+    var buttons: [UIButton] {
+        get {
+            buttonStackView.arrangedSubviews.compactMap { $0 as? UIButton }
+        }
+    }
+    
+    func setButtonImages(_ list: [UIImage?]) {
+        buttonStackView.removeAllArrangedSubviews()
+        list.forEach {
+            let button = UIButton()
+            button.setImage($0, for: .normal)
+            buttonStackView.addArrangedSubview(button)
+        }
+    }
+
+    private lazy var buttonStackView: UIStackView = {
+        let view = UIStackView()
+        view.spacing = 70
+        view.isLayoutMarginsRelativeArrangement = true
+        view.layoutMargins = .init(top: 14, left: 0, bottom: 14, right: 0)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(view)
+        return view
+    }()
+    
+
+    init() {
+        super.init(frame: .zero)
+        layout()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func layout() {
+
+        NSLayoutConstraint.activate([
+            buttonStackView.topAnchor.constraint(equalTo: topAnchor),
+            buttonStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            buttonStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor),
+            buttonStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            buttonStackView.heightAnchor.constraint(equalToConstant: 56)
+        ])
+    }
 }

@@ -35,7 +35,7 @@ class PosterDetailViewModel: PosterDetailViewModelType {
         poster = .init(asset)
         switch mode {
         case .general: title = .init(asset?.creationDate?.toString() ?? Date().toString())
-        case .editing: title = .init(CommonText.posterEditTitle)
+        case .editing: title = .init(Date().toString())
         }
         shareBtnTitle = .init(CommonText.shareBtnText)
         contentMode = .init(mode)
@@ -43,7 +43,7 @@ class PosterDetailViewModel: PosterDetailViewModelType {
     }
 
     convenience init(image: UIImage, exercises: [ExerciseItemModel], emotion: EmotionDataResponse) {
-        self.init(mode: .general)
+        self.init(mode: .editing)
         makePoster.send((image, exercises, emotion))
     }
 
