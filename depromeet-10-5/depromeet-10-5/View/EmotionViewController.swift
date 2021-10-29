@@ -23,7 +23,7 @@ class EmotionViewController: UIViewController {
     private var fetchSubscription: AnyCancellable?
     private var selectedIndex: Int = 17
     private var isDark: Bool = false
-    
+
     weak var delegate: PosterEditDelegate?
 
     var selectedEmotion: EmotionDataResponse!
@@ -56,16 +56,11 @@ class EmotionViewController: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-
-        overrideUserInterfaceStyle = .light
-        setNeedsStatusBarAppearanceUpdate()
-
         bind()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        overrideUserInterfaceStyle = .light
     }
 
     private func bind() {
@@ -123,6 +118,7 @@ extension EmotionViewController {
     private func createCollectionView() -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
+        collectionView.isScrollEnabled = false
         return collectionView
     }
 
@@ -148,13 +144,11 @@ extension EmotionViewController {
     }
 
     func style() {
-        navigationController?.isNavigationBarHidden = false
-        navigationController?.navigationBar.backgroundColor = .clear
-
-        navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 16),
-            .foregroundColor: UIColor.black
-        ]
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        self.navigationController?.navigationBar.backgroundColor = .clear
 
         let backButton = UIButton(type: .custom)
         if let image = UIImage(named: "back") {
@@ -232,10 +226,10 @@ extension EmotionViewController {
         view.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            contentView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             contentView.topAnchor.constraint(equalTo: secondTitleLabel.bottomAnchor, constant: 67),
-            contentView.widthAnchor.constraint(equalToConstant: 304),
-            contentView.heightAnchor.constraint(equalToConstant: 448)
+            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
+            contentView.bottomAnchor.constraint(equalTo: selectButton.topAnchor, constant: -92),
+            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35)
         ])
 
         contentView.addSubview(collectionView)
@@ -406,7 +400,7 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath)
     -> CGSize {
-        return CGSize(width: 76, height: 94)
+        return CGSize(width: contentView.frame.width * (1/4), height: contentView.frame.height * (1/5))
     }
 
     func collectionView(
