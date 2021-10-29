@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 protocol EmotionViewModelType {
+    var buttonTitle: CurrentValueSubject<String, Never> { get }
+    var canEnableButton: CurrentValueSubject<Bool, Never> { get }
+    var selectButtonDidTap: PassthroughSubject<Void, Never> { get }
+
     func emotionCategories() -> AnyPublisher<[EmotionDataResponse], Never>
 }
 
@@ -20,6 +24,10 @@ class EmotionViewModel: EmotionViewModelType {
     private var emotionSubject = CurrentValueSubject<[EmotionDataResponse], Never>(.init())
 
     var emotions: [EmotionResponse] = []
+    var buttonTitle =  CurrentValueSubject<String, Never>("선택 완료")
+    var canEnableButton = CurrentValueSubject<Bool, Never>(true)
+
+    let selectButtonDidTap = PassthroughSubject<Void, Never>()
 
     init(service: EmotionServiceType) {
         self.emotionService = service
