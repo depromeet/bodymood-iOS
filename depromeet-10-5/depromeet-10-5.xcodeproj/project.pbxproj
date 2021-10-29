@@ -82,6 +82,7 @@
 		E8B3730F2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3730E2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift */; };
 		E8B373112729C32500833052 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B373102729C32500833052 /* CheckBoxView.swift */; };
 		E8B373132729C58E00833052 /* UIView+addDashedBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */; };
+		E8B3735F272C4F2A00833052 /* PosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3735E272C4F2A00833052 /* PosterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +166,7 @@
 		E8B3730E2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+removeAllArrangedSubviews.swift"; sourceTree = "<group>"; };
 		E8B373102729C32500833052 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
 		E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addDashedBorder.swift"; sourceTree = "<group>"; };
+		E8B3735E272C4F2A00833052 /* PosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,6 +250,7 @@
 				E8AD75B02721A80C009A3432 /* PosterListViewController.swift */,
 				E8AD763F27243139009A3432 /* PosterDetailViewController.swift */,
 				96DAF9CF2727017100B21E08 /* EmotionViewController.swift */,
+				E8B3735E272C4F2A00833052 /* PosterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -695,6 +698,7 @@
 				E8B35152272706E600A9C54D /* ExerciseListViewController.swift in Sources */,
 				E8B373132729C58E00833052 /* UIView+addDashedBorder.swift in Sources */,
 				E8AD764D27254509009A3432 /* PosterTemplateListViewController.swift in Sources */,
+				E8B3735F272C4F2A00833052 /* PosterView.swift in Sources */,
 				E8AD75B52721BDE4009A3432 /* String+toAttributedText.swift in Sources */,
 				E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */,
 				E8B3730D2729828000833052 /* UIView+toImage.swift in Sources */,

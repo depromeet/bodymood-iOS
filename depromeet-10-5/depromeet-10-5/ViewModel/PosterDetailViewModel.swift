@@ -9,6 +9,7 @@ protocol PosterDetailViewModelType {
     
     // Outputs
     var poster: CurrentValueSubject<PHAsset?, Never> { get }
+    var makePoster: CurrentValueSubject<(UIImage, [ExerciseItemModel], EmotionDataResponse)?, Never> { get }
     var title: CurrentValueSubject<String, Never> { get }
     var shareBtnTitle: CurrentValueSubject<String, Never> { get }
     var showShareBottomSheet: PassthroughSubject<Void, Never> { get }
@@ -26,6 +27,7 @@ class PosterDetailViewModel: PosterDetailViewModelType {
     let shareBtnTitle: CurrentValueSubject<String, Never>
     let showShareBottomSheet = PassthroughSubject<Void, Never>()
     let contentMode: CurrentValueSubject<PosterDetailContentMode, Never>
+    let makePoster = CurrentValueSubject<(UIImage, [ExerciseItemModel], EmotionDataResponse)?, Never>(nil)
 
     private var bag = Set<AnyCancellable>()
 
@@ -38,6 +40,11 @@ class PosterDetailViewModel: PosterDetailViewModelType {
         shareBtnTitle = .init(CommonText.shareBtnText)
         contentMode = .init(mode)
         bind()
+    }
+
+    convenience init(image: UIImage, exercises: [ExerciseItemModel], emotion: EmotionDataResponse) {
+        self.init(mode: .general)
+        makePoster.send((image, exercises, emotion))
     }
 
     deinit {

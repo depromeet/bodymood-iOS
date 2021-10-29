@@ -69,6 +69,12 @@ extension PosterEditViewController {
             .sink { [weak self] title in
                 self?.titleLabel.text = title
             }.store(in: &bag)
+        
+        viewModel.activateCompleteButton
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] isEnabled in
+                self?.navigationItem.rightBarButtonItem?.isEnabled = isEnabled
+            }.store(in: &bag)
 
         navigationItem.leftBarButtonItem?.tap
             .receive(on: DispatchQueue.main)
@@ -79,15 +85,18 @@ extension PosterEditViewController {
         navigationItem.rightBarButtonItem?.tap
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                guard let self = self else { return }
+                guard
+                    let self = self,
+                    let image = self.posterEditGuideView.posterImageView.image,
+                    let emotion = self.selectedEmotion
+                else { return }
+                let exercises = self.viewModel.exerciseSelected.value
+                
+                let detailVM = PosterDetailViewModel(image: image, exercises: exercises, emotion: emotion)
+                let detailVC = PosterDetailViewController(viewModel: detailVM)
+                self.navigationController?.pushViewController(detailVC, animated: true)
+                
                 self.viewModel.completeBtnTapped.send()
-                self.posterEditGuideView.selectPhotoGuideView.isHidden = true
-                let image = self.posterEditGuideView.toImage(with: PosterModel.defaultSize)
-//                UIImageWriteToSavedPhotosAlbum(image!, nil, nil, nil)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-                    self.present(activityVC, animated: true, completion: nil)
-                }
             }.store(in: &bag)
 
         viewModel.moveToAlbum
@@ -163,6 +172,7 @@ extension PosterEditViewController {
     }
     
     private func updateCheckBox(index: Int) {
+        viewModel.itemSelected.send(index)
         (checkBoxContainer.arrangedSubviews[safe: index] as? CheckBoxView)?.tintColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1098039216, alpha: 1)
     }
 }
