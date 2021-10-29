@@ -67,8 +67,8 @@ class EmotionViewController: UIViewController {
         }.store(in: &subscriptions)
 
         emotionViewModel.canEnableButton.receive(on: DispatchQueue.main).sink { [weak self] canEnable in
+            Log.debug(canEnable)
             self?.bottomButton.isEnabled = canEnable
-
         }.store(in: &subscriptions)
 
         emotionViewModel.buttonTitle.receive(on: DispatchQueue.main).sink { [weak self] title in
@@ -140,7 +140,7 @@ extension EmotionViewController {
     private func createBottomButtonView() -> DefaultBottomButton {
         let view = DefaultBottomButton()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.isEnabled = true
+        view.isEnabled = false
         self.view.addSubview(view)
         return view
     }
@@ -202,16 +202,24 @@ extension EmotionViewController {
         gradientLayer.add(gradientAnimation, forKey: nil)
     }
 
+    override func viewWillLayoutSubviews() {
+        let startColor =  UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0))
+        let endColor = UIColor(cgColor: CGColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0))
+
+        gradientLocation(startColor: startColor, endColor: endColor)
+    }
+
     func layout() {
         NSLayoutConstraint.activate([
             bottomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             bottomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bottomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+
         view.addSubview(firstTitleLabel)
         firstTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            firstTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 74),
+            firstTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             firstTitleLabel.widthAnchor.constraint(equalToConstant: 139),
             firstTitleLabel.heightAnchor.constraint(equalToConstant: 27),
             firstTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
@@ -340,8 +348,6 @@ extension EmotionViewController: UICollectionViewDataSource {
             }
         }
 
-        bottomButton.isEnabled = true
-
         return cell
     }
 }
@@ -391,6 +397,8 @@ extension EmotionViewController: UICollectionViewDelegate {
         navigationItem.leftBarButtonItem = leftBarButton
 
         collectionView.reloadData()
+        
+        emotionViewModel.itemTapped.send(indexPath.item)
     }
 }
 
