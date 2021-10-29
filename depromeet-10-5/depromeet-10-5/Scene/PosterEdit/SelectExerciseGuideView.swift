@@ -51,6 +51,7 @@ class SelectExerciseGuideView: UIButton {
     private func style() {
         setTitle("운동을 선택하세요", for: .normal)
         backgroundColor = #colorLiteral(red: 0.3137254902, green: 0.3137254902, blue: 0.3137254902, alpha: 1).withAlphaComponent(0.4)
+        titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16)
     }
 
     private func layout() {
@@ -62,7 +63,7 @@ class SelectExerciseGuideView: UIButton {
             editButton.widthAnchor.constraint(equalToConstant: Layout.btnSize.width),
             editButton.heightAnchor.constraint(equalToConstant: Layout.btnSize.height)
         ])
-        
+
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor,
                                                  constant: Layout.contentMinInset),

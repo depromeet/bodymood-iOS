@@ -6,9 +6,9 @@ class SelectPhotoGuideView: UIView {
     lazy var albumButton: UIButton  = { createButton(with: ImageResource.addPhoteFromAlbum) }()
     lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.text = "사진을 선택하세요."
+        view.text = "사진을 선택하세요"
         view.textAlignment = .center
-        view.font = .boldSystemFont(ofSize: 16)
+        view.font = UIFont(name: "Pretendard-Bold", size: 16)
         view.textColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
@@ -46,7 +46,7 @@ class SelectPhotoGuideView: UIView {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
-        
+
         let guide = UILayoutGuide()
         addLayoutGuide(guide)
 
@@ -65,7 +65,7 @@ class SelectPhotoGuideView: UIView {
             albumButton.heightAnchor.constraint(equalToConstant: Layout.btnSize.height)
         ])
     }
-    
+
     enum Layout {
         static let titleLabelTopInset: CGFloat = 36
         static let btnSize = CGSize(width: 40, height: 40)

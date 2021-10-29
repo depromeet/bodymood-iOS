@@ -1,21 +1,21 @@
 import UIKit
 
 class SecondDepthCategoryCell: UICollectionViewCell {
-    
+
     lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 14)
+        view.font = UIFont(name: "PlayfairDisplay-Bold", size: 14)
         view.textColor = .white
         return view
     }()
-    
+
     lazy var descLabel: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 12)
+        view.font = UIFont(name: "Pretendard-Bold", size: 12)
         view.textColor = .white
         return view
     }()
-    
+
     lazy var stackView: UIStackView = {
         let view = UIStackView(arrangedSubviews: [titleLabel, descLabel])
         view.axis = .vertical
@@ -38,10 +38,11 @@ class SecondDepthCategoryCell: UICollectionViewCell {
     func update(with model: ExerciseItemModel, parentBgColor: UIColor) {
         titleLabel.text = model.english
         descLabel.text = model.korean
-        
-        let textColor: UIColor = parentBgColor.isDarkColor ? .white : .black
-        titleLabel.textColor = textColor
-        descLabel.textColor = textColor
+
+        let titleColor: UIColor = parentBgColor.isDarkColor ? .white : .black
+        let descColor: UIColor = parentBgColor.isDarkColor ? .gray : .darkGray
+        titleLabel.textColor = titleColor
+        descLabel.textColor = descColor
     }
 
     override var isSelected: Bool {

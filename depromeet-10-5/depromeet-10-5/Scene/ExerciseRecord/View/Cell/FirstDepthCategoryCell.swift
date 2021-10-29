@@ -9,14 +9,14 @@ class FirstDepthCategoryCell: UICollectionViewCell {
 
     lazy var titleLabel: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 18)
+        view.font = UIFont(name: "PlayFairDisplay-Bold", size: 22)
         view.textColor = .gray
         return view
     }()
     
     lazy var descLabel: UILabel = {
         let view = UILabel()
-        view.font = .systemFont(ofSize: 12)
+        view.font = UIFont(name: "Pretendard-Bold", size: 14)
         view.textColor = .gray
         return view
     }()
@@ -44,7 +44,7 @@ class FirstDepthCategoryCell: UICollectionViewCell {
     func update(with model: ExerciseItemModel, parentBgColor: UIColor) {
         titleLabel.text = model.english
         descLabel.text = model.korean
-        
+
         textColor = parentBgColor.isDarkColor ? .white : UIColor(rgb: 0x1C1C1C)
         titleLabel.textColor = textColor.withAlphaComponent(Style.alpha)
         descLabel.textColor = textColor.withAlphaComponent(Style.alpha)

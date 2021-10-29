@@ -30,7 +30,7 @@ class ExerciseCategoryPageViewController: UIPageViewController {
             .sink { [weak self] list in
                 self?.update(with: list)
             }.store(in: &bag)
-        
+
         viewModel.currentIdxOfFirstDepth
             .receive(on: DispatchQueue.main)
             .sink { [weak self] idx in

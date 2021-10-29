@@ -19,7 +19,7 @@ class CheckBoxView: UIView {
 
     private lazy var label: UILabel = {
         let view = UILabel()
-        view.font = .boldSystemFont(ofSize: 14)
+        view.font = UIFont(name: "Pretendard-Regular", size: 14)
         view.textColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1098039216, alpha: 1)
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)

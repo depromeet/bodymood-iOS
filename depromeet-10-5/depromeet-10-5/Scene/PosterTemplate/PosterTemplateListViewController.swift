@@ -129,7 +129,8 @@ extension PosterTemplateListViewController {
     private func createTitleLabel() -> UILabel {
         let view = UILabel()
         view.textAlignment = .center
-        view.font = .systemFont(ofSize: 16)
+        view.font = UIFont(name: "Pretended-Regular", size: 16)
+        view.textColor = .black
         view.translatesAutoresizingMaskIntoConstraints = false
         navigationItem.titleView = view
         return view
@@ -137,7 +138,7 @@ extension PosterTemplateListViewController {
 
     private func createSelectButton() -> UIButton {
         let view = UIButton()
-        view.titleLabel?.font = .systemFont(ofSize: 16)
+        view.titleLabel?.font = UIFont(name: "Pretended-Regular", size: 16)
         view.layer.cornerRadius = Layout.btnHeight / 3
         view.clipsToBounds = true
         view.setBackgroundColor(.init(rgb: 0xAAAAAA), for: [.disabled])
