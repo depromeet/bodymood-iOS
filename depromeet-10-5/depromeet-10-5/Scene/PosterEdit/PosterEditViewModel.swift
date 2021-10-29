@@ -5,6 +5,7 @@ import UIKit
 protocol PosterEditViewModelType: PosterEditGuideViewModelType {
     // Inputs
     var completeBtnTapped: PassthroughSubject<Void, Never> { get }
+    var itemSelected: PassthroughSubject<Int, Never> { get }
     
     // Outputs
     var poster: CurrentValueSubject<PHAsset?, Never> { get }
@@ -13,6 +14,7 @@ protocol PosterEditViewModelType: PosterEditGuideViewModelType {
     var moveToAlbum: PassthroughSubject<Void, Never> { get }
     var moveToExerciseCategory: PassthroughSubject<Void, Never> { get }
     var moveToMoodList: PassthroughSubject<Void, Never> { get }
+    var activateCompleteButton: PassthroughSubject<Bool, Never> { get }
     
     // Mediators
     var photoSelectedFromAlbum: PassthroughSubject<PHAsset, Never> { get }
@@ -33,6 +35,7 @@ class PosterEditViewModel: PosterEditViewModelType {
     let cameraBtnTapped = PassthroughSubject<Void, Never>()
     let selectExerciseBtnTapped = PassthroughSubject<Void, Never>()
     let selectMoodBtnTapped = PassthroughSubject<Void, Never>()
+    let itemSelected = PassthroughSubject<Int, Never>()
 
     let poster: CurrentValueSubject<PHAsset?, Never>
     let title: CurrentValueSubject<String, Never>
@@ -40,11 +43,12 @@ class PosterEditViewModel: PosterEditViewModelType {
     let moveToAlbum = PassthroughSubject<Void, Never>()
     let moveToMoodList = PassthroughSubject<Void, Never>()
     let moveToExerciseCategory = PassthroughSubject<Void, Never>()
-
+    let activateCompleteButton = PassthroughSubject<Bool, Never>()
     let photoSelectedFromAlbum = PassthroughSubject<PHAsset, Never>()
     let exerciseSelected = CurrentValueSubject<[ExerciseItemModel], Never>([])
 
     private var bag = Set<AnyCancellable>()
+    private var isSelected = Array(repeating: false, count: 3)
 
     init(with asset: PHAsset? = nil, templateType: PosterTemplate.TemplateType? = nil) {
         poster = .init(asset)
@@ -80,6 +84,13 @@ class PosterEditViewModel: PosterEditViewModelType {
         selectMoodBtnTapped
             .sink { [weak self] _ in
                 self?.moveToMoodList.send()
+            }.store(in: &bag)
+        
+        itemSelected
+            .sink { [weak self] idx in
+                guard let self = self else { return }
+                self.isSelected[safe: idx] = true
+                self.activateCompleteButton.send(!self.isSelected.contains(false))
             }.store(in: &bag)
     }
 }
