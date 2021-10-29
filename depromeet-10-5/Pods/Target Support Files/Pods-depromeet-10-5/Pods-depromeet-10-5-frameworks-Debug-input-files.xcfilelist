@@ -1,10 +1,7 @@
 ${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
-${BUILT_PRODUCTS_DIR}/KakaoSDKAuth/KakaoSDKAuth.framework
-${BUILT_PRODUCTS_DIR}/KakaoSDKCommon/KakaoSDKCommon.framework
-${BUILT_PRODUCTS_DIR}/KakaoSDKLink/KakaoSDKLink.framework
-${BUILT_PRODUCTS_DIR}/KakaoSDKNavi/KakaoSDKNavi.framework
-${BUILT_PRODUCTS_DIR}/KakaoSDKStory/KakaoSDKStory.framework
-${BUILT_PRODUCTS_DIR}/KakaoSDKTalk/KakaoSDKTalk.framework
-${BUILT_PRODUCTS_DIR}/KakaoSDKTemplate/KakaoSDKTemplate.framework
-${BUILT_PRODUCTS_DIR}/KakaoSDKUser/KakaoSDKUser.framework
+${BUILT_PRODUCTS_DIR}/ObjectMapper/ObjectMapper.framework
+${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework
+${BUILT_PRODUCTS_DIR}/RxRelay/RxRelay.framework
+${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework
+${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
