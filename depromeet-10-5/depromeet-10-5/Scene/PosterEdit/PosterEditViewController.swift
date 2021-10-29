@@ -8,7 +8,7 @@ protocol PosterEditDelegate: NSObject {
 
 extension PosterEditViewController: PosterEditDelegate {
     func emotion(emotion: EmotionDataResponse) {
-//        self.posterEditGuideView.selectExerciseGuideView.update(with: list.map { $0.english })
+        self.posterEditGuideView.selectMoodGuideView.update(with: emotion)
         self.updateCheckBox(index: 2)
         selectedEmotion = emotion
     }
@@ -68,7 +68,7 @@ extension PosterEditViewController {
             .sink { [weak self] title in
                 self?.titleLabel.text = title
             }.store(in: &bag)
-        
+
         viewModel.activateCompleteButton
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isEnabled in
@@ -90,11 +90,11 @@ extension PosterEditViewController {
                     let emotion = self.selectedEmotion
                 else { return }
                 let exercises = self.viewModel.exerciseSelected.value
-                
+
                 let detailVM = PosterDetailViewModel(image: image, exercises: exercises, emotion: emotion)
                 let detailVC = PosterDetailViewController(viewModel: detailVM)
                 self.navigationController?.pushViewController(detailVC, animated: true)
-                
+
                 self.viewModel.completeBtnTapped.send()
             }.store(in: &bag)
 
@@ -168,6 +168,15 @@ extension PosterEditViewController {
                 self.posterEditGuideView.selectExerciseGuideView.update(with: list.map { $0.english })
                 self.updateCheckBox(index: 1)
             }.store(in: &bag)
+
+        viewModel.emotionSelected
+            .compactMap({$0})
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] response in
+                guard let self = self else { return }
+                self.posterEditGuideView.selectMoodGuideView.update(with: response)
+                self.updateCheckBox(index: 2)
+            }.store(in: &bag)
     }
 
     private func updateCheckBox(index: Int) {
@@ -189,6 +198,9 @@ extension PosterEditViewController {
 
 // MARK: - Configure UI
 extension PosterEditViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
 
     private func style() {
         view.backgroundColor = .white

@@ -51,7 +51,7 @@ class PosterEditGuideView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutSubviews() {
         stackView.arrangedSubviews.forEach {
             $0.addDashedBorder(with: #colorLiteral(red: 0.3137254902, green: 0.3137254902, blue: 0.3137254902, alpha: 1).withAlphaComponent(0.5), lineWidth: 1, cornerRadius: 0)

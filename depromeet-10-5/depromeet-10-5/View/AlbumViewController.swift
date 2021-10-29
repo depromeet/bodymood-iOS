@@ -103,6 +103,10 @@ class AlbumViewController: UIViewController {
 
 // MARK: - Configure UI
 extension AlbumViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+
 	private func createSelectButton() -> DefaultBottomButton {
         let view = DefaultBottomButton()
         view.isEnabled = false
