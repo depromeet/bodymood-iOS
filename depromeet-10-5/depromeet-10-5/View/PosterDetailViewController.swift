@@ -105,7 +105,7 @@ extension PosterDetailViewController {
                     self?.navigationController?.popToRootViewController(animated: true)
                 }.store(in: &bag)
         }
-        
+
         shareButton?.publisher(for: .touchUpInside)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -115,11 +115,10 @@ extension PosterDetailViewController {
                 let image = renderer.image { ctx in
                     view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
                 }
-                
+
                 let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
                 self.present(activityVC, animated: true, completion: nil)
             }.store(in: &bag)
-        
     }
 }
 
@@ -138,7 +137,7 @@ extension PosterDetailViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
     }
-    
+
     private func style() {
         view.backgroundColor = .white
 
@@ -189,7 +188,7 @@ extension PosterDetailViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }
-    
+
     private func createBottomButtonView() -> BottomButtonListView {
         let view = BottomButtonListView()
         view.backgroundColor = .init(rgb: 0x1C1C1C)

@@ -32,6 +32,13 @@ class PosterListViewController: UIViewController {
         layout()
         bind()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont(name: "PlayfairDisplay-Bold", size: 25),
+        ]
+    }
 }
 
 // MARK: - Bind ViewModel
