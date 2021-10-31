@@ -21,13 +21,14 @@ class SplashViewController: UIViewController, Coordinating {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Log.debug("splash view controller")
+
         style()
         layout()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
             self.animate()
         }
@@ -35,14 +36,12 @@ class SplashViewController: UIViewController, Coordinating {
 
     private func style() {
         view.backgroundColor = .white
+
         navigationController?.navigationBar.backgroundColor = .black
         navigationController?.isNavigationBarHidden = true
     }
 
     private func layout() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-
         NSLayoutConstraint.activate([
             imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31),
@@ -54,21 +53,30 @@ class SplashViewController: UIViewController, Coordinating {
     private func animate() {
         UIView.animate(withDuration: 1.5, delay: 0.3, options: .curveEaseOut, animations: {
             self.imageView.alpha = 0.0
+
         }, completion: { done in
             if done {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-                        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
-                        let mainVC = PosterListViewController(viewModel: mainVM)
-                        self.navigationController?.pushViewController(mainVC, animated: false)
+                        self.moveToPoster()
                     } else {
-                        let mainVM = AuthViewModel(service: AuthService())
-                        let mainVC = LoginViewController(viewModel: mainVM)
-                        self.navigationController?.pushViewController(mainVC, animated: false)
+                        self.moveToLogin()
                     }
                 }
             }
         })
+    }
+
+    private func moveToPoster() {
+        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
+        let mainVC = PosterListViewController(viewModel: mainVM)
+        self.navigationController?.pushViewController(mainVC, animated: false)
+    }
+
+    private func moveToLogin() {
+        let mainVM = AuthViewModel(service: AuthService())
+        let mainVC = LoginViewController(viewModel: mainVM)
+        self.navigationController?.pushViewController(mainVC, animated: false)
     }
 }
 
@@ -77,6 +85,9 @@ extension SplashViewController {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "splash_image")
         imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+        
         return imageView
     }
 }
