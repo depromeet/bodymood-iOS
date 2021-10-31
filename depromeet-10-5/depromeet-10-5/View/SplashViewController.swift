@@ -57,8 +57,15 @@ class SplashViewController: UIViewController, Coordinating {
         }, completion: { done in
             if done {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    let viewController = LoginViewController(viewModel: AuthViewModel(service: AuthService()))
-                    self.navigationController?.pushViewController(viewController, animated: false)
+                    if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
+                        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
+                        let mainVC = PosterListViewController(viewModel: mainVM)
+                        self.navigationController?.pushViewController(mainVC, animated: false)
+                    } else {
+                        let mainVM = AuthViewModel(service: AuthService())
+                        let mainVC = LoginViewController(viewModel: mainVM)
+                        self.navigationController?.pushViewController(mainVC, animated: false)
+                    }
                 }
             }
         })
