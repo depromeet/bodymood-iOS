@@ -10,7 +10,7 @@
 		5DFE960D847EFA3C1FE17CF5 /* Pods_depromeet_10_5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7BC365CD3E3383551B38498 /* Pods_depromeet_10_5.framework */; };
 		9610B3082702379B00539F99 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9610B3072702379B00539F99 /* LoginViewController.swift */; };
 		9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B30F27060AB7007CB5BA /* LogConfig.swift */; };
-		9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B31127060B4A007CB5BA /* AuthViewModel.swift */; };
+		9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B31127060B4A007CB5BA /* LoginViewModel.swift */; };
 		9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665626EDD79E00E8E547 /* AppDelegate.swift */; };
 		9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665826EDD79E00E8E547 /* SceneDelegate.swift */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
@@ -46,6 +46,7 @@
 		9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9676E4C42725745B0068C979 /* SplashViewController.swift */; };
 		9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9676E4C627257C110068C979 /* SplashCoordinator.swift */; };
 		9676E4CA2725899B0068C979 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9676E4C92725899B0068C979 /* LaunchScreen.storyboard */; };
+		96AB5B11272F0C5500EC2485 /* UIView+DashedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */; };
 		96DAF9CE2726D83000B21E08 /* CameraOutputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DAF9CD2726D83000B21E08 /* CameraOutputViewController.swift */; };
 		96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DAF9CF2727017100B21E08 /* EmotionViewController.swift */; };
 		96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBB6271B0ED6008013CA /* CameraViewController.swift */; };
@@ -111,7 +112,7 @@
 		815C56450EE98D41841E0C7B /* Pods-depromeet-10-5.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.release.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.release.xcconfig"; sourceTree = "<group>"; };
 		9610B3072702379B00539F99 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9624B30F27060AB7007CB5BA /* LogConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfig.swift; sourceTree = "<group>"; };
-		9624B31127060B4A007CB5BA /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		9624B31127060B4A007CB5BA /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +151,7 @@
 		9676E4C42725745B0068C979 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		9676E4C627257C110068C979 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		9676E4C92725899B0068C979 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DashedCircle.swift"; sourceTree = "<group>"; };
 		96DAF9CD2726D83000B21E08 /* CameraOutputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOutputViewController.swift; sourceTree = "<group>"; };
 		96DAF9CF2727017100B21E08 /* EmotionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionViewController.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -322,7 +324,7 @@
 		967549B02700A879007E4E95 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				9624B31127060B4A007CB5BA /* AuthViewModel.swift */,
+				9624B31127060B4A007CB5BA /* LoginViewModel.swift */,
 				E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */,
 				E8AD75B22721A817009A3432 /* PosterListViewModel.swift */,
 				E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */,
@@ -455,6 +457,7 @@
 				E8B3730C2729828000833052 /* UIView+toImage.swift */,
 				E8B3730E2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift */,
 				E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */,
+				96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -749,6 +752,7 @@
 				E8B3518427279BD900A9C54D /* SecondDepthCategoryCell.swift in Sources */,
 				E86EC93B271ADE3A00A7DD54 /* AlbumViewModel.swift in Sources */,
 				E86EC93D271B1FAD00A7DD54 /* PhotoCell.swift in Sources */,
+				96AB5B11272F0C5500EC2485 /* UIView+DashedCircle.swift in Sources */,
 				E83C14D02725CD9A007B2E11 /* PageIndicator.swift in Sources */,
 				E8B351912727D01100A9C54D /* DefaultBottomButtonView.swift in Sources */,
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
@@ -763,7 +767,7 @@
 				E86EC942271B32E700A7DD54 /* ImageResource.swift in Sources */,
 				965EC52827279E5200ED0420 /* EmotionResponse.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
-				9624B31227060B4A007CB5BA /* AuthViewModel.swift in Sources */,
+				9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */,
 				9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
 				E8AD75B92721CF36009A3432 /* PosterCell.swift in Sources */,

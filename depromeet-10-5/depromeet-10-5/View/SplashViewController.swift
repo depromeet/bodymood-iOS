@@ -7,13 +7,16 @@
 
 import UIKit
 class SplashViewController: UIViewController, Coordinating {
+    enum Layout {
+        static let imageTopSpacing: CGFloat = 44
+        static let imageLeadingSpacing: CGFloat = 31
+        static let imageTrailingSpacing: CGFloat = -1
+        static let imageBottomSpacing: CGFloat = -48
+    }
+
     var coordinator: Coordinator?
 
     private lazy var imageView: UIImageView = { createSplashImageView() }()
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -24,6 +27,23 @@ class SplashViewController: UIViewController, Coordinating {
 
         style()
         layout()
+    }
+}
+
+// MARK: - Configure UI
+extension SplashViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+
+    private func createSplashImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "splash_image")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+
+        return imageView
     }
 
     override func viewDidLayoutSubviews() {
@@ -43,10 +63,10 @@ class SplashViewController: UIViewController, Coordinating {
 
     private func layout() {
         NSLayoutConstraint.activate([
-            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31),
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 41),
-            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -48)
+            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.imageTopSpacing),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.imageLeadingSpacing),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Layout.imageTrailingSpacing),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Layout.imageBottomSpacing)
         ])
     }
 
@@ -56,6 +76,7 @@ class SplashViewController: UIViewController, Coordinating {
 
         }, completion: { done in
             if done {
+                self.moveToLogin()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
                         self.moveToPoster()
@@ -66,7 +87,10 @@ class SplashViewController: UIViewController, Coordinating {
             }
         })
     }
+}
 
+// MARK: - Configure Actions
+extension SplashViewController {
     private func moveToPoster() {
         let mainVM = PosterListViewModel(useCase: AlbumUseCase())
         let mainVC = PosterListViewController(viewModel: mainVM)
@@ -74,20 +98,8 @@ class SplashViewController: UIViewController, Coordinating {
     }
 
     private func moveToLogin() {
-        let mainVM = AuthViewModel(service: AuthService())
+        let mainVM = LoginViewModel(service: AuthService())
         let mainVC = LoginViewController(viewModel: mainVM)
         self.navigationController?.pushViewController(mainVC, animated: false)
-    }
-}
-
-extension SplashViewController {
-    func createSplashImageView() -> UIImageView {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "splash_image")
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        
-        return imageView
     }
 }
