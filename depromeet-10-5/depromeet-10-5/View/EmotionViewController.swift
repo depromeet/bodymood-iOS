@@ -423,9 +423,3 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         return UIEdgeInsets(top: 10, left: 0, bottom: 23, right: 0)
     }
 }
-
-class EmotionNavigationController: UINavigationController {
-    override var childForStatusBarStyle: UIViewController? {
-        topViewController
-    }
-}

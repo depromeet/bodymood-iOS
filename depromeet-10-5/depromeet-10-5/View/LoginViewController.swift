@@ -115,11 +115,7 @@ extension LoginViewController {
 
 extension LoginViewController {
     @objc func kakaoLoginButtonDidTap() {
-        // TODO: 배포시 제거할 것
-        moveToPosterList()
-        return
-        
-
+    
         let kakaoLogin = authViewModel.kakaoLoginAvailable()
 
         kakaoLogin.sink( receiveCompletion: { [weak self] completion in

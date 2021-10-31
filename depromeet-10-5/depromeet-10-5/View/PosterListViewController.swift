@@ -32,6 +32,13 @@ class PosterListViewController: UIViewController {
         layout()
         bind()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont(name: "PlayfairDisplay-Bold", size: 25),
+        ]
+    }
 }
 
 // MARK: - Bind ViewModel
@@ -92,6 +99,10 @@ extension PosterListViewController {
 
 // MARK: - Configure UI
 extension PosterListViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+    
     private func style() {
         view.backgroundColor = .white
 
@@ -102,7 +113,7 @@ extension PosterListViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont.systemFont(ofSize: 25),
+            .font: UIFont(name: "PlayfairDisplay-Bold", size: 25),
             .foregroundColor: UIColor.black
         ]
     }
@@ -248,15 +259,7 @@ extension PosterListViewController: UIGestureRecognizerDelegate {
     }
 }
 
-class MainNavigationController: UINavigationController {
-    override var childForStatusBarStyle: UIViewController? {
-        topViewController
-    }
 
-    override var childForStatusBarHidden: UIViewController? {
-        topViewController
-    }
-}
 
 // MARK: - Definitions
 extension PosterListViewController {
