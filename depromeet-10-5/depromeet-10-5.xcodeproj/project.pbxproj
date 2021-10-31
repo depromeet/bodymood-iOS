@@ -103,6 +103,7 @@
 		E8B373112729C32500833052 /* CheckBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B373102729C32500833052 /* CheckBoxView.swift */; };
 		E8B373132729C58E00833052 /* UIView+addDashedBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */; };
 		E8B3735F272C4F2A00833052 /* PosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3735E272C4F2A00833052 /* PosterView.swift */; };
+		E8BBC0C7272ED2E100EEBD5E /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BBC0C6272ED2E100EEBD5E /* MainNavigationController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -207,6 +208,7 @@
 		E8B373102729C32500833052 /* CheckBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxView.swift; sourceTree = "<group>"; };
 		E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addDashedBorder.swift"; sourceTree = "<group>"; };
 		E8B3735E272C4F2A00833052 /* PosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterView.swift; sourceTree = "<group>"; };
+		E8BBC0C6272ED2E100EEBD5E /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,6 +293,7 @@
 				E8AD763F27243139009A3432 /* PosterDetailViewController.swift */,
 				96DAF9CF2727017100B21E08 /* EmotionViewController.swift */,
 				E8B3735E272C4F2A00833052 /* PosterView.swift */,
+				E8BBC0C6272ED2E100EEBD5E /* MainNavigationController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				E8AD764B2724B1EE009A3432 /* Date+toString.swift in Sources */,
 				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
 				E8B3730F2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift in Sources */,
+				E8BBC0C7272ED2E100EEBD5E /* MainNavigationController.swift in Sources */,
 				E86415082725755000D58B3E /* UIColor+init.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,

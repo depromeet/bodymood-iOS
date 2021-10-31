@@ -37,20 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 로그인 페이지 이동
         }
 
-        let navVC = EmotionNavigationController()
-        navVC.navigationBar.backgroundColor = .clear
-
-        let coordinator = AuthCoordinator()
-        coordinator.navigationController = navVC
-
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = navVC
-        window.makeKeyAndVisible()
-
-        self.window = window
-
-        coordinator.start()
-
         return true
     }
 
