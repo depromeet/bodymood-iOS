@@ -49,10 +49,6 @@ class LoginViewController: UIViewController, Coordinating {
 
         style()
         layout()
-        bind()
-    }
-
-    private func bind() {
     }
 }
 

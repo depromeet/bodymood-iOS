@@ -9,7 +9,7 @@ class AuthCoordinator: Coordinator {
         switch type {
         case .buttonDidTap:
             var cameraVC: UIViewController & Coordinating {
-                let cameraVC = CameraViewController()
+                let cameraVC = CameraViewController(viewModel: CameraViewModel())
                 cameraVC.coordinator = self
                 return cameraVC
             }

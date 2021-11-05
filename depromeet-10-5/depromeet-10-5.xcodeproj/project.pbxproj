@@ -46,8 +46,8 @@
 		9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9676E4C42725745B0068C979 /* SplashViewController.swift */; };
 		9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9676E4C627257C110068C979 /* SplashCoordinator.swift */; };
 		9676E4CA2725899B0068C979 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9676E4C92725899B0068C979 /* LaunchScreen.storyboard */; };
+		96AB433C273512E3001B2808 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AB433B273512E3001B2808 /* CameraViewModel.swift */; };
 		96AB5B11272F0C5500EC2485 /* UIView+DashedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */; };
-		96DAF9CE2726D83000B21E08 /* CameraOutputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DAF9CD2726D83000B21E08 /* CameraOutputViewController.swift */; };
 		96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DAF9CF2727017100B21E08 /* EmotionViewController.swift */; };
 		96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBB6271B0ED6008013CA /* CameraViewController.swift */; };
 		96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */; };
@@ -151,8 +151,8 @@
 		9676E4C42725745B0068C979 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		9676E4C627257C110068C979 /* SplashCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashCoordinator.swift; sourceTree = "<group>"; };
 		9676E4C92725899B0068C979 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		96AB433B273512E3001B2808 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DashedCircle.swift"; sourceTree = "<group>"; };
-		96DAF9CD2726D83000B21E08 /* CameraOutputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOutputViewController.swift; sourceTree = "<group>"; };
 		96DAF9CF2727017100B21E08 /* EmotionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionViewController.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
@@ -329,6 +329,7 @@
 				E8AD75B22721A817009A3432 /* PosterListViewModel.swift */,
 				E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */,
 				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
+				96AB433B273512E3001B2808 /* CameraViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -417,7 +418,6 @@
 			isa = PBXGroup;
 			children = (
 				96F0BBB6271B0ED6008013CA /* CameraViewController.swift */,
-				96DAF9CD2726D83000B21E08 /* CameraOutputViewController.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -745,6 +745,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8B3518B2727A87900A9C54D /* UIViewController+embed.swift in Sources */,
+				96AB433C273512E3001B2808 /* CameraViewModel.swift in Sources */,
 				E8AD75BD2723C834009A3432 /* PosterModel.swift in Sources */,
 				E8B3518027279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift in Sources */,
 				E8B3514E2726F80400A9C54D /* SelectExerciseGuideView.swift in Sources */,
@@ -776,7 +777,6 @@
 				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
-				96DAF9CE2726D83000B21E08 /* CameraOutputViewController.swift in Sources */,
 				E8B3514C2726F7EA00A9C54D /* SelectMoodGuideView.swift in Sources */,
 				E8B3518D2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift in Sources */,
 				E8B351432725EB8600A9C54D /* PosterTemplateCell.swift in Sources */,

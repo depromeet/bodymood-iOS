@@ -112,7 +112,7 @@ extension PosterEditViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                let cameraViewController = CameraViewController()
+                let cameraViewController = CameraViewController(viewModel: CameraViewModel())
                 cameraViewController.delegate = self
                 self.navigationController?.pushViewController(cameraViewController, animated: true)
             }.store(in: &bag)
