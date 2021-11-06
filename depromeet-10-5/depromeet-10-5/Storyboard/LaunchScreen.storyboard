@@ -17,15 +17,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" preservesSuperviewLayoutMargins="YES" image="splash_image" translatesAutoresizingMaskIntoConstraints="NO" id="d9d-Fn-WiV">
-                                <rect key="frame" x="31" y="41" width="344" height="578"/>
+                                <rect key="frame" x="31" y="44" width="343" height="575"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="d9d-Fn-WiV" secondAttribute="bottom" constant="48" id="EtW-ij-85Y"/>
-                            <constraint firstItem="d9d-Fn-WiV" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="41" id="dP7-T2-sOh"/>
-                            <constraint firstAttribute="trailing" secondItem="d9d-Fn-WiV" secondAttribute="trailing" id="f7e-Z2-aQb"/>
+                            <constraint firstItem="d9d-Fn-WiV" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" constant="44" id="dP7-T2-sOh"/>
+                            <constraint firstAttribute="trailing" secondItem="d9d-Fn-WiV" secondAttribute="trailing" constant="1" id="f7e-Z2-aQb"/>
                             <constraint firstItem="d9d-Fn-WiV" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="31" id="h5X-BK-Xcr"/>
                         </constraints>
                     </view>

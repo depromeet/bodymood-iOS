@@ -53,9 +53,6 @@ class DefaultBottomButton: UIButton {
     }
 }
 
-
-import UIKit
-
 class BottomButtonListView: UIView {
     enum Style {
         static let normalBGColor = UIColor(rgb: 0x1C1C1C)
@@ -63,13 +60,13 @@ class BottomButtonListView: UIView {
         static let highlightedTextColor = UIColor(rgb: 0xAAAAAA)
         static let normalTextColor = UIColor.white
     }
-    
+
     var buttons: [UIButton] {
         get {
             buttonStackView.arrangedSubviews.compactMap { $0 as? UIButton }
         }
     }
-    
+
     func setButtonImages(_ list: [UIImage?]) {
         buttonStackView.removeAllArrangedSubviews()
         list.forEach {
@@ -88,7 +85,6 @@ class BottomButtonListView: UIView {
         addSubview(view)
         return view
     }()
-    
 
     init() {
         super.init(frame: .zero)

@@ -32,11 +32,11 @@ class PosterListViewController: UIViewController {
         layout()
         bind()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.black,
-            .font: UIFont(name: "PlayfairDisplay-Bold", size: 25),
+            .font: UIFont(name: "PlayfairDisplay-Bold", size: 25) ?? UIFont.boldSystemFont(ofSize: 25)
         ]
     }
 }
@@ -113,8 +113,8 @@ extension PosterListViewController {
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.shadowImage = UIImage()
         navigationController?.navigationBar.titleTextAttributes = [
-            .font: UIFont(name: "PlayfairDisplay-Bold", size: 25),
-            .foregroundColor: UIColor.black
+            .foregroundColor: UIColor.black,
+            .font: UIFont(name: "PlayfairDisplay-Bold", size: 25) ?? UIFont.boldSystemFont(ofSize: 25)
         ]
     }
 
@@ -228,7 +228,7 @@ extension PosterListViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-    
+
     private func setAddButtonLayout() {
         NSLayoutConstraint.activate([
             addButton.widthAnchor.constraint(equalToConstant: Layout.btnHeight),
@@ -258,8 +258,6 @@ extension PosterListViewController: UIGestureRecognizerDelegate {
         return !self.isEqual(navigationController?.topViewController)
     }
 }
-
-
 
 // MARK: - Definitions
 extension PosterListViewController {

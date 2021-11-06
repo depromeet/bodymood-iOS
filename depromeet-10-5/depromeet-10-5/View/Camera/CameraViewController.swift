@@ -1,4 +1,5 @@
 import AVFoundation
+import Combine
 import UIKit
 
 class CameraViewController: UIViewController, Coordinating {
@@ -31,8 +32,19 @@ class CameraViewController: UIViewController, Coordinating {
     private lazy var shutterButton: UIButton = { createShutterButton() }()
     private lazy var cameraFlipButton: UIButton = {  createCameraFlipButton() }()
     private lazy var focusGesture: UITapGestureRecognizer = { createfocusGesture() }()
-    
+
     weak var delegate: PosterEditDelegate?
+    private var subscriptions = Set<AnyCancellable>()
+    private let viewModel: CameraViewModelType
+
+    init(viewModel: CameraViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     deinit {
         Log.debug(Self.self, #function)
@@ -51,6 +63,7 @@ class CameraViewController: UIViewController, Coordinating {
         cameraLayer()
         cameraDataOutput()
         layout()
+        bind()
     }
 
     override func viewDidLayoutSubviews() {
@@ -153,61 +166,81 @@ class CameraViewController: UIViewController, Coordinating {
     }
 }
 
+// MARK: - Bind ViewModel
+extension CameraViewController {
+    private func bind() {
+        viewModel.moveToPoster.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            guard let self = self else { return }
+            self.navigationController?.popViewController(animated: true)
+        }.store(in: &subscriptions)
+
+        viewModel.flash.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            guard let self = self else { return }
+            self.flashButtonDidTap()
+        }.store(in: &subscriptions)
+
+        viewModel.shutter.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            guard let self = self else { return }
+            self.shutterButtonDidTap()
+        }.store(in: &subscriptions)
+
+        viewModel.flip.receive(on: DispatchQueue.main).sink { [weak self] _ in
+            guard let self = self else { return }
+            self.flipButtonDidTap()
+        }.store(in: &subscriptions)
+
+        clearButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            self?.viewModel.clearButtonDidTap.send()
+        }.store(in: &subscriptions)
+
+        flashButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            self?.viewModel.flashButtonDidTap.send()
+        }.store(in: &subscriptions)
+
+        shutterButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            self?.viewModel.shutterButtonDidTap.send()
+        }.store(in: &subscriptions)
+
+        cameraFlipButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            self?.viewModel.flipButtonDidTap.send()
+        }.store(in: &subscriptions)
+    }
+}
+
 // MARK: - Configure UI
 extension CameraViewController {
     private func createContentView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .black
-        return view
-    }
-
-    private func createFlashView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.alpha = 0
-        return view
+        let contentView = UIView()
+        contentView.backgroundColor = .black
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(contentView)
+        return contentView
     }
 
     private func createTopView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.alpha = 0.5
-        return view
+        let topView = UIView()
+        topView.backgroundColor = .black
+        topView.alpha = 0.5
+        topView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(topView)
+        return topView
     }
 
     private func createClearButton() -> UIButton {
         let button = UIButton()
         button.setImage(UIImage(named: "clear"), for: .normal)
-        button.addTarget(self, action: #selector(clearButtonDidTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        topView.addSubview(button)
         return button
     }
 
     private func createBottomView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .black
-        view.alpha = 0.5
-        return view
-    }
-
-    private func createShutterButton() -> UIButton {
-        let button = UIButton()
-        button.setImage(UIImage(named: "shutter"), for: .normal)
-        button.addTarget(self, action: #selector(shutterButtonDidTap), for: .touchUpInside)
-        return button
-    }
-
-    private func createFlashButton() -> UIButton {
-        let button = UIButton()
-        button.setImage(UIImage(named: "flash_off"), for: .normal)
-        button.addTarget(self, action: #selector(flashButtonDidTap), for: .touchUpInside)
-        return button
-    }
-
-    private func createCameraFlipButton() -> UIButton {
-        let button = UIButton()
-        button.setImage(UIImage(named: "flip_camera"), for: .normal)
-        button.addTarget(self, action: #selector(flipButtonDidTap), for: .touchUpInside)
-        return button
+        let bottomView = UIView()
+        bottomView.backgroundColor = .black
+        bottomView.alpha = 0.5
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bottomView)
+        return bottomView
     }
 
     private func createStackView() -> UIStackView {
@@ -215,7 +248,39 @@ extension CameraViewController {
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
         stackView.spacing = 48.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        bottomView.addSubview(stackView)
         return stackView
+    }
+
+    private func createFlashButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "flash_off"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+
+    private func createFlashView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = .black
+        view.alpha = 0
+        contentView.addSubview(view)
+        return view
+    }
+
+    private func createShutterButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "shutter"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(button)
+        return button
+    }
+
+    private func createCameraFlipButton() -> UIButton {
+        let button = UIButton()
+        button.setImage(UIImage(named: "flip_camera"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }
 
     private func createfocusGesture() -> UITapGestureRecognizer {
@@ -229,13 +294,17 @@ extension CameraViewController {
     private func style() {
         navigationController?.isNavigationBarHidden = true
         overrideUserInterfaceStyle = .dark
+        view.backgroundColor = .black
         setNeedsStatusBarAppearanceUpdate()
     }
 
     private func layout() {
-        view.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
+        layoutContainerView()
+        layoutTopView()
+        layoutBottomView()
+    }
 
+    private func layoutContainerView() {
         let guide = self.view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             contentView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
@@ -246,11 +315,9 @@ extension CameraViewController {
 
         contentView.layer.addSublayer(previewLayer)
         contentView.addGestureRecognizer(focusGesture)
-        contentView.addSubview(flashView)
-        contentView.addSubview(shutterButton)
+    }
 
-        view.addSubview(topView)
-        topView.translatesAutoresizingMaskIntoConstraints = false
+    private func layoutTopView() {
         NSLayoutConstraint.activate([
             topView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             topView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -258,17 +325,15 @@ extension CameraViewController {
             topView.heightAnchor.constraint(equalToConstant: 50)
         ])
 
-        topView.addSubview(clearButton)
-        clearButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             clearButton.centerYAnchor.constraint(equalTo: topView.centerYAnchor),
             clearButton.leadingAnchor.constraint(equalTo: topView.leadingAnchor, constant: 21),
             clearButton.widthAnchor.constraint(equalToConstant: 24),
             clearButton.heightAnchor.constraint(equalToConstant: 24)
         ])
+    }
 
-        view.addSubview(bottomView)
-        bottomView.translatesAutoresizingMaskIntoConstraints = false
+    private func layoutBottomView() {
         NSLayoutConstraint.activate([
             bottomView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             bottomView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -276,29 +341,24 @@ extension CameraViewController {
             bottomView.heightAnchor.constraint(equalToConstant: 154)
         ])
 
-        bottomView.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: bottomView.centerXAnchor),
             stackView.topAnchor.constraint(equalTo: bottomView.topAnchor, constant: 20),
             stackView.heightAnchor.constraint(equalToConstant: 80)
         ])
 
-        flashButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             flashButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
             flashButton.widthAnchor.constraint(equalToConstant: 28),
             flashButton.heightAnchor.constraint(equalToConstant: 28)
         ])
 
-        shutterButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             shutterButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
             shutterButton.widthAnchor.constraint(equalToConstant: 80),
             shutterButton.heightAnchor.constraint(equalToConstant: 80)
         ])
 
-        cameraFlipButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             cameraFlipButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor),
             cameraFlipButton.widthAnchor.constraint(equalToConstant: 28),
@@ -309,12 +369,7 @@ extension CameraViewController {
 
 // MARK: - Configure Actions
 extension CameraViewController {
-    @objc func clearButtonDidTap() {
-        navigationController?.popViewController(animated: true)
-    }
-
-    @objc func shutterButtonDidTap() {
-
+    private func shutterButtonDidTap() {
         UIView.animate(
             withDuration: 0.1,
             delay: 0.0,
@@ -333,7 +388,7 @@ extension CameraViewController {
         cameraOutput.capturePhoto(with: settings, delegate: self)
     }
 
-    @objc func flashButtonDidTap() {
+    private func flashButtonDidTap() {
         if isBackCamera {
             if isFlash {
                 isFlash = false
@@ -355,11 +410,11 @@ extension CameraViewController {
         }
     }
 
-    @objc func flipButtonDidTap() {
+    private func flipButtonDidTap() {
         switchCameraInput()
     }
 
-    func switchCameraInput() {
+    private func switchCameraInput() {
         navigationItem.rightBarButtonItem?.customView?.isUserInteractionEnabled = false
         captureSession.beginConfiguration()
         if isBackCamera {

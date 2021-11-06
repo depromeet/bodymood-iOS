@@ -1,10 +1,3 @@
-//
-//  EmotionViewModel.swift
-//  depromeet-10-5
-//
-//  Created by 허예은 on 2021/10/26.
-//
-
 import Combine
 import Foundation
 import UIKit
@@ -48,8 +41,6 @@ class EmotionViewModel: EmotionViewModelType {
             self?.buttonTitle.send("선택 완료")
             self?.canEnableButton.send(true)
         }.store(in: &subscriptions)
-        
-        
     }
 
     func emotionCategories() -> AnyPublisher<[EmotionDataResponse], Never> {

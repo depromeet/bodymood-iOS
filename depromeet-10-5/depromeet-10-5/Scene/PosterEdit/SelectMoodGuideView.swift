@@ -10,11 +10,12 @@ class SelectMoodGuideView: UIButton {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     lazy var stackView: UIStackView = {
         let view = UIStackView()
         view.axis = .vertical
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isUserInteractionEnabled = false
         addSubview(view)
         return view
     }()
@@ -136,18 +137,5 @@ class SelectMoodGuideView: UIButton {
         static let btnSize = CGSize(width: 40, height: 40)
         static let contentMinInset: CGFloat = 22
         static let topAnchor: CGFloat = 28
-    }
-}
-
-extension UIView {
-    func addDashedCircle(startColor: UIColor) {
-        let circleLayer = CAShapeLayer()
-        circleLayer.path = UIBezierPath(ovalIn: bounds).cgPath
-        circleLayer.lineWidth = 2.0
-        circleLayer.strokeColor =  UIColor.white.cgColor
-        circleLayer.fillColor = startColor.cgColor
-        circleLayer.lineJoin = .round
-        circleLayer.lineDashPattern = [6,3]
-        layer.addSublayer(circleLayer)
     }
 }

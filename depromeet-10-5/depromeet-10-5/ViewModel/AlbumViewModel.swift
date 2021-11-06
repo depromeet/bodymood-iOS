@@ -38,8 +38,8 @@ class AlbumViewModel: AlbumViewModelType {
 		return finished.eraseToAnyPublisher()
 	}
 
-    init(useCase: AlbumUseCaseType, resultReciever: PassthroughSubject<PHAsset, Never>) {
-        self.resultReceiver = resultReciever
+    init(useCase: AlbumUseCaseType, resultReceiver: PassthroughSubject<PHAsset, Never>) {
+        self.resultReceiver = resultReceiver
 		self.useCase = useCase
 		bind()
 		loadImage()

@@ -7,13 +7,16 @@
 
 import UIKit
 class SplashViewController: UIViewController, Coordinating {
+    enum Layout {
+        static let imageTopSpacing: CGFloat = 44
+        static let imageLeadingSpacing: CGFloat = 31
+        static let imageTrailingSpacing: CGFloat = -1
+        static let imageBottomSpacing: CGFloat = -48
+    }
+
     var coordinator: Coordinator?
 
     private lazy var imageView: UIImageView = { createSplashImageView() }()
-
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .darkContent
-    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -21,13 +24,31 @@ class SplashViewController: UIViewController, Coordinating {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        Log.debug("splash view controller")
+
         style()
         layout()
+    }
+}
+
+// MARK: - Configure UI
+extension SplashViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .darkContent
+    }
+
+    private func createSplashImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "splash_image")
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+
+        return imageView
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
             self.animate()
         }
@@ -35,41 +56,50 @@ class SplashViewController: UIViewController, Coordinating {
 
     private func style() {
         view.backgroundColor = .white
+
         navigationController?.navigationBar.backgroundColor = .black
         navigationController?.isNavigationBarHidden = true
     }
 
     private func layout() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-
         NSLayoutConstraint.activate([
-            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 31),
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 41),
-            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -48)
+            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: Layout.imageTopSpacing),
+            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Layout.imageLeadingSpacing),
+            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Layout.imageTrailingSpacing),
+            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: Layout.imageBottomSpacing)
         ])
     }
 
     private func animate() {
         UIView.animate(withDuration: 1.5, delay: 0.3, options: .curveEaseOut, animations: {
             self.imageView.alpha = 0.0
+
         }, completion: { done in
             if done {
+                self.moveToLogin()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    let viewController = LoginViewController(viewModel: AuthViewModel(service: AuthService()))
-                    self.navigationController?.pushViewController(viewController, animated: false)
+                    if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
+                        self.moveToPoster()
+                    } else {
+                        self.moveToLogin()
+                    }
                 }
             }
         })
     }
 }
 
+// MARK: - Configure Actions
 extension SplashViewController {
-    func createSplashImageView() -> UIImageView {
-        let imageView = UIImageView()
-        imageView.image = UIImage(named: "splash_image")
-        imageView.contentMode = .scaleAspectFit
-        return imageView
+    private func moveToPoster() {
+        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
+        let mainVC = PosterListViewController(viewModel: mainVM)
+        self.navigationController?.pushViewController(mainVC, animated: false)
+    }
+
+    private func moveToLogin() {
+        let mainVM = LoginViewModel(service: AuthService())
+        let mainVC = LoginViewController(viewModel: mainVM)
+        self.navigationController?.pushViewController(mainVC, animated: false)
     }
 }

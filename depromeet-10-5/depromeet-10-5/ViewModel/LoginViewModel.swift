@@ -12,26 +12,28 @@ import UIKit
 import KakaoSDKAuth
 import KakaoSDKUser
 
-protocol AuthViewModelType {
+protocol LoginViewModelType {
     var accessToken: AnyPublisher<String, Never> { get }
-
-    var kakaoBtnTapped: PassthroughSubject<Void, Never> { get }
-
+    var kakaoLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
+    var appleLoginButtonDidTap: PassthroughSubject<Void,Never> { get }
+    var moveToPoster: PassthroughSubject<Void, Never> { get }
     func kakaoLoginAvailable() -> Future<OAuthToken, Error>
     func kakaoLogin(accessToken: String)
     func appleLogin(accessToken: String)
 }
 
-class AuthViewModel: AuthViewModelType {
+class LoginViewModel: LoginViewModelType {
     private let accessTokenSubject = CurrentValueSubject<String, Never>(.init())
     private var authService: AuthServiceType
-    private var subscription: AnyCancellable?
+    private var fetchSubscription: AnyCancellable?
+    private var subscriptions =  Set<AnyCancellable>()
     var accessToken: AnyPublisher<String, Never> {
         accessTokenSubject.eraseToAnyPublisher()
     }
 
-    let kakaoBtnTapped =  PassthroughSubject<Void, Never>()
-    let appleBtnTapped = PassthroughSubject<Void, Never>()
+    let kakaoLoginButtonDidTap =  PassthroughSubject<Void, Never>()
+    let appleLoginButtonDidTap = PassthroughSubject<Void, Never>()
+    let moveToPoster = PassthroughSubject<Void, Never>()
 
     init(service: AuthServiceType) {
         self.authService = service
@@ -40,6 +42,16 @@ class AuthViewModel: AuthViewModelType {
 
     deinit {
         Log.debug(Self.self, #function)
+    }
+
+    private func bind() {
+        kakaoLoginButtonDidTap.sink { [weak self] _ in
+            self?.moveToPoster.send()
+        }.store(in: &subscriptions)
+
+        appleLoginButtonDidTap.sink { [weak self] _ in
+            self?.moveToPoster.send()
+        }.store(in: &subscriptions)
     }
 
     func kakaoLoginAvailable() -> Future<OAuthToken, Error> {
@@ -57,7 +69,7 @@ class AuthViewModel: AuthViewModelType {
     }
 
     func kakaoLogin(accessToken: String) {
-        subscription = authService.kakaoLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
+        fetchSubscription = authService.kakaoLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
                 Log.debug("success kakaoLogin View Model")
@@ -68,16 +80,16 @@ class AuthViewModel: AuthViewModelType {
 
         }, receiveValue: { response in
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                UserDefaults.standard.setValue(response.data?.accessToken ?? "", forKey: UserDefaultKey.accessToken)
-                UserDefaults.standard.setValue(response.data?.refreshToken ?? "", forKey: UserDefaultKey.refreshToken)
+                let accessToken = response.data?.accessToken ?? ""
+                let refreshToken = response.data?.refreshToken ?? ""
 
-                self.accessTokenSubject.send(response.data?.accessToken ?? "")
+                self.saveTokens(accessToken: accessToken, refreshToken: refreshToken)
             }
         })
     }
 
     func appleLogin(accessToken: String) {
-        subscription = authService.appleLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
+        fetchSubscription = authService.appleLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
             switch completion {
             case .finished:
                 Log.debug("success Apple Login View Model")
@@ -87,20 +99,17 @@ class AuthViewModel: AuthViewModelType {
 
         }, receiveValue: { response in
             DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                UserDefaults.standard.setValue(response.data?.accessToken, forKey: UserDefaultKey.accessToken)
-                UserDefaults.standard.setValue(response.data?.refreshToken ?? "", forKey: UserDefaultKey.refreshToken)
-                self.accessTokenSubject.send(response.data?.accessToken ?? "")
+                let accessToken = response.data?.accessToken ?? ""
+                let refreshToken = response.data?.refreshToken ?? ""
+
+                self.saveTokens(accessToken: accessToken, refreshToken: refreshToken)
             }
         })
     }
 
-    private func bind() {
-        kakaoBtnTapped.sink { _ in
-            Log.debug("kakaoButton Tapped")
-        }
-
-        appleBtnTapped.sink {_ in
-            Log.debug("ApplButton Tapped")
-        }
+    private func saveTokens(accessToken: String, refreshToken: String) {
+        UserDefaults.standard.setValue(accessToken, forKey: UserDefaultKey.accessToken)
+        UserDefaults.standard.setValue(refreshToken, forKey: UserDefaultKey.refreshToken)
+        self.accessTokenSubject.send(accessToken)
     }
 }

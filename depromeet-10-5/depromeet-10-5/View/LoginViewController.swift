@@ -7,19 +7,24 @@ import KakaoSDKCommon
 import KakaoSDKUser
 
 class LoginViewController: UIViewController, Coordinating {
+    enum Layout {
+        static let buttonWidth: CGFloat = 300
+        static let buttonHeight: CGFloat = 45
+        static let stackViewSpacing: CGFloat = 18
+    }
     var coordinator: Coordinator?
 
     private lazy var kakaoLoginButton: UIButton = { createKakaoButton() }()
     private lazy var appleLoginButton: UIButton = { createAppleButton() }()
     private lazy var stackView: UIStackView = { createStackView() }()
-    private var authViewModel: AuthViewModelType
+    private var loginViewModel: LoginViewModelType
 
     private var subscriptions: Set<AnyCancellable> = []
     private var kakaoAccessToken: String?
     private var appleAccessToken: String?
 
-    init(viewModel: AuthViewModelType) {
-        self.authViewModel = viewModel
+    init(viewModel: LoginViewModelType) {
+        self.loginViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -41,21 +46,9 @@ class LoginViewController: UIViewController, Coordinating {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         style()
         layout()
-        bind()
-
-//        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-//            let viewController = EmotionViewController(viewModel: EmotionViewModel(service: EmotionService()))
-//            self.navigationController?.pushViewController(viewController, animated: true)
-//        }
-    }
-
-    private func bind() {
-        authViewModel.kakaoBtnTapped.receive(on: DispatchQueue.main).sink { _ in
-            Log.debug("kakaoLogin Button Tapped")
-
-        }.store(in: &subscriptions)
     }
 }
 
@@ -65,6 +58,7 @@ extension LoginViewController {
         button.setImage(UIImage(named: "kakao_login"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
 
@@ -73,15 +67,17 @@ extension LoginViewController {
         button.setImage(UIImage(named: "apple_login"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(appleLoginDidTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
 
     private func createStackView() -> UIStackView {
         let stackView = UIStackView(arrangedSubviews: [kakaoLoginButton, appleLoginButton])
-
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
-        stackView.spacing = 18.0
+        stackView.spacing = Layout.stackViewSpacing
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
         return stackView
     }
 
@@ -90,39 +86,35 @@ extension LoginViewController {
     }
 
     func layout() {
-        view.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
 
-        kakaoLoginButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             kakaoLoginButton.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
-            kakaoLoginButton.widthAnchor.constraint(equalToConstant: 300),
-            kakaoLoginButton.heightAnchor.constraint(equalToConstant: 45)
+            kakaoLoginButton.widthAnchor.constraint(equalToConstant: Layout.buttonWidth),
+            kakaoLoginButton.heightAnchor.constraint(equalToConstant: Layout.buttonHeight)
         ])
 
-        appleLoginButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             appleLoginButton.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
-            appleLoginButton.widthAnchor.constraint(equalToConstant: 300),
-            appleLoginButton.heightAnchor.constraint(equalToConstant: 45)
+            appleLoginButton.widthAnchor.constraint(equalToConstant: Layout.buttonWidth),
+            appleLoginButton.heightAnchor.constraint(equalToConstant: Layout.buttonHeight)
         ])
     }
 }
 
+// MARK: - Configure Actions
 extension LoginViewController {
     @objc func kakaoLoginButtonDidTap() {
-    
-        let kakaoLogin = authViewModel.kakaoLoginAvailable()
+        let kakaoLogin = loginViewModel.kakaoLoginAvailable()
 
         kakaoLogin.sink( receiveCompletion: { [weak self] completion in
             guard let self = self else { return }
             switch completion {
             case .finished:
-                self.authViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
+                self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
 
                 if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
                     self.moveToPosterList()
@@ -132,17 +124,8 @@ extension LoginViewController {
                 Log.debug(error)
             }
         }, receiveValue: { [weak self] result in
-            Log.debug("====\(result.accessToken)====")
             self?.kakaoAccessToken = result.accessToken
         }).store(in: &subscriptions)
-    }
-
-    func moveToPosterList() {
-        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
-        let mainVC = PosterListViewController(viewModel: mainVM)
-        let nav = MainNavigationController(rootViewController: mainVC)
-        nav.modalPresentationStyle = .fullScreen
-        self.present(nav, animated: true, completion: nil)
     }
 
     @objc func appleLoginDidTap() {
@@ -154,6 +137,14 @@ extension LoginViewController {
         authorizationController.delegate = self
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
+    }
+
+    private func moveToPosterList() {
+        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
+        let mainVC = PosterListViewController(viewModel: mainVM)
+        let nav = MainNavigationController(rootViewController: mainVC)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: true, completion: nil)
     }
 }
 
@@ -169,23 +160,14 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let userIdentifier = appleIDCredential.user
-            let fullName = appleIDCredential.fullName
-            let email = appleIDCredential.email
             let token = appleIDCredential.identityToken
             let tokenToUTF8 = String(data: token!, encoding: .utf8)!
             appleAccessToken = tokenToUTF8
 
-            Log.debug("user token: \(String(describing: tokenToUTF8))")
-            Log.debug("User ID: \(userIdentifier)")
-            Log.debug("User full name: \(String(describing: fullName))")
-            Log.debug("User email: \(String(describing: email))")
-
-            self.authViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
+            self.loginViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
 
             if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-                let cameraViewController = CameraViewController()
-                self.navigationController?.pushViewController(cameraViewController, animated: true)
+                moveToPosterList()
             }
 
         default:
@@ -194,6 +176,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        Log.debug("login error")
+        Log.error("login error")
     }
 }

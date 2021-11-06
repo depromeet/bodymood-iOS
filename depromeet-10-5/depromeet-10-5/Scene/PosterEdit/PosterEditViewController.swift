@@ -103,7 +103,7 @@ extension PosterEditViewController {
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 let albumVM = AlbumViewModel(useCase: AlbumUseCase(),
-                                             resultReciever: self.viewModel.photoSelectedFromAlbum)
+                                             resultReceiver: self.viewModel.photoSelectedFromAlbum)
                 let albumVC = AlbumViewController(viewModel: albumVM)
                 self.navigationController?.pushViewController(albumVC, animated: true)
             }.store(in: &bag)
@@ -112,7 +112,7 @@ extension PosterEditViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                let cameraViewController = CameraViewController()
+                let cameraViewController = CameraViewController(viewModel: CameraViewModel())
                 cameraViewController.delegate = self
                 self.navigationController?.pushViewController(cameraViewController, animated: true)
             }.store(in: &bag)
