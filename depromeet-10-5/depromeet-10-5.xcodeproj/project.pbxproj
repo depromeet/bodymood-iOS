@@ -27,6 +27,9 @@
 		966363B727366A5400F81387 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B627366A5400F81387 /* UserInfoViewController.swift */; };
 		966363B927366A7100F81387 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B827366A7100F81387 /* AgreementViewController.swift */; };
 		966363BB27366A8300F81387 /* RemoveAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363BA27366A8300F81387 /* RemoveAccountViewController.swift */; };
+		966363BE27368A1E00F81387 /* UserInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363BD27368A1E00F81387 /* UserInfoViewModel.swift */; };
+		966363C027368D1100F81387 /* AgreementViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363BF27368D1100F81387 /* AgreementViewModel.swift */; };
+		966363C227368D1B00F81387 /* RemoveAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363C127368D1B00F81387 /* RemoveAccountViewModel.swift */; };
 		96761191272BEB57001A887B /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 96761187272BE23C001A887B /* Pretendard-Black.otf */; };
 		96761192272BEB59001A887B /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 96761186272BE23C001A887B /* Pretendard-Bold.otf */; };
 		96761193272BEB5C001A887B /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9676118D272BE23D001A887B /* Pretendard-ExtraBold.otf */; };
@@ -137,6 +140,9 @@
 		966363B627366A5400F81387 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		966363B827366A7100F81387 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		966363BA27366A8300F81387 /* RemoveAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAccountViewController.swift; sourceTree = "<group>"; };
+		966363BD27368A1E00F81387 /* UserInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewModel.swift; sourceTree = "<group>"; };
+		966363BF27368D1100F81387 /* AgreementViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewModel.swift; sourceTree = "<group>"; };
+		966363C127368D1B00F81387 /* RemoveAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAccountViewModel.swift; sourceTree = "<group>"; };
 		96761178272BE1E4001A887B /* PlayfairDisplay-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-BlackItalic.ttf"; sourceTree = "<group>"; };
 		96761179272BE1E4001A887B /* PlayfairDisplay-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Black.ttf"; sourceTree = "<group>"; };
 		9676117A272BE1E4001A887B /* PlayfairDisplay-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -304,6 +310,17 @@
 			path = Mypage;
 			sourceTree = "<group>";
 		};
+		966363BC27368A1200F81387 /* Mypage */ = {
+			isa = PBXGroup;
+			children = (
+				966363B22736561300F81387 /* MypageViewModel.swift */,
+				966363BD27368A1E00F81387 /* UserInfoViewModel.swift */,
+				966363BF27368D1100F81387 /* AgreementViewModel.swift */,
+				966363C127368D1B00F81387 /* RemoveAccountViewModel.swift */,
+			);
+			path = Mypage;
+			sourceTree = "<group>";
+		};
 		967549AD2700A866007E4E95 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,13 +363,13 @@
 		967549B02700A879007E4E95 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				966363BC27368A1200F81387 /* Mypage */,
 				9624B31127060B4A007CB5BA /* LoginViewModel.swift */,
 				E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */,
 				E8AD75B22721A817009A3432 /* PosterListViewModel.swift */,
 				E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */,
 				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
 				96AB433B273512E3001B2808 /* CameraViewModel.swift */,
-				966363B22736561300F81387 /* MypageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -790,6 +807,7 @@
 				E8AD764027243139009A3432 /* PosterDetailViewController.swift in Sources */,
 				965EC52A27279EEE00ED0420 /* EmotionService.swift in Sources */,
 				E86EC942271B32E700A7DD54 /* ImageResource.swift in Sources */,
+				966363BE27368A1E00F81387 /* UserInfoViewModel.swift in Sources */,
 				965EC52827279E5200ED0420 /* EmotionResponse.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */,
@@ -800,6 +818,7 @@
 				9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */,
 				966363BB27366A8300F81387 /* RemoveAccountViewController.swift in Sources */,
 				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
+				966363C027368D1100F81387 /* AgreementViewModel.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
 				E8B3514C2726F7EA00A9C54D /* SelectMoodGuideView.swift in Sources */,
@@ -819,6 +838,7 @@
 				E8BBC0C7272ED2E100EEBD5E /* MainNavigationController.swift in Sources */,
 				E86415082725755000D58B3E /* UIColor+init.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
+				966363C227368D1B00F81387 /* RemoveAccountViewModel.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				E8B351942728212700A9C54D /* FirstDepthCategoryCell.swift in Sources */,
 				E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */,

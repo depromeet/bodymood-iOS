@@ -11,7 +11,6 @@ import Combine
 protocol MypageViewModelType {
     // Outputs
     var title: AnyPublisher<String, Never> { get }
-    var moveToBack: PassthroughSubject<Void, Never> { get }
     var moveToUserInfo: PassthroughSubject<Void, Never> { get }
     var moveToAgreement: PassthroughSubject<Void, Never> { get }
     var moveToRemoveAccount: PassthroughSubject<Void, Never> { get }
@@ -29,7 +28,6 @@ class MypageViewModel: MypageViewModelType {
 
     private var subscriptions = Set<AnyCancellable>()
     var title: AnyPublisher<String, Never> { Just("마이페이지").eraseToAnyPublisher()}
-    let moveToBack = PassthroughSubject<Void, Never>()
     let moveToUserInfo = PassthroughSubject<Void, Never>()
     let moveToAgreement = PassthroughSubject<Void, Never>()
     let moveToRemoveAccount = PassthroughSubject<Void, Never>()

@@ -44,17 +44,17 @@ extension MyPageViewController {
         }.store(in: &subscriptions)
 
         viewModel.moveToUserInfo.sink { [weak self] _ in
-            let viewController = UserInfoViewController()
+            let viewController = UserInfoViewController(viewModel: UserInfoViewModel())
             self?.navigationController?.pushViewController(viewController, animated: true)
         }.store(in: &subscriptions)
 
         viewModel.moveToAgreement.sink { [weak self] _ in
-            let viewController = AgreementViewController()
+            let viewController = AgreementViewController(viewModel: AgreementViewModel())
             self?.navigationController?.pushViewController(viewController, animated: true)
         }.store(in: &subscriptions)
 
         viewModel.moveToRemoveAccount.sink { [weak self] _ in
-            let viewController = RemoveAccountViewController()
+            let viewController = RemoveAccountViewController(viewModel: RemoveAccountViewModel())
             self?.navigationController?.pushViewController(viewController, animated: true)
         }.store(in: &subscriptions)
 
