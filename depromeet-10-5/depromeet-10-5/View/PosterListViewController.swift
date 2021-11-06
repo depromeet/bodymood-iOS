@@ -259,8 +259,6 @@ extension PosterListViewController: UIGestureRecognizerDelegate {
     }
 }
 
-
-
 // MARK: - Definitions
 extension PosterListViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, PHAsset>

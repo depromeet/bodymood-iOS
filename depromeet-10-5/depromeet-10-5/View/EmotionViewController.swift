@@ -36,10 +36,6 @@ class EmotionViewController: UIViewController {
         Log.debug(Self.self, #function)
     }
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return isDark ? .darkContent : .lightContent
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         style()
         layout()
@@ -96,7 +92,12 @@ class EmotionViewController: UIViewController {
     }
 }
 
+// MARK: - Configure UI
 extension EmotionViewController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return isDark ? .darkContent : .lightContent
+    }
+
     private func createCollectionViewFlowLayout() -> UICollectionViewFlowLayout {
         let flowLayout = UICollectionViewFlowLayout()
         return flowLayout
@@ -109,7 +110,8 @@ extension EmotionViewController {
         label.text = "오늘은 어떤 색상의"
         label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
         label.textAlignment = .center
-
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
         return label
     }
 
@@ -120,21 +122,27 @@ extension EmotionViewController {
         label.text = "감정을 느끼셨나요?"
         label.font = UIFont(name: "Pretendard-SemiBold", size: 18)
         label.textAlignment = .center
-
+        label.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(label)
         return label
+    }
+
+    private func createContentView() -> UIView {
+        let contentView = UIView()
+        contentView.backgroundColor = .clear
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(contentView)
+        return contentView
     }
 
     private func createCollectionView() -> UICollectionView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.backgroundColor = .clear
         collectionView.isScrollEnabled = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.register(EmotionCell.self, forCellWithReuseIdentifier: cellID)
+        contentView.addSubview(collectionView)
         return collectionView
-    }
-
-    private func createContentView() -> UIView {
-        let view = UIView()
-        view.backgroundColor = .clear
-        return view
     }
 
     private func createBottomButtonView() -> DefaultBottomButton {
@@ -172,12 +180,12 @@ extension EmotionViewController {
         let startColor =  UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0))
         let endColor = UIColor(cgColor: CGColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0))
 
-        gradientLocation(startColor: startColor, endColor: endColor)
+        gradient(startColor: startColor, endColor: endColor)
 
         oldGradientLayer.colors = [startColor, endColor]
     }
 
-    func gradientLocation(startColor: UIColor, endColor: UIColor) {
+    func gradient(startColor: UIColor, endColor: UIColor) {
         let gradientLayerName = "gradientLayer"
 
         if let oldLayer = view.layer.sublayers?.filter({$0.name == gradientLayerName}).first {
@@ -206,7 +214,7 @@ extension EmotionViewController {
         let startColor =  UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0))
         let endColor = UIColor(cgColor: CGColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0))
 
-        gradientLocation(startColor: startColor, endColor: endColor)
+        gradient(startColor: startColor, endColor: endColor)
     }
 
     func layout() {
@@ -216,8 +224,6 @@ extension EmotionViewController {
             bottomButton.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
 
-        view.addSubview(firstTitleLabel)
-        firstTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             firstTitleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
             firstTitleLabel.widthAnchor.constraint(equalToConstant: 139),
@@ -225,8 +231,6 @@ extension EmotionViewController {
             firstTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
 
-        view.addSubview(secondTitleLabel)
-        secondTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             secondTitleLabel.topAnchor.constraint(equalTo: firstTitleLabel.topAnchor, constant: 30),
             secondTitleLabel.widthAnchor.constraint(equalToConstant: 139),
@@ -234,8 +238,6 @@ extension EmotionViewController {
             secondTitleLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
 
-        view.addSubview(contentView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             contentView.topAnchor.constraint(equalTo: secondTitleLabel.bottomAnchor, constant: 67),
             contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 36),
@@ -243,17 +245,12 @@ extension EmotionViewController {
             contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -35)
         ])
 
-        contentView.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: contentView.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ])
-
-        collectionView.register(EmotionCell.self, forCellWithReuseIdentifier: cellID)
     }
 
     func hexStringToUIColor(hex: String) -> UIColor {
@@ -291,6 +288,7 @@ extension EmotionViewController {
     }
 }
 
+// MARK: - Configure Collection View
 extension EmotionViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return emotionData.count
@@ -334,7 +332,7 @@ extension EmotionViewController: UICollectionViewDataSource {
                 let startColor = hexStringToUIColor(hex: emotionData[selectedIndex].startColor!)
                 let endColor = hexStringToUIColor(hex: emotionData[selectedIndex].endColor!)
 
-                gradientLocation(startColor: startColor, endColor: endColor)
+                gradient(startColor: startColor, endColor: endColor)
 
             } else {
                 cell.koreanTitleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
@@ -359,7 +357,6 @@ extension EmotionViewController: UICollectionViewDataSource {
 
 extension EmotionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
         selectedIndex = indexPath.row
         selectedEmotion = emotionData[selectedIndex]
 
@@ -393,7 +390,6 @@ extension EmotionViewController: UICollectionViewDelegate {
         navigationItem.leftBarButtonItem = leftBarButton
 
         collectionView.reloadData()
-        
         emotionViewModel.itemTapped.send(indexPath.item)
     }
 }

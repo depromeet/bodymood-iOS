@@ -103,7 +103,7 @@ extension PosterEditViewController {
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 let albumVM = AlbumViewModel(useCase: AlbumUseCase(),
-                                             resultReciever: self.viewModel.photoSelectedFromAlbum)
+                                             resultReceiver: self.viewModel.photoSelectedFromAlbum)
                 let albumVC = AlbumViewController(viewModel: albumVM)
                 self.navigationController?.pushViewController(albumVC, animated: true)
             }.store(in: &bag)

@@ -229,7 +229,6 @@ extension CameraViewController {
     private func createClearButton() -> UIButton {
         let button = UIButton()
         button.setImage(UIImage(named: "clear"), for: .normal)
-//        button.addTarget(self, action: #selector(clearButtonDidTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         topView.addSubview(button)
         return button
