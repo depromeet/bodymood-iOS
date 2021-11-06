@@ -76,7 +76,6 @@ extension SplashViewController {
 
         }, completion: { done in
             if done {
-                self.moveToLogin()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
                         self.moveToPoster()

@@ -22,6 +22,12 @@
 		965EC52A27279EEE00ED0420 /* EmotionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EC52927279EEE00ED0420 /* EmotionService.swift */; };
 		965EC52C27279FA600ED0420 /* EmotionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EC52B27279FA600ED0420 /* EmotionViewModel.swift */; };
 		965EC52E27280E1E00ED0420 /* EmotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EC52D27280E1E00ED0420 /* EmotionCell.swift */; };
+		966363B1273649D200F81387 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B0273649D200F81387 /* MyPageViewController.swift */; };
+		966363B32736561300F81387 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B22736561300F81387 /* MypageViewModel.swift */; };
+		966363B527365F5F00F81387 /* MypageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B427365F5F00F81387 /* MypageCell.swift */; };
+		966363B727366A5400F81387 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B627366A5400F81387 /* UserInfoViewController.swift */; };
+		966363B927366A7100F81387 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B827366A7100F81387 /* AgreementViewController.swift */; };
+		966363BB27366A8300F81387 /* RemoveAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363BA27366A8300F81387 /* RemoveAccountViewController.swift */; };
 		96761191272BEB57001A887B /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 96761187272BE23C001A887B /* Pretendard-Black.otf */; };
 		96761192272BEB59001A887B /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 96761186272BE23C001A887B /* Pretendard-Bold.otf */; };
 		96761193272BEB5C001A887B /* Pretendard-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9676118D272BE23D001A887B /* Pretendard-ExtraBold.otf */; };
@@ -127,6 +133,12 @@
 		965EC52927279EEE00ED0420 /* EmotionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionService.swift; sourceTree = "<group>"; };
 		965EC52B27279FA600ED0420 /* EmotionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionViewModel.swift; sourceTree = "<group>"; };
 		965EC52D27280E1E00ED0420 /* EmotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionCell.swift; sourceTree = "<group>"; };
+		966363B0273649D200F81387 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		966363B22736561300F81387 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
+		966363B427365F5F00F81387 /* MypageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageCell.swift; sourceTree = "<group>"; };
+		966363B627366A5400F81387 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
+		966363B827366A7100F81387 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
+		966363BA27366A8300F81387 /* RemoveAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAccountViewController.swift; sourceTree = "<group>"; };
 		96761178272BE1E4001A887B /* PlayfairDisplay-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-BlackItalic.ttf"; sourceTree = "<group>"; };
 		96761179272BE1E4001A887B /* PlayfairDisplay-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-Black.ttf"; sourceTree = "<group>"; };
 		9676117A272BE1E4001A887B /* PlayfairDisplay-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayfairDisplay-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -283,9 +295,21 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		966363AF273649C500F81387 /* Mypage */ = {
+			isa = PBXGroup;
+			children = (
+				966363B0273649D200F81387 /* MyPageViewController.swift */,
+				966363B627366A5400F81387 /* UserInfoViewController.swift */,
+				966363B827366A7100F81387 /* AgreementViewController.swift */,
+				966363BA27366A8300F81387 /* RemoveAccountViewController.swift */,
+			);
+			path = Mypage;
+			sourceTree = "<group>";
+		};
 		967549AD2700A866007E4E95 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				966363AF273649C500F81387 /* Mypage */,
 				96DAF9CC2726D81E00B21E08 /* Camera */,
 				E8AD75B62721CF20009A3432 /* Cells */,
 				9610B3072702379B00539F99 /* LoginViewController.swift */,
@@ -330,6 +354,7 @@
 				E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */,
 				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
 				96AB433B273512E3001B2808 /* CameraViewModel.swift */,
+				966363B22736561300F81387 /* MypageViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -476,6 +501,7 @@
 				E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */,
 				E8AD75B82721CF36009A3432 /* PosterCell.swift */,
 				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
+				966363B427365F5F00F81387 /* MypageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -761,6 +787,7 @@
 				E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */,
 				E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */,
 				E864150A27257D9600D58B3E /* PosterTemplateListViewModel.swift in Sources */,
+				966363B727366A5400F81387 /* UserInfoViewController.swift in Sources */,
 				E8B3518627279FBA00A9C54D /* ExerciseRecordViewModel.swift in Sources */,
 				9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */,
 				E8AD764027243139009A3432 /* PosterDetailViewController.swift in Sources */,
@@ -769,11 +796,13 @@
 				965EC52827279E5200ED0420 /* EmotionResponse.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */,
+				966363B527365F5F00F81387 /* MypageCell.swift in Sources */,
 				9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
 				E8AD75B92721CF36009A3432 /* PosterCell.swift in Sources */,
 				E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */,
 				9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */,
+				966363BB27366A8300F81387 /* RemoveAccountViewController.swift in Sources */,
 				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
@@ -784,6 +813,7 @@
 				E8B35199272839B100A9C54D /* PosterEditViewModel.swift in Sources */,
 				E8B373112729C32500833052 /* CheckBoxView.swift in Sources */,
 				E8B351502726F81900A9C54D /* SelectPhotoGuideView.swift in Sources */,
+				966363B927366A7100F81387 /* AgreementViewController.swift in Sources */,
 				E8B351452725ED6F00A9C54D /* PosterTemplate.swift in Sources */,
 				E8AD764F272552BD009A3432 /* UIButton+setBackgroundColor.swift in Sources */,
 				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
@@ -809,6 +839,7 @@
 				96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */,
 				965EC52E27280E1E00ED0420 /* EmotionCell.swift in Sources */,
 				E8B35152272706E600A9C54D /* ExerciseListViewController.swift in Sources */,
+				966363B32736561300F81387 /* MypageViewModel.swift in Sources */,
 				E8B373132729C58E00833052 /* UIView+addDashedBorder.swift in Sources */,
 				E8AD764D27254509009A3432 /* PosterTemplateListViewController.swift in Sources */,
 				E8B3735F272C4F2A00833052 /* PosterView.swift in Sources */,
@@ -816,6 +847,7 @@
 				E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */,
 				E8B3730D2729828000833052 /* UIView+toImage.swift in Sources */,
 				96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */,
+				966363B1273649D200F81387 /* MyPageViewController.swift in Sources */,
 				96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */,
 				E8AD764927248834009A3432 /* CommonText.swift in Sources */,
 				9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */,

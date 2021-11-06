@@ -8,10 +8,12 @@ class PosterListViewController: UIViewController {
     private lazy var dataSource: DataSource = { createDataSource() }()
     private lazy var addButton: UIButton = { createAddButton() }()
     private lazy var guideLabel: UILabel = { createGuideLabel() }()
+    private lazy var mypageButton: UIButton = {
+        createMypageButton() }()
 
     private var subscriptions = Set<AnyCancellable>()
     private let viewModel: PosterListViewModelType
-
+    
     init(viewModel: PosterListViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -38,6 +40,9 @@ class PosterListViewController: UIViewController {
             .foregroundColor: UIColor.black,
             .font: UIFont(name: "PlayfairDisplay-Bold", size: 25) ?? UIFont.boldSystemFont(ofSize: 25)
         ]
+
+        navigationItem.leftBarButtonItems = []
+        navigationItem.hidesBackButton = true
     }
 }
 
@@ -64,6 +69,11 @@ extension PosterListViewController {
                 self?.navigationItem.title = title
             }.store(in: &subscriptions)
 
+        viewModel.moveToMypage.receive(on: DispatchQueue.main).sink { [weak self] in
+            let mypageVC = MyPageViewController(viewModel: MypageViewModel())
+            self?.navigationController?.pushViewController(mypageVC, animated: true)
+        }.store(in: &subscriptions)
+
         viewModel.moveToDetail
             .receive(on: DispatchQueue.main)
             .sink { [weak self] asset in
@@ -79,6 +89,11 @@ extension PosterListViewController {
                 self?.navigationController?.setNavigationBarHidden(false, animated: false)
                 self?.navigationController?.pushViewController(templateVC, animated: true)
             }.store(in: &subscriptions)
+
+        mypageButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.mypageBtnTapped.send()
+        }.store(in: &subscriptions)
 
         addButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
@@ -102,7 +117,7 @@ extension PosterListViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .darkContent
     }
-    
+
     private func style() {
         view.backgroundColor = .white
 
@@ -116,6 +131,10 @@ extension PosterListViewController {
             .foregroundColor: UIColor.black,
             .font: UIFont(name: "PlayfairDisplay-Bold", size: 25) ?? UIFont.boldSystemFont(ofSize: 25)
         ]
+
+        let rightBarButton = UIBarButtonItem(customView: mypageButton)
+        navigationItem.rightBarButtonItem = rightBarButton
+        navigationItem.rightBarButtonItem?.tintColor = .gray
     }
 
     private func layout() {
@@ -125,6 +144,15 @@ extension PosterListViewController {
     }
 
     // MARK: Create Views
+    private func createMypageButton() -> UIButton {
+        let view = UIButton(type: .custom)
+        if let image = UIImage(named: "person") {
+            view.setImage(image, for: .normal)
+        }
+        view.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+        return view
+    }
+
     private func createAddButton() -> UIButton {
         let view = UIButton()
         view.backgroundColor = #colorLiteral(red: 0.1098039216, green: 0.1098039216, blue: 0.1098039216, alpha: 1)

@@ -9,9 +9,11 @@ protocol PosterListViewModelType {
     var guideText: AnyPublisher<String, Never> { get }
     var moveToDetail: PassthroughSubject<PHAsset, Never> { get }
     var moveToTemplate: PassthroughSubject<Void, Never> { get }
+    var moveToMypage: PassthroughSubject<Void, Never> { get }
 
     // Inputs
     var numOfItemsPerRow: Int { get }
+    var mypageBtnTapped: PassthroughSubject<Void, Never> { get }
     var addBtnTapped: PassthroughSubject<Void, Never> { get }
     var posterSelected: PassthroughSubject<Int, Never> { get }
 }
@@ -28,9 +30,11 @@ class PosterListViewModel: PosterListViewModelType {
     var posters: AnyPublisher<[PHAsset], Never> { postersSubject.prefix(maxNumOfItems).eraseToAnyPublisher() }
     var title: AnyPublisher<String, Never> { Just("Bodymood").eraseToAnyPublisher() }
     var guideText: AnyPublisher<String, Never> { Just("나의 Bodymood로\n이 곳을 채워주세요").eraseToAnyPublisher() }
+    let moveToMypage = PassthroughSubject<Void, Never>()
     let moveToDetail = PassthroughSubject<PHAsset, Never>()
     let moveToTemplate = PassthroughSubject<Void, Never>()
 
+    let mypageBtnTapped = PassthroughSubject<Void, Never>()
     let addBtnTapped = PassthroughSubject<Void, Never>()
     let posterSelected = PassthroughSubject<Int, Never>()
 
@@ -56,6 +60,10 @@ class PosterListViewModel: PosterListViewModelType {
     }
 
     private func bind() {
+        mypageBtnTapped.sink { [weak self] _ in
+            self?.moveToMypage.send()
+        }.store(in: &subscriptions)
+
         addBtnTapped
             .sink { [weak self] _ in
                 self?.moveToTemplate.send()

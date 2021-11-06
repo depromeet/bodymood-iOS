@@ -12,7 +12,7 @@ class EmotionViewController: UIViewController {
 
     private var emotionData: [EmotionDataResponse] = []
     private var emotionViewModel: EmotionViewModelType
-    private var subscriptions: Set<AnyCancellable> = []
+    private var subscriptions = Set<AnyCancellable>()
     private var fetchSubscription: AnyCancellable?
     private var selectedIndex: Int = 17
     private var isDark: Bool = false
