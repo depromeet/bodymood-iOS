@@ -2,23 +2,23 @@ import Combine
 import UIKit
 
 class MyPageViewController: UIViewController {
-    private let cellIDs = ["UserInfo", "Agreement", "RemoveAccount"]
-    private let cellTitle = ["계정정보", "개인정보 약관 동의", "계정 삭제"]
-
-    private lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = { createCollectionViewFlowLayout() }()
-    private lazy var collectionView: UICollectionView = { createCollectionView() }()
     private lazy var titleLabel: UILabel = {
         createTitleLabel()
     }()
+
+    private lazy var userInfoButton: UIButton = { createUserInfoButton() }()
+    private lazy var agreementButton: UIButton = { createAgreementButton() }()
+    private lazy var removeAccountButton: UIButton = { createRemoveAccountButton() }()
+    private lazy var logoutButton: UIButton = { createLogoutButton() }()
+    private lazy var stackView: UIStackView = { createStackView() }()
 
     private var viewModel: MypageViewModelType
     private var subscriptions = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.delegate = self
-        collectionView.dataSource = self
         style()
+        layout()
         bind()
     }
 
@@ -67,6 +67,21 @@ extension MyPageViewController {
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
         }.store(in: &subscriptions)
+
+        userInfoButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.moveToUserInfo.send()
+        }.store(in: &subscriptions)
+
+        agreementButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.moveToAgreement.send()
+        }.store(in: &subscriptions)
+
+        removeAccountButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.moveToRemoveAccount.send()
+        }.store(in: &subscriptions)
     }
 }
 
@@ -81,15 +96,6 @@ extension MyPageViewController {
         return flowLayout
     }
 
-    private func createCollectionView() -> UICollectionView {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
-        collectionView.backgroundColor = .clear
-        collectionView.isScrollEnabled = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(collectionView)
-        return collectionView
-    }
-
     private func createTitleLabel() -> UILabel {
         let label = UILabel()
         label.textColor = .black
@@ -100,7 +106,59 @@ extension MyPageViewController {
         return label
     }
 
-    func style() {
+    private func createUserInfoButton() -> UIButton {
+        let button = UIButton()
+        button.setTitle("계정 정보", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 16)
+        button.contentHorizontalAlignment = .leading
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+
+    private func createAgreementButton() -> UIButton {
+        let button = UIButton()
+        button.setTitle("개인정보 약관 동의", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 16)
+        button.contentHorizontalAlignment = .leading
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+
+    private func createRemoveAccountButton() -> UIButton {
+        let button = UIButton()
+        button.setTitle("계정 삭제", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 16)
+        button.contentHorizontalAlignment = .leading
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+
+    private func createStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [userInfoButton, agreementButton, removeAccountButton])
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(stackView)
+        return stackView
+    }
+
+    private func createLogoutButton() -> UIButton {
+        let button = UIButton()
+        button.setTitle("로그아웃", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.tintColor = .white
+        button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 18)
+        button.backgroundColor = .black
+        button.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(button)
+        return button
+    }
+
+    private func style() {
         view.backgroundColor = .white
         navigationItem.leftBarButtonItem = .init(
             image: UIImage(named: "back_black"),
@@ -110,41 +168,31 @@ extension MyPageViewController {
         )
         navigationItem.leftBarButtonItem?.tintColor = .black
     }
-}
 
-extension MyPageViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Log.debug("select \(indexPath.row)")
-    }
-}
+    private func layout() {
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -28)
+        ])
 
-extension MyPageViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellIDs.count
-    }
+        NSLayoutConstraint.activate([
+            userInfoButton.heightAnchor.constraint(equalToConstant: 54)
+        ])
 
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: cellIDs[indexPath.row],
-            for: indexPath) as? MypageCell
-        else {
-            return UICollectionViewCell()
-        }
+        NSLayoutConstraint.activate([
+            agreementButton.heightAnchor.constraint(equalToConstant: 54)
+        ])
 
-        cell.update(title: cellTitle[indexPath.row])
-        return cell
-    }
-}
+        NSLayoutConstraint.activate([
+            removeAccountButton.heightAnchor.constraint(equalToConstant: 54)
+        ])
 
-extension MyPageViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath)
-    -> CGSize {
-        return CGSize(width: view.frame.width, height: 54)
+        NSLayoutConstraint.activate([
+            logoutButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            logoutButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24),
+            logoutButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            logoutButton.heightAnchor.constraint(equalToConstant: 56)
+        ])
     }
 }

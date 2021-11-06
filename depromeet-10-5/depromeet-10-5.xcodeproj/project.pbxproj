@@ -24,7 +24,6 @@
 		965EC52E27280E1E00ED0420 /* EmotionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EC52D27280E1E00ED0420 /* EmotionCell.swift */; };
 		966363B1273649D200F81387 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B0273649D200F81387 /* MyPageViewController.swift */; };
 		966363B32736561300F81387 /* MypageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B22736561300F81387 /* MypageViewModel.swift */; };
-		966363B527365F5F00F81387 /* MypageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B427365F5F00F81387 /* MypageCell.swift */; };
 		966363B727366A5400F81387 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B627366A5400F81387 /* UserInfoViewController.swift */; };
 		966363B927366A7100F81387 /* AgreementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363B827366A7100F81387 /* AgreementViewController.swift */; };
 		966363BB27366A8300F81387 /* RemoveAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 966363BA27366A8300F81387 /* RemoveAccountViewController.swift */; };
@@ -135,7 +134,6 @@
 		965EC52D27280E1E00ED0420 /* EmotionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionCell.swift; sourceTree = "<group>"; };
 		966363B0273649D200F81387 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		966363B22736561300F81387 /* MypageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageViewModel.swift; sourceTree = "<group>"; };
-		966363B427365F5F00F81387 /* MypageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageCell.swift; sourceTree = "<group>"; };
 		966363B627366A5400F81387 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		966363B827366A7100F81387 /* AgreementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
 		966363BA27366A8300F81387 /* RemoveAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAccountViewController.swift; sourceTree = "<group>"; };
@@ -501,7 +499,6 @@
 				E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */,
 				E8AD75B82721CF36009A3432 /* PosterCell.swift */,
 				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
-				966363B427365F5F00F81387 /* MypageCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -796,7 +793,6 @@
 				965EC52827279E5200ED0420 /* EmotionResponse.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */,
-				966363B527365F5F00F81387 /* MypageCell.swift in Sources */,
 				9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
 				E8AD75B92721CF36009A3432 /* PosterCell.swift in Sources */,
