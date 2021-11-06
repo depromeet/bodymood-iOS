@@ -40,6 +40,9 @@ class PosterListViewController: UIViewController {
             .foregroundColor: UIColor.black,
             .font: UIFont(name: "PlayfairDisplay-Bold", size: 25) ?? UIFont.boldSystemFont(ofSize: 25)
         ]
+
+        navigationItem.leftBarButtonItems = []
+        navigationItem.hidesBackButton = true
     }
 }
 
@@ -128,6 +131,7 @@ extension PosterListViewController {
             .foregroundColor: UIColor.black,
             .font: UIFont(name: "PlayfairDisplay-Bold", size: 25) ?? UIFont.boldSystemFont(ofSize: 25)
         ]
+
         let rightBarButton = UIBarButtonItem(customView: mypageButton)
         navigationItem.rightBarButtonItem = rightBarButton
         navigationItem.rightBarButtonItem?.tintColor = .gray

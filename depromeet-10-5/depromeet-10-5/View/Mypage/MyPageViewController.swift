@@ -102,8 +102,13 @@ extension MyPageViewController {
 
     func style() {
         view.backgroundColor = .white
-        let backIcon = ImageResource.leftArrow?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        navigationItem.leftBarButtonItem = .init(image: backIcon, style: .plain, target: nil, action: nil)
+        navigationItem.leftBarButtonItem = .init(
+            image: UIImage(named: "back_black"),
+            style: .plain,
+            target: nil,
+            action: nil
+        )
+        navigationItem.leftBarButtonItem?.tintColor = .black
     }
 }
 
