@@ -42,7 +42,7 @@ class PosterTemplateListViewModel: PosterTemplateListViewModelType {
     }
 
     private func bind() {
-        selectBtnTapped.combineLatest(templateSelected)
+        selectBtnTapped.zip(templateSelected)
             .map { $0.1 }
             .sink { [weak self] index in
                 guard
