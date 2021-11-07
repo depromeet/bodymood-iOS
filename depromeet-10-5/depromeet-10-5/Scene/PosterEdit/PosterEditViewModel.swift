@@ -18,7 +18,7 @@ protocol PosterEditViewModelType: PosterEditGuideViewModelType {
     
     // Mediators
     var photoSelectedFromAlbum: PassthroughSubject<PHAsset, Never> { get }
-    var exerciseSelected: CurrentValueSubject<[ExerciseItemModel], Never> { get }
+    var exerciseSelected: CurrentValueSubject<[ExerciseCategoryModel], Never> { get }
     var emotionSelected: CurrentValueSubject<EmotionDataResponse?, Never> { get }
 }
 
@@ -46,7 +46,7 @@ class PosterEditViewModel: PosterEditViewModelType {
     let moveToExerciseCategory = PassthroughSubject<Void, Never>()
     let activateCompleteButton = PassthroughSubject<Bool, Never>()
     let photoSelectedFromAlbum = PassthroughSubject<PHAsset, Never>()
-    let exerciseSelected = CurrentValueSubject<[ExerciseItemModel], Never>([])
+    let exerciseSelected = CurrentValueSubject<[ExerciseCategoryModel], Never>([])
     let emotionSelected =  CurrentValueSubject<EmotionDataResponse?, Never>(nil)
 
     private var bag = Set<AnyCancellable>()

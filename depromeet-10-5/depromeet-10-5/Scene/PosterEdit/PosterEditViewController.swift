@@ -165,7 +165,7 @@ extension PosterEditViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] list in
                 guard let self = self else { return }
-                self.posterEditGuideView.selectExerciseGuideView.update(with: list.map { $0.english })
+                self.posterEditGuideView.selectExerciseGuideView.update(with: list.map { $0.englishName })
                 self.updateCheckBox(index: 1)
             }.store(in: &bag)
 

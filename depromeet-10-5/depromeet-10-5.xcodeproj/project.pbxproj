@@ -111,6 +111,9 @@
 		E8B373132729C58E00833052 /* UIView+addDashedBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */; };
 		E8B3735F272C4F2A00833052 /* PosterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B3735E272C4F2A00833052 /* PosterView.swift */; };
 		E8BBC0C7272ED2E100EEBD5E /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8BBC0C6272ED2E100EEBD5E /* MainNavigationController.swift */; };
+		E8F8569F27369BB9006FA900 /* PosterUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F8569E27369BB9006FA900 /* PosterUseCase.swift */; };
+		E8F856A12737160D006FA900 /* BodyMoodAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F856A02737160D006FA900 /* BodyMoodAPIService.swift */; };
+		E8F856A327371A26006FA900 /* URLRequest+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8F856A227371A26006FA900 /* URLRequest+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -223,6 +226,9 @@
 		E8B373122729C58E00833052 /* UIView+addDashedBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+addDashedBorder.swift"; sourceTree = "<group>"; };
 		E8B3735E272C4F2A00833052 /* PosterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterView.swift; sourceTree = "<group>"; };
 		E8BBC0C6272ED2E100EEBD5E /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
+		E8F8569E27369BB9006FA900 /* PosterUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterUseCase.swift; sourceTree = "<group>"; };
+		E8F856A02737160D006FA900 /* BodyMoodAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMoodAPIService.swift; sourceTree = "<group>"; };
+		E8F856A227371A26006FA900 /* URLRequest+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,10 +319,7 @@
 				96DAF9CC2726D81E00B21E08 /* Camera */,
 				E8AD75B62721CF20009A3432 /* Cells */,
 				9610B3072702379B00539F99 /* LoginViewController.swift */,
-				E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */,
 				9676E4C42725745B0068C979 /* SplashViewController.swift */,
-				E8AD75B02721A80C009A3432 /* PosterListViewController.swift */,
-				E8AD763F27243139009A3432 /* PosterDetailViewController.swift */,
 				96DAF9CF2727017100B21E08 /* EmotionViewController.swift */,
 				E8B3735E272C4F2A00833052 /* PosterView.swift */,
 				E8BBC0C6272ED2E100EEBD5E /* MainNavigationController.swift */,
@@ -329,6 +332,8 @@
 			children = (
 				9641DAED2713334E001BE018 /* AuthService.swift */,
 				965EC52927279EEE00ED0420 /* EmotionService.swift */,
+				E8F856A02737160D006FA900 /* BodyMoodAPIService.swift */,
+				E8F856A227371A26006FA900 /* URLRequest+.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -349,9 +354,6 @@
 			isa = PBXGroup;
 			children = (
 				9624B31127060B4A007CB5BA /* LoginViewModel.swift */,
-				E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */,
-				E8AD75B22721A817009A3432 /* PosterListViewModel.swift */,
-				E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */,
 				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
 				96AB433B273512E3001B2808 /* CameraViewModel.swift */,
 				966363B22736561300F81387 /* MypageViewModel.swift */,
@@ -490,16 +492,24 @@
 		E86EC945271B640200A7DD54 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		E87D25622737CE800056F14C /* PhotoAlbum */ = {
+			isa = PBXGroup;
+			children = (
+				E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */,
+				E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */,
+				E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */,
+				E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */,
+			);
+			path = PhotoAlbum;
 			sourceTree = "<group>";
 		};
 		E8AD75B62721CF20009A3432 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */,
-				E8AD75B82721CF36009A3432 /* PosterCell.swift */,
 				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
 				966363B427365F5F00F81387 /* MypageCell.swift */,
 			);
@@ -518,14 +528,17 @@
 		E8B3517527279A1B00A9C54D /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				E87D25622737CE800056F14C /* PhotoAlbum */,
+				E8F856A42737A76D006FA900 /* PosterDetail */,
+				E8F8569C27369BA2006FA900 /* PosterList */,
 				E8B3519A27283A5400A9C54D /* PosterTemplate */,
 				E8B35195272830C600A9C54D /* PosterEdit */,
-				E8B3517627279A4500A9C54D /* ExerciseRecord */,
+				E8B3517627279A4500A9C54D /* ExerciseCategory */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
 		};
-		E8B3517627279A4500A9C54D /* ExerciseRecord */ = {
+		E8B3517627279A4500A9C54D /* ExerciseCategory */ = {
 			isa = PBXGroup;
 			children = (
 				E8B351872727A04C00A9C54D /* UseCase */,
@@ -534,7 +547,7 @@
 				E8B3517E27279B3200A9C54D /* Model */,
 				E8B3517B27279AB400A9C54D /* Dummy */,
 			);
-			path = ExerciseRecord;
+			path = ExerciseCategory;
 			sourceTree = "<group>";
 		};
 		E8B3517727279A6100A9C54D /* View */ = {
@@ -614,6 +627,34 @@
 				E83C14CF2725CD9A007B2E11 /* PageIndicator.swift */,
 			);
 			path = PosterTemplate;
+			sourceTree = "<group>";
+		};
+		E8F8569C27369BA2006FA900 /* PosterList */ = {
+			isa = PBXGroup;
+			children = (
+				E8AD75B02721A80C009A3432 /* PosterListViewController.swift */,
+				E8AD75B22721A817009A3432 /* PosterListViewModel.swift */,
+				E8AD75B82721CF36009A3432 /* PosterCell.swift */,
+				E8F8569D27369BAA006FA900 /* UseCase */,
+			);
+			path = PosterList;
+			sourceTree = "<group>";
+		};
+		E8F8569D27369BAA006FA900 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				E8F8569E27369BB9006FA900 /* PosterUseCase.swift */,
+			);
+			path = UseCase;
+			sourceTree = "<group>";
+		};
+		E8F856A42737A76D006FA900 /* PosterDetail */ = {
+			isa = PBXGroup;
+			children = (
+				E8AD763F27243139009A3432 /* PosterDetailViewController.swift */,
+				E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */,
+			);
+			path = PosterDetail;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -785,6 +826,7 @@
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
 				E8B351972728398F00A9C54D /* PosterEditViewController.swift in Sources */,
 				E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */,
+				E8F856A12737160D006FA900 /* BodyMoodAPIService.swift in Sources */,
 				E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */,
 				E864150A27257D9600D58B3E /* PosterTemplateListViewModel.swift in Sources */,
 				966363B727366A5400F81387 /* UserInfoViewController.swift in Sources */,
@@ -803,6 +845,7 @@
 				E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */,
 				9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */,
 				966363BB27366A8300F81387 /* RemoveAccountViewController.swift in Sources */,
+				E8F856A327371A26006FA900 /* URLRequest+.swift in Sources */,
 				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
 				96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */,
 				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
@@ -834,6 +877,7 @@
 				E8B3514A2726D94A00A9C54D /* PosterEditGuideView.swift in Sources */,
 				E8B351892727A09A00A9C54D /* ExerciseRecordUseCase.swift in Sources */,
 				E8B3518227279BC700A9C54D /* ExerciseCategoryModel.swift in Sources */,
+				E8F8569F27369BB9006FA900 /* PosterUseCase.swift in Sources */,
 				E8AD75B12721A80C009A3432 /* PosterListViewController.swift in Sources */,
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */,
@@ -984,7 +1028,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3CY8UX9N2S;
+				DEVELOPMENT_TEAM = RC5265XPLQ;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1007,7 +1051,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3CY8UX9N2S;
+				DEVELOPMENT_TEAM = RC5265XPLQ;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

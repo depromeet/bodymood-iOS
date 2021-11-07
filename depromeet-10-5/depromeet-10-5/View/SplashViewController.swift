@@ -91,7 +91,7 @@ extension SplashViewController {
 // MARK: - Configure Actions
 extension SplashViewController {
     private func moveToPoster() {
-        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
+        let mainVM = PosterListViewModel(useCase: PosterUseCase())
         let mainVC = PosterListViewController(viewModel: mainVM)
         self.navigationController?.pushViewController(mainVC, animated: false)
     }
