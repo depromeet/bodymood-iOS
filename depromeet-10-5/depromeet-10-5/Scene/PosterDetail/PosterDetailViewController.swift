@@ -66,7 +66,8 @@ extension PosterDetailViewController {
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] model in
-                self?.posterImageView.imageView.downloaded(from: model.imageUrl)
+                guard let view = self?.posterImageView.imageView else { return }
+                view.fetchImage(from: model.imageUrl) { view.image = $0 }
             }.store(in: &bag)
 
         viewModel.makePoster

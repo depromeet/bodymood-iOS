@@ -319,7 +319,6 @@
 				96DAF9CC2726D81E00B21E08 /* Camera */,
 				E8AD75B62721CF20009A3432 /* Cells */,
 				9610B3072702379B00539F99 /* LoginViewController.swift */,
-				E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */,
 				9676E4C42725745B0068C979 /* SplashViewController.swift */,
 				96DAF9CF2727017100B21E08 /* EmotionViewController.swift */,
 				E8B3735E272C4F2A00833052 /* PosterView.swift */,
@@ -355,7 +354,6 @@
 			isa = PBXGroup;
 			children = (
 				9624B31127060B4A007CB5BA /* LoginViewModel.swift */,
-				E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */,
 				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
 				96AB433B273512E3001B2808 /* CameraViewModel.swift */,
 				966363B22736561300F81387 /* MypageViewModel.swift */,
@@ -494,16 +492,24 @@
 		E86EC945271B640200A7DD54 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
-				E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		E87D25622737CE800056F14C /* PhotoAlbum */ = {
+			isa = PBXGroup;
+			children = (
+				E86EC938271AD2B500A7DD54 /* AlbumViewController.swift */,
+				E86EC93A271ADE3A00A7DD54 /* AlbumViewModel.swift */,
+				E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */,
+				E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */,
+			);
+			path = PhotoAlbum;
 			sourceTree = "<group>";
 		};
 		E8AD75B62721CF20009A3432 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				E86EC93C271B1FAD00A7DD54 /* PhotoCell.swift */,
-				E8AD75B82721CF36009A3432 /* PosterCell.swift */,
 				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
 				966363B427365F5F00F81387 /* MypageCell.swift */,
 			);
@@ -522,6 +528,7 @@
 		E8B3517527279A1B00A9C54D /* Scene */ = {
 			isa = PBXGroup;
 			children = (
+				E87D25622737CE800056F14C /* PhotoAlbum */,
 				E8F856A42737A76D006FA900 /* PosterDetail */,
 				E8F8569C27369BA2006FA900 /* PosterList */,
 				E8B3519A27283A5400A9C54D /* PosterTemplate */,
@@ -627,6 +634,7 @@
 			children = (
 				E8AD75B02721A80C009A3432 /* PosterListViewController.swift */,
 				E8AD75B22721A817009A3432 /* PosterListViewModel.swift */,
+				E8AD75B82721CF36009A3432 /* PosterCell.swift */,
 				E8F8569D27369BAA006FA900 /* UseCase */,
 			);
 			path = PosterList;

@@ -2,6 +2,8 @@ import UIKit
 import Photos
 
 extension UIImageView {
+    static let cache = NSCache<NSString, UIImage>()
+
     func fetchImageAsset(
         _ asset: PHAsset,
         frameSize: CGSize? = nil,
@@ -20,7 +22,7 @@ extension UIImageView {
         options.deliveryMode = PHImageRequestOptionsDeliveryMode.highQualityFormat
         options.isSynchronous = false
         options.isNetworkAccessAllowed = true
-        
+
         options.progressHandler = {  (progress, error, stop, info) in
             Log.debug("progress: \(progress)")
         }
@@ -33,23 +35,41 @@ extension UIImageView {
             resultHandler: resultHandler)
     }
 
-    func downloaded(from url: URL, contentMode mode: ContentMode = .scaleAspectFit) {
-        contentMode = mode
+    func fetchImage(from url: URL,
+                    resultHandler: @escaping (UIImage?) -> Void) {
+        let key = NSString(string: url.absoluteString)
+        
+        if let image = Self.cache.object(forKey: key) {
+            DispatchQueue.main.async { resultHandler(image) }
+            return
+        }
+
         URLSession.shared.dataTask(with: url) { data, response, error in
-            guard
-                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
-                let data = data, error == nil,
-                let image = UIImage(data: data)
-            else { return }
-            DispatchQueue.main.async { [weak self] in
-                self?.image = image
+            let image: UIImage?
+            if let httpURLResponse = response as? HTTPURLResponse,
+               httpURLResponse.statusCode == 200,
+               let mimeType = response?.mimeType,
+               mimeType.hasPrefix("image"),
+               let data = data, error == nil {
+                image = UIImage(data: data)
+            } else {
+                image = nil
             }
+            
+            if let image = image {
+                Self.cache.setObject(image, forKey: key)
+            }
+
+            DispatchQueue.main.async { resultHandler(image) }
         }.resume()
     }
 
-    func downloaded(from link: String, contentMode mode: ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
+    func fetchImage(from urlString: String,
+                    resultHandler: @escaping (UIImage?) -> Void) {
+        if let url = URL(string: urlString) {
+            fetchImage(from: url, resultHandler: resultHandler)
+        } else {
+            resultHandler(nil)
+        }
     }
 }

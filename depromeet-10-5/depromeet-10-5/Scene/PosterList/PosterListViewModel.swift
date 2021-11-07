@@ -16,6 +16,8 @@ protocol PosterListViewModelType {
     var mypageBtnTapped: PassthroughSubject<Void, Never> { get }
     var addBtnTapped: PassthroughSubject<Void, Never> { get }
     var posterSelected: PassthroughSubject<Int, Never> { get }
+    
+    func loadImage() -> AnyPublisher<Bool, Never>
 }
 
 class PosterListViewModel: PosterListViewModelType {
