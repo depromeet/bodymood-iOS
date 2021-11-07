@@ -23,13 +23,14 @@ class PosterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(with asset: PHAsset) {
-        assetId = asset.localIdentifier
-        imageView.fetchImageAsset(asset, frameSize: bounds.size) { [weak self] image, _ in
-            if self?.assetId == asset.localIdentifier {
-                self?.imageView.image = image
-            }
-        }
+    func update(with model: PosterPhotoResponseModel) {
+        imageView.downloaded(from: model.imageUrl)
+//        assetId = model.localIdentifier
+//        imageView.fetchImageAsset(asset, frameSize: bounds.size) { [weak self] image, _ in
+//            if self?.assetId == asset.localIdentifier {
+//                self?.imageView.image = image
+//            }
+//        }
     }
 
     override func prepareForReuse() {

@@ -5,7 +5,7 @@ import UIKit
 protocol ExerciseRecordViewModelType: ExerciseListViewModelType {
     // Outputs
     var categories: CurrentValueSubject<[ExerciseCategoryModel], Never> { get }
-    var firstDepthCategories: CurrentValueSubject<[ExerciseItemModel], Never> { get }
+    var firstDepthCategories: CurrentValueSubject<[ExerciseCategoryModel], Never> { get }
     var buttonTitle: CurrentValueSubject<String, Never> { get }
     var canEnableButton: CurrentValueSubject<Bool, Never> { get }
     var canShowButton: CurrentValueSubject<Bool, Never> { get }
@@ -29,7 +29,7 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
     private var fetchSubscription: AnyCancellable?
     private var bag = Set<AnyCancellable>()
     private let selectedExerciseList = CurrentValueSubject<[IndexPath], Never>([])
-    private let resultReciever: CurrentValueSubject<[ExerciseItemModel], Never>
+    private let resultReciever: CurrentValueSubject<[ExerciseCategoryModel], Never>
 
     let categories = CurrentValueSubject<[ExerciseCategoryModel], Never>([])
     let buttonTitle = CurrentValueSubject<String, Never>("")
@@ -38,15 +38,15 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
     let canEnableButton = CurrentValueSubject<Bool, Never>(false)
     let canShowButton = CurrentValueSubject<Bool, Never>(true)
     let bgColorHexPair: CurrentValueSubject<(Int, Int), Never>
-    let firstDepthCategories = CurrentValueSubject<[ExerciseItemModel], Never>([])
+    let firstDepthCategories = CurrentValueSubject<[ExerciseCategoryModel], Never>([])
  
     let selectBtnTapped = PassthroughSubject<Void, Never>()
-    let currentIdxOfFirstDepth = CurrentValueSubject<Int, Never>(0)
+    let currentIdxOfFirstDepth = CurrentValueSubject<Int, Never>(-1)
     let itemTapped = PassthroughSubject<Int, Never>()
 
     init(useCase: ExerciseRecordUseCaseType,
          bgColorHexPair: (Int, Int) = (0xffffff, 0xffffff),
-         resultReciever: CurrentValueSubject<[ExerciseItemModel], Never>) {
+         resultReciever: CurrentValueSubject<[ExerciseCategoryModel], Never>) {
         self.useCase = useCase
         self.resultReciever = resultReciever
 
@@ -89,15 +89,17 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
                 guard let self = self else { return }
                 let list = self.selectedExerciseList.value.compactMap {
                     self.categories.value[safe: $0.section]?.children?[safe: $0.item]
-                }.map { ExerciseItemModel(english: $0.name, korean: $0.description) }
+                }
                 self.resultReciever.send(list)
             }.store(in: &bag)
     }
 
     private func fetchCategories() {
-        fetchSubscription = useCase.fetch().sink { [weak self] list in
+        fetchSubscription = useCase.fetch().sink { _ in
+        } receiveValue: { [weak self] list in
             self?.categories.send(list)
-            self?.firstDepthCategories.send(list.map { .init(english: $0.name, korean: $0.description) })
+            self?.firstDepthCategories.send(list)
+            self?.currentIdxOfFirstDepth.send(0)
         }
     }
 }

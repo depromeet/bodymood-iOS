@@ -39,6 +39,7 @@ class ExerciseRecordViewController: UIViewController {
 
     private func bind() {
         viewModel.firstDepthCategories
+            .filter { !$0.isEmpty }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] list in
                 self?.updateMenu(with: list)
@@ -46,6 +47,7 @@ class ExerciseRecordViewController: UIViewController {
             }.store(in: &bag)
 
         viewModel.currentIdxOfFirstDepth
+            .filter { $0 >= 0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] idx in
                 guard let self = self else { return }
@@ -89,7 +91,7 @@ class ExerciseRecordViewController: UIViewController {
             }.store(in: &bag)
     }
 
-    private func updateMenu(with items: [ExerciseItemModel], animatingDifferences: Bool = true) {
+    private func updateMenu(with items: [ExerciseCategoryModel], animatingDifferences: Bool = true) {
         var snapshot = SnapShot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
@@ -239,9 +241,9 @@ extension ExerciseRecordViewController {
 
 // MARK: - Definitions
 extension ExerciseRecordViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, ExerciseItemModel>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, ExerciseItemModel>
-    typealias CellRegistration = UICollectionView.CellRegistration<FirstDepthCategoryCell, ExerciseItemModel>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, ExerciseCategoryModel>
+    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, ExerciseCategoryModel>
+    typealias CellRegistration = UICollectionView.CellRegistration<FirstDepthCategoryCell, ExerciseCategoryModel>
 
     enum Section {
         case main

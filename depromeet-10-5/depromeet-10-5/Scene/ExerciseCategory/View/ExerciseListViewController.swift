@@ -10,9 +10,9 @@ class ExerciseListViewController: UIViewController {
     private var bag = Set<AnyCancellable>()
     private let viewModel: ExerciseListViewModelType
 
-    private let itemList: [ExerciseItemModel]
+    private let itemList: [ExerciseCategoryModel]
 
-    init(with itemList: [ExerciseItemModel], viewModel: ExerciseListViewModelType) {
+    init(with itemList: [ExerciseCategoryModel], viewModel: ExerciseListViewModelType) {
         self.itemList = itemList
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -59,7 +59,7 @@ extension ExerciseListViewController {
             }.store(in: &bag)
     }
 
-    func updateList(with items: [ExerciseItemModel], animatingDifferences: Bool = true) {
+    func updateList(with items: [ExerciseCategoryModel], animatingDifferences: Bool = true) {
         var snapshot = SnapShot()
         snapshot.appendSections([.main])
         snapshot.appendItems(items, toSection: .main)
@@ -145,9 +145,9 @@ extension ExerciseListViewController {
 
 // MARK: - Definitions
 extension ExerciseListViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, ExerciseItemModel>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, ExerciseItemModel>
-    typealias CellRegistration = UICollectionView.CellRegistration<SecondDepthCategoryCell, ExerciseItemModel>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, ExerciseCategoryModel>
+    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, ExerciseCategoryModel>
+    typealias CellRegistration = UICollectionView.CellRegistration<SecondDepthCategoryCell, ExerciseCategoryModel>
 
     enum Section {
         case main

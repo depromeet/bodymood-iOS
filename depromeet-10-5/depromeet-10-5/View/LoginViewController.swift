@@ -140,7 +140,7 @@ extension LoginViewController {
     }
 
     private func moveToPosterList() {
-        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
+        let mainVM = PosterListViewModel(useCase: PosterUseCase())
         let mainVC = PosterListViewController(viewModel: mainVM)
         let nav = MainNavigationController(rootViewController: mainVC)
         nav.modalPresentationStyle = .fullScreen

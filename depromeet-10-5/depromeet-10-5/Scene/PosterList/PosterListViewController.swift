@@ -104,7 +104,7 @@ extension PosterListViewController {
             }.store(in: &subscriptions)
     }
 
-    private func updateList(with photos: [PHAsset], animatingDifferences: Bool = true) {
+    private func updateList(with photos: [PosterPhotoResponseModel], animatingDifferences: Bool = true) {
         var snapshot = SnapShot()
         snapshot.appendSections([.main])
         snapshot.appendItems(photos, toSection: .main)
@@ -289,9 +289,9 @@ extension PosterListViewController: UIGestureRecognizerDelegate {
 
 // MARK: - Definitions
 extension PosterListViewController {
-    typealias DataSource = UICollectionViewDiffableDataSource<Section, PHAsset>
-    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, PHAsset>
-    typealias CellRegistration = UICollectionView.CellRegistration<PosterCell, PHAsset>
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, PosterPhotoResponseModel>
+    typealias SnapShot = NSDiffableDataSourceSnapshot<Section, PosterPhotoResponseModel>
+    typealias CellRegistration = UICollectionView.CellRegistration<PosterCell, PosterPhotoResponseModel>
 
     enum Section {
         case main
