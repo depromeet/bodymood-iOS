@@ -76,13 +76,11 @@ class PosterView: UIView {
         emotionLabel.text = emotion.englishTitle
 
         updateFonts()
-        print(#function)
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         updateFonts()
-        print(#function)
     }
 
     private func updateFonts() {

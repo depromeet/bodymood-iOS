@@ -38,8 +38,9 @@ struct BodyMoodAPIService {
         httpBody.appendString(convertFormField(named: "categories", value: value, using: boundary))
         ["posterImage": requestModel.posterImage,
          "originImage": requestModel.originImage].forEach {
-            guard let data = $0.value.pngData() else { return }
-            httpBody.append(convertFileData(fieldName: $0.key, fileName: "\(Date()).png", mimeType: "image/png", fileData: data, using: boundary))
+            
+            guard let data = $0.value.jpegData(compressionQuality: 0.5) else { return }
+            httpBody.append(convertFileData(fieldName: $0.key, fileName: "\(Date()).jpeg", mimeType: "image/jpeg", fileData: data, using: boundary))
         }
         httpBody.appendString("--\(boundary)--")
 
