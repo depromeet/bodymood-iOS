@@ -81,7 +81,7 @@
 		E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */; };
 		E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD7645272437CF009A3432 /* CommonLayout.swift */; };
 		E8AD764927248834009A3432 /* CommonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764827248834009A3432 /* CommonText.swift */; };
-		E8AD764B2724B1EE009A3432 /* Date+toString.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764A2724B1EE009A3432 /* Date+toString.swift */; };
+		E8AD764B2724B1EE009A3432 /* Date+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764A2724B1EE009A3432 /* Date+.swift */; };
 		E8AD764D27254509009A3432 /* PosterTemplateListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764C27254509009A3432 /* PosterTemplateListViewController.swift */; };
 		E8AD764F272552BD009A3432 /* UIButton+setBackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD764E272552BD009A3432 /* UIButton+setBackgroundColor.swift */; };
 		E8B351432725EB8600A9C54D /* PosterTemplateCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B351422725EB8600A9C54D /* PosterTemplateCell.swift */; };
@@ -196,7 +196,7 @@
 		E8AD76412724315D009A3432 /* PosterDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterDetailViewModel.swift; sourceTree = "<group>"; };
 		E8AD7645272437CF009A3432 /* CommonLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonLayout.swift; sourceTree = "<group>"; };
 		E8AD764827248834009A3432 /* CommonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonText.swift; sourceTree = "<group>"; };
-		E8AD764A2724B1EE009A3432 /* Date+toString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+toString.swift"; sourceTree = "<group>"; };
+		E8AD764A2724B1EE009A3432 /* Date+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+.swift"; sourceTree = "<group>"; };
 		E8AD764C27254509009A3432 /* PosterTemplateListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterTemplateListViewController.swift; sourceTree = "<group>"; };
 		E8AD764E272552BD009A3432 /* UIButton+setBackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+setBackgroundColor.swift"; sourceTree = "<group>"; };
 		E8B351422725EB8600A9C54D /* PosterTemplateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterTemplateCell.swift; sourceTree = "<group>"; };
@@ -476,7 +476,7 @@
 				E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */,
 				E8AD75B42721BDE4009A3432 /* String+toAttributedText.swift */,
 				E8AD75BA2721D175009A3432 /* Collection+subscript.swift */,
-				E8AD764A2724B1EE009A3432 /* Date+toString.swift */,
+				E8AD764A2724B1EE009A3432 /* Date+.swift */,
 				E8AD764E272552BD009A3432 /* UIButton+setBackgroundColor.swift */,
 				E86415072725755000D58B3E /* UIColor+init.swift */,
 				E8B3518A2727A87900A9C54D /* UIViewController+embed.swift */,
@@ -860,7 +860,7 @@
 				E8B351452725ED6F00A9C54D /* PosterTemplate.swift in Sources */,
 				E8AD764F272552BD009A3432 /* UIButton+setBackgroundColor.swift in Sources */,
 				9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */,
-				E8AD764B2724B1EE009A3432 /* Date+toString.swift in Sources */,
+				E8AD764B2724B1EE009A3432 /* Date+.swift in Sources */,
 				E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */,
 				E8B3730F2729AD9E00833052 /* UIStackView+removeAllArrangedSubviews.swift in Sources */,
 				E8BBC0C7272ED2E100EEBD5E /* MainNavigationController.swift in Sources */,

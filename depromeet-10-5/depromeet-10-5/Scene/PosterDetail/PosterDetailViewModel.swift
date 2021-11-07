@@ -34,7 +34,10 @@ class PosterDetailViewModel: PosterDetailViewModelType {
     init(with poster: PosterPhotoResponseModel? = nil, mode: PosterDetailContentMode, templateType: PosterTemplate.TemplateType? = nil) {
         self.poster = .init(poster)
         switch mode {
-        case .general: title = .init(Date().toString())
+        case .general:
+            let date = Date.fromISO8601(poster?.createdAt ?? "", withFractionalSeconds: true)
+            let dateString = date?.toString()
+            title = .init(dateString ?? Date().toString())
         case .editing: title = .init(Date().toString())
         }
         shareBtnTitle = .init(CommonText.shareBtnText)
