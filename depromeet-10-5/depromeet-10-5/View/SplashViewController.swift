@@ -93,7 +93,9 @@ extension SplashViewController {
     private func moveToPoster() {
         let mainVM = PosterListViewModel(useCase: PosterUseCase())
         let mainVC = PosterListViewController(viewModel: mainVM)
-        self.navigationController?.pushViewController(mainVC, animated: false)
+        let nav = MainNavigationController(rootViewController: mainVC)
+        nav.modalPresentationStyle = .fullScreen
+        self.present(nav, animated: false, completion: nil)
     }
 
     private func moveToLogin() {
