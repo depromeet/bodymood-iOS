@@ -12,7 +12,7 @@ struct BodyMoodAPIService {
         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJpc3MiOiJkZ2RnIiwiZXhwIjoxNjM2MzAwNDk1LCJpYXQiOjE2MzYyMTQwOTV9.b4l3ALd5GcBWul1Dwns684ZX9XMLI_GvZuH-HqFMc5w"
     }
 
-    func fetchPosterList(page: Int, size: Int) -> AnyPublisher<[PosterPhotoResponseModel], Error> {
+    func fetchPosterList(page: Int, size: Int) -> AnyPublisher<PosterPhotoListResponseModel, Error> {
         let url = URL(string: "\(baseURL)/api/v1/posters?page=\(page)&size=\(size)")
         return URLRequest(url: url!)
             .setHttpMethod(.GET)
@@ -98,9 +98,18 @@ struct BodyMoodAPIResponse<Data: Decodable>: Decodable {
     let data: Data
 }
 
+struct PosterPhotoListResponseModel: Decodable, Hashable {
+    let totalCount: Int
+    let pageTotalCount: Int
+    let pagePosition: Int
+    let posters: [PosterPhotoResponseModel]
+}
+
 struct PosterPhotoResponseModel: Decodable, Hashable {
     let photoId: Int
     let imageUrl: String
+    let createdAt: String
+    let updatedAt: String
 }
 
 struct PosterAddResponseModel: Decodable {

@@ -43,10 +43,10 @@ class PosterListViewModel: PosterListViewModelType {
     @discardableResult
     func loadImage() -> AnyPublisher<Bool, Never> {
         let finished = CurrentValueSubject<Bool, Never>(false)
-        fetchSubscription = useCase.fetch(page: 0, size: 10)
+        fetchSubscription = useCase.fetch(page: 0, size: 100)
             .sink(receiveCompletion: { _ in
             }, receiveValue: { [weak self] list in
-                self?.postersSubject.send(list)
+                self?.postersSubject.send(list.posters)
                 finished.send(true)
             })
         return finished.eraseToAnyPublisher()
