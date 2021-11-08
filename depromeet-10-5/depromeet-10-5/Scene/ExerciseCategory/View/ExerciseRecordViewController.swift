@@ -153,7 +153,7 @@ extension ExerciseRecordViewController {
     private func createPageIndicator() -> PageIndicator {
         let view = PageIndicator()
         view.backgroundColor = .init(rgb: 0xAAAAAA).withAlphaComponent(0.3)
-        view.bar.backgroundColor = .init(rgb: 0xAAAAAA)
+        view.bar.backgroundColor = blendedBGColor.isDarkColor ? .white : .init(rgb: 0xAAAAAA)
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
         return view

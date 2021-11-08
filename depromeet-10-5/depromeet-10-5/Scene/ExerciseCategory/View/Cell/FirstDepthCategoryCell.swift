@@ -36,7 +36,7 @@ class FirstDepthCategoryCell: UICollectionViewCell {
         super.init(frame: frame)
         layout()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -48,6 +48,7 @@ class FirstDepthCategoryCell: UICollectionViewCell {
         textColor = parentBgColor.isDarkColor ? .white : UIColor(rgb: 0x1C1C1C)
         titleLabel.textColor = textColor.withAlphaComponent(Style.alpha)
         descLabel.textColor = textColor.withAlphaComponent(Style.alpha)
+        isSelected = isSelected
     }
 
     override var isSelected: Bool {
