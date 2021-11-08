@@ -51,5 +51,11 @@ class PosterTemplateListViewModel: PosterTemplateListViewModelType {
                 else { return }
                 self.moveToPosterEdit.send(type)
             }.store(in: &bag)
+
+        // data prefetch
+        ExerciseRecordUseCase().fetch().sink { _ in
+        } receiveValue: { model in
+        }.store(in: &bag)
+
     }
 }
