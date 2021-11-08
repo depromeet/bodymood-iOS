@@ -10,5 +10,7 @@ import Foundation
 struct UserDefaultKey {
     static let accessToken: String = "accessToken"
     static let refreshToken: String = "refreshToken"
+    static let userName: String = "userName"
+    static let kakaoID: String = "kakaoID"
     static let appleID: String = "appleID"
 }

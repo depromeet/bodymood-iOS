@@ -10,7 +10,7 @@ import UIKit
 
 class RemoveAccountViewController: UIViewController {
     private let viewModel: RemoveAccountViewModelType
-    
+
     init(viewModel: RemoveAccountViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)

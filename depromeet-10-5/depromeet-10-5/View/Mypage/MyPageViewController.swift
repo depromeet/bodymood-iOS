@@ -7,6 +7,9 @@ class MyPageViewController: UIViewController {
     }()
 
     private lazy var userInfoButton: UIButton = { createUserInfoButton() }()
+    private lazy var userInfoView: UIView = { createUserInfoView() }()
+    private lazy var userInfoLabel: UILabel = { createUserInfoLabel() }()
+    private lazy var userNameLabel: UILabel = { createUserNameLabel() }()
     private lazy var agreementButton: UIButton = { createAgreementButton() }()
     private lazy var removeAccountButton: UIButton = { createRemoveAccountButton() }()
     private lazy var logoutButton: UIButton = { createLogoutButton() }()
@@ -58,8 +61,11 @@ extension MyPageViewController {
             self?.navigationController?.pushViewController(viewController, animated: true)
         }.store(in: &subscriptions)
 
-        viewModel.moveToLogout.sink {
-            Log.debug("move to user info")
+        viewModel.moveToLogout.sink { [weak self] _ in
+            let viewController = LogoutModalViewController()
+            viewController.modalPresentationStyle = .overCurrentContext
+            viewController.modalTransitionStyle = .crossDissolve
+            self?.present(viewController, animated: false)
         }.store(in: &subscriptions)
 
         navigationItem.leftBarButtonItem?.tap
@@ -81,6 +87,11 @@ extension MyPageViewController {
         removeAccountButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
                 self?.viewModel.moveToRemoveAccount.send()
+        }.store(in: &subscriptions)
+
+        logoutButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.viewModel.moveToLogout.send()
         }.store(in: &subscriptions)
     }
 }
@@ -116,6 +127,34 @@ extension MyPageViewController {
         return button
     }
 
+    private func createUserInfoView() -> UIView {
+        let view = UIButton()
+        view.backgroundColor = .white
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
+        return view
+    }
+
+    private func createUserInfoLabel() -> UILabel {
+        let label = UILabel()
+        label.text = "계정 정보"
+        label.textColor = .black
+        label.font = UIFont(name: "Pretendard-Regular", size: 16)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        userInfoView.addSubview(label)
+        return label
+    }
+
+    private func createUserNameLabel() -> UILabel {
+        let label = UILabel()
+        label.text = "\(String(describing: UserDefaults.standard.string(forKey: UserDefaultKey.userName)))"
+        label.font = UIFont(name: "Pretendard-Bold", size: 16)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        userInfoView.addSubview(label)
+        return label
+    }
+
     private func createAgreementButton() -> UIButton {
         let button = UIButton()
         button.setTitle("개인정보 약관 동의", for: .normal)
@@ -137,7 +176,7 @@ extension MyPageViewController {
     }
 
     private func createStackView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [userInfoButton, agreementButton, removeAccountButton])
+        let stackView = UIStackView(arrangedSubviews: [userInfoView, agreementButton, removeAccountButton])
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
         stackView.spacing = 0
@@ -177,7 +216,17 @@ extension MyPageViewController {
         ])
 
         NSLayoutConstraint.activate([
-            userInfoButton.heightAnchor.constraint(equalToConstant: 54)
+            userInfoView.heightAnchor.constraint(equalToConstant: 54)
+        ])
+
+        NSLayoutConstraint.activate([
+            userInfoLabel.heightAnchor.constraint(equalToConstant: 54),
+            userInfoLabel.leadingAnchor.constraint(equalTo: userInfoView.leadingAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
+            userNameLabel.heightAnchor.constraint(equalToConstant: 54),
+            userNameLabel.trailingAnchor.constraint(equalTo: userInfoView.trailingAnchor)
         ])
 
         NSLayoutConstraint.activate([

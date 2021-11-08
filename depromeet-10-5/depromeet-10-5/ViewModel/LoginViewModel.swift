@@ -15,7 +15,7 @@ import KakaoSDKUser
 protocol LoginViewModelType {
     var accessToken: AnyPublisher<String, Never> { get }
     var kakaoLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
-    var appleLoginButtonDidTap: PassthroughSubject<Void,Never> { get }
+    var appleLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
     var moveToPoster: PassthroughSubject<Void, Never> { get }
     func kakaoLoginAvailable() -> Future<OAuthToken, Error>
     func kakaoLogin(accessToken: String)
@@ -86,6 +86,18 @@ class LoginViewModel: LoginViewModelType {
                 self.saveTokens(accessToken: accessToken, refreshToken: refreshToken)
             }
         })
+    }
+
+    func kakaoUserName() {
+        UserApi.shared.me(){  user, error in
+            if let error = error {
+                Log.error(error)
+            } else {
+                let userName = user?.kakaoAccount?.legalName ?? "이름 없음"
+                Log.debug(userName)
+                UserDefaults.standard.set(userName, forKey: UserDefaultKey.userName)
+            }
+        }
     }
 
     func appleLogin(accessToken: String) {
