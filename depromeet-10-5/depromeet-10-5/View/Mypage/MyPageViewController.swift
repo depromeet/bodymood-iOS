@@ -44,7 +44,7 @@ class MyPageViewController: UIViewController {
 extension MyPageViewController {
     private func bind() {
         viewModel.userInfo()
-        
+
         viewModel.title.sink { [weak self] title in
             self?.titleLabel.text = title
         }.store(in: &subscriptions)
@@ -65,7 +65,7 @@ extension MyPageViewController {
         }.store(in: &subscriptions)
 
         viewModel.moveToLogout.sink { [weak self] _ in
-            let viewController = LogoutModalViewController(viewModel: LogoutViewModel())
+            let viewController = LogoutModalViewController(viewModel: LogoutViewModel(service: AuthService()))
             viewController.modalPresentationStyle = .overCurrentContext
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: false)

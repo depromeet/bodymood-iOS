@@ -14,6 +14,7 @@
 		9624C82A273958F300D8312A /* LogoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C829273958F300D8312A /* LogoutViewModel.swift */; };
 		9624C82C273965A500D8312A /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C82B273965A500D8312A /* UserResponse.swift */; };
 		9624C82E2739664F00D8312A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C82D2739664F00D8312A /* UserService.swift */; };
+		9624C83027397D5400D8312A /* LogoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C82F27397D5400D8312A /* LogoutResponse.swift */; };
 		9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665626EDD79E00E8E547 /* AppDelegate.swift */; };
 		9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665826EDD79E00E8E547 /* SceneDelegate.swift */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
@@ -128,6 +129,7 @@
 		9624C829273958F300D8312A /* LogoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewModel.swift; sourceTree = "<group>"; };
 		9624C82B273965A500D8312A /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		9624C82D2739664F00D8312A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		9624C82F27397D5400D8312A /* LogoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutResponse.swift; sourceTree = "<group>"; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -303,6 +305,7 @@
 			children = (
 				9641DAE82713319C001BE018 /* LoginRequest.swift */,
 				9641DAEA271331A2001BE018 /* LoginResponse.swift */,
+				9624C82F27397D5400D8312A /* LogoutResponse.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -808,6 +811,7 @@
 				96AB5B11272F0C5500EC2485 /* UIView+DashedCircle.swift in Sources */,
 				E83C14D02725CD9A007B2E11 /* PageIndicator.swift in Sources */,
 				E8B351912727D01100A9C54D /* DefaultBottomButtonView.swift in Sources */,
+				9624C83027397D5400D8312A /* LogoutResponse.swift in Sources */,
 				9610B3082702379B00539F99 /* LoginViewController.swift in Sources */,
 				E8B351972728398F00A9C54D /* PosterEditViewController.swift in Sources */,
 				E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */,

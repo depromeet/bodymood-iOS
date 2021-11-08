@@ -12,23 +12,28 @@ protocol LogoutViewModelType {
     var moveToLogout: PassthroughSubject<Void, Never> { get }
     var moveToBack: PassthroughSubject<Void, Never> { get }
     func kakaoLogout() -> Future<Bool, Error>
-
+    func logout() -> Future<Bool, Never>
     // Inputs
     var logoutButtonDidTap: PassthroughSubject<Void, Never> { get }
     var cancelButtonDidTap: PassthroughSubject<Void, Never> { get }
 }
 
 class LogoutViewModel: LogoutViewModelType {
+    private var fetchScription: AnyCancellable?
     private var subscriptions = Set<AnyCancellable>()
+    private var authService: AuthServiceType
+
     var title: AnyPublisher<String, Never> { Just("로그아웃을 하시겠습니까?").eraseToAnyPublisher() }
     var logoutButtonTitle: AnyPublisher<String, Never> { Just("로그아웃").eraseToAnyPublisher() }
     var cancelButtonTitle: AnyPublisher<String, Never> { Just("취소").eraseToAnyPublisher() }
+    var logoutSubject: CurrentValueSubject<LogoutResponse, Never>?
     let moveToLogout = PassthroughSubject<Void, Never>()
     let moveToBack = PassthroughSubject<Void, Never>()
     let logoutButtonDidTap = PassthroughSubject<Void, Never>()
     let cancelButtonDidTap = PassthroughSubject<Void, Never>()
 
-    init() {
+    init(service: AuthServiceType) {
+        self.authService = service
         bind()
     }
 
@@ -55,6 +60,24 @@ class LogoutViewModel: LogoutViewModelType {
                     promise(.success(true))
                 }
             }
+        }
+    }
+
+    func logout() -> Future<Bool, Never> {
+        return Future { [weak self] promise in
+            self?.fetchScription = self?.authService.logout().sink(receiveCompletion: { completion in
+
+                if case let .failure(error) = completion {
+                    Log.error("서버 로그아웃 실패 \(error)")
+                }
+            }, receiveValue: { response in
+                Log.debug(response.code)
+                if response.code == "0000" {
+                    promise(.success(true))
+                } else {
+                    Log.error("웹서버 로그아웃 실패")
+                }
+            })
         }
     }
 }

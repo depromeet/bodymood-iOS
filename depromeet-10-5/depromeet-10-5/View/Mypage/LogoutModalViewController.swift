@@ -308,7 +308,7 @@ extension LogoutModalViewController {
         if socialProvider == "KAKAO" {
             kakaoLogout()
         } else if socialProvider == "APPLE" {
-            appleLogout()
+            logoutToServer()
         }
     }
 
@@ -325,21 +325,38 @@ extension LogoutModalViewController {
         }, receiveValue: { [weak self] result in
             if result == true {
                 Log.debug("로그아웃 성공")
+                    self?.logoutToServer()
 
-                self?.view.window?.rootViewController?.dismiss(animated: false, completion: {
-                    let loginVC = LoginViewController(viewModel: LoginViewModel(service: AuthService()))
-                    loginVC.modalPresentationStyle = .fullScreen
-
-                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
-                    appDelegate?.window?.rootViewController?.present(loginVC, animated: true, completion: nil)
-                })
             } else {
                 Log.debug("로그아웃 실패")
             }
         }).store(in: &subscriptions)
     }
 
-    private func appleLogout() {
-        
+    private func logoutToServer() {
+        let logout = viewModel.logout()
+        logout.sink ( receiveCompletion: { [weak self] completion in
+            switch completion {
+            case .finished:
+                Log.debug("웹 서버 로그인 성공")
+            case .failure(let error):
+                Log.error(error)
+            }
+        }, receiveValue: {[weak self] result in
+            Log.debug(result)
+            if result == true {
+                self?.moveToLogin()
+            }
+        }).store(in: &subscriptions)
+    }
+
+    private func moveToLogin() {
+        view.window?.rootViewController?.dismiss(animated: false, completion: {
+        let loginVC = LoginViewController(viewModel: LoginViewModel(service: AuthService()))
+        loginVC.modalPresentationStyle = .fullScreen
+
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.window?.rootViewController?.present(loginVC, animated: true, completion: nil)
+        })
     }
 }
