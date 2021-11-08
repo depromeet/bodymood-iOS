@@ -91,6 +91,14 @@ extension PosterListViewController {
                 self?.navigationController?.pushViewController(templateVC, animated: true)
             }.store(in: &subscriptions)
 
+        viewModel.showAlert
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] msg in
+                let alertVC = UIAlertController(title: msg, message: nil, preferredStyle: .alert)
+                alertVC.addAction(.init(title: "확인", style: .default, handler: nil))
+                self?.present(alertVC, animated: true)
+            }.store(in: &subscriptions)
+
         mypageButton.publisher(for: .touchUpInside).sink { [weak self] _ in
             guard let self = self else { return }
             self.viewModel.mypageBtnTapped.send()
@@ -103,7 +111,7 @@ extension PosterListViewController {
                 else { return }
                 self.viewModel.addBtnTapped.send(())
             }.store(in: &subscriptions)
-        
+
         refreshControl.publisher(for: .valueChanged)
             .compactMap { [weak self] _ in
                 return self?.viewModel.loadImage()
@@ -112,6 +120,7 @@ extension PosterListViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.refreshControl.endRefreshing()
+                self?.collectionView.reloadData()
             }.store(in: &subscriptions)
     }
 

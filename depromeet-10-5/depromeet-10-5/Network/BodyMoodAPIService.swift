@@ -20,7 +20,7 @@ struct BodyMoodAPIService {
             .setAuthToken(token)
             .toDataTaskPublisher()
     }
-    
+
     func fetchExerciseCategory() -> AnyPublisher<[ExerciseCategoryModel], Error> {
         let url = URL(string: "\(baseURL)/api/v1/exercises/categories")
         return URLRequest(url: url!)

@@ -10,6 +10,7 @@ protocol PosterListViewModelType {
     var moveToDetail: PassthroughSubject<PosterPhotoResponseModel, Never> { get }
     var moveToTemplate: PassthroughSubject<Void, Never> { get }
     var moveToMypage: PassthroughSubject<Void, Never> { get }
+    var showAlert: PassthroughSubject<String, Never> { get }
 
     // Inputs
     var numOfItemsPerRow: Int { get }
@@ -35,6 +36,7 @@ class PosterListViewModel: PosterListViewModelType {
     let moveToMypage = PassthroughSubject<Void, Never>()
     let moveToDetail = PassthroughSubject<PosterPhotoResponseModel, Never>()
     let moveToTemplate = PassthroughSubject<Void, Never>()
+    let showAlert = PassthroughSubject<String, Never>()
 
     let mypageBtnTapped = PassthroughSubject<Void, Never>()
     let addBtnTapped = PassthroughSubject<Void, Never>()
@@ -44,10 +46,14 @@ class PosterListViewModel: PosterListViewModelType {
     func loadImage() -> AnyPublisher<Bool, Never> {
         let finished = CurrentValueSubject<Bool, Never>(false)
         fetchSubscription = useCase.fetch(page: 0, size: 100)
-            .sink(receiveCompletion: { _ in
+            .sink(receiveCompletion: { [weak self] completion in
+                finished.send(true)
+                if case let .failure(error) = completion {
+                    let errorMsg = (error as? BodyMoodErrorResponse)?.message ?? error.localizedDescription
+                    self?.showAlert.send(errorMsg)
+                }
             }, receiveValue: { [weak self] list in
                 self?.postersSubject.send(list.posters)
-                finished.send(true)
             })
         return finished.eraseToAnyPublisher()
     }

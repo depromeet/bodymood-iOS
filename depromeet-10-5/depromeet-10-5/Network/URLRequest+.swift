@@ -53,7 +53,7 @@ extension URLRequest {
             }.decode(type: BodyMoodAPIResponse<Response>.self, decoder: JSONDecoder())
             .mapError({ error -> Error in
                 print(error)
-                return NetworkError.unknownError
+                return (error as? BodyMoodErrorResponse) ?? NetworkError.unknownError
             }).map(\.data)
             .eraseToAnyPublisher()
     }
