@@ -62,7 +62,7 @@ extension MyPageViewController {
         }.store(in: &subscriptions)
 
         viewModel.moveToLogout.sink { [weak self] _ in
-            let viewController = LogoutModalViewController()
+            let viewController = LogoutModalViewController(viewModel: LogoutViewModel())
             viewController.modalPresentationStyle = .overCurrentContext
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: false)
@@ -147,7 +147,7 @@ extension MyPageViewController {
 
     private func createUserNameLabel() -> UILabel {
         let label = UILabel()
-        label.text = "\(String(describing: UserDefaults.standard.string(forKey: UserDefaultKey.userName)))"
+        label.text = "\(String(describing: UserDefaults.standard.string(forKey: UserDefaultKey.userName)!))"
         label.font = UIFont(name: "Pretendard-Bold", size: 16)
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false

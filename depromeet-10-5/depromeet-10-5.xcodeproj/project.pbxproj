@@ -11,6 +11,7 @@
 		9610B3082702379B00539F99 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9610B3072702379B00539F99 /* LoginViewController.swift */; };
 		9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B30F27060AB7007CB5BA /* LogConfig.swift */; };
 		9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B31127060B4A007CB5BA /* LoginViewModel.swift */; };
+		9624C82A273958F300D8312A /* LogoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C829273958F300D8312A /* LogoutViewModel.swift */; };
 		9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665626EDD79E00E8E547 /* AppDelegate.swift */; };
 		9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665826EDD79E00E8E547 /* SceneDelegate.swift */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
@@ -122,6 +123,7 @@
 		9610B3072702379B00539F99 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9624B30F27060AB7007CB5BA /* LogConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfig.swift; sourceTree = "<group>"; };
 		9624B31127060B4A007CB5BA /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		9624C829273958F300D8312A /* LogoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewModel.swift; sourceTree = "<group>"; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 				966363BD27368A1E00F81387 /* UserInfoViewModel.swift */,
 				966363BF27368D1100F81387 /* AgreementViewModel.swift */,
 				966363C127368D1B00F81387 /* RemoveAccountViewModel.swift */,
+				9624C829273958F300D8312A /* LogoutViewModel.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -805,6 +808,7 @@
 				E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */,
 				E864150A27257D9600D58B3E /* PosterTemplateListViewModel.swift in Sources */,
 				966363B727366A5400F81387 /* UserInfoViewController.swift in Sources */,
+				9624C82A273958F300D8312A /* LogoutViewModel.swift in Sources */,
 				E8B3518627279FBA00A9C54D /* ExerciseRecordViewModel.swift in Sources */,
 				9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */,
 				E8AD764027243139009A3432 /* PosterDetailViewController.swift in Sources */,

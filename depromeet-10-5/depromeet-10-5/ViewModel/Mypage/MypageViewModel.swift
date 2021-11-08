@@ -59,7 +59,7 @@ class MypageViewModel: MypageViewModelType {
         removeAccountButtonDidTap.sink { [weak self] _ in
             self?.moveToRemoveAccount.send()
         }.store(in: &subscriptions)
-        
+
         logoutButtonDidTap.sink { [weak self] _ in
             self?.moveToLogout.send()
         }.store(in: &subscriptions)

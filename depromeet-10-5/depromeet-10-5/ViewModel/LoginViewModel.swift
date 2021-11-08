@@ -69,10 +69,11 @@ class LoginViewModel: LoginViewModelType {
     }
 
     func kakaoLogin(accessToken: String) {
-        fetchSubscription = authService.kakaoLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
+        fetchSubscription = authService.kakaoLogin(accessToken: accessToken)
+            .sink(receiveCompletion: { [weak self] completion in
             switch completion {
             case .finished:
-                Log.debug("success kakaoLogin View Model")
+                self?.kakaoUserName()
 
             case .failure(let error):
                 Log.error(error)
@@ -93,7 +94,7 @@ class LoginViewModel: LoginViewModelType {
             if let error = error {
                 Log.error(error)
             } else {
-                let userName = user?.kakaoAccount?.legalName ?? "이름 없음"
+                let userName = user?.kakaoAccount?.profile?.nickname ?? "이름 없음"
                 Log.debug(userName)
                 UserDefaults.standard.set(userName, forKey: UserDefaultKey.userName)
             }

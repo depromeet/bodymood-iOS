@@ -1,3 +1,4 @@
+import Combine
 import UIKit
 
 class LogoutModalViewController: UIViewController {
@@ -18,15 +19,19 @@ class LogoutModalViewController: UIViewController {
     private let defaultHeight =  Layout.defaultHeight
     private let dismissibleHeight = Layout.defaultHeight
     private let maximumContainerHeight = Layout.defaultHeight
-    
+
     private var currentContainerHeight = Layout.defaultHeight
     private var containerViewHeightConstraint: NSLayoutConstraint?
     private var containerViewBottomConstraint: NSLayoutConstraint?
+
+    private var viewModel: LogoutViewModelType
+    private var subscriptions = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         style()
         layout()
+        bind()
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.handleCloseAction))
         dimmedView.addGestureRecognizer(tapGesture)
@@ -39,8 +44,55 @@ class LogoutModalViewController: UIViewController {
         animateShowDimmedView()
         animatePresentContainer()
     }
+
+    init(viewModel: LogoutViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    deinit {
+        Log.debug(Self.self, #function)
+    }
 }
 
+// MARK: - Configure bind
+extension LogoutModalViewController {
+    private func bind() {
+        viewModel.title.sink { [weak self] title in
+            self?.titleLabel.text = title
+        }.store(in: &subscriptions)
+
+        viewModel.logoutButtonTitle.sink { [weak self] title in
+            self?.logoutButton.setTitle(title, for: .normal)
+        }.store(in: &subscriptions)
+
+        viewModel.cancelButtonTitle.sink { [weak self] title in
+            self?.cancelButton.setTitle(title, for: .normal)
+        }.store(in: &subscriptions)
+
+        viewModel.moveToLogout.sink {
+            Log.debug("로그아웃")
+        }.store(in: &subscriptions)
+
+        viewModel.moveToBack.sink { [weak self] _ in
+            self?.animateDismissView()
+        }.store(in: &subscriptions)
+
+        logoutButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            self?.viewModel.moveToLogout.send()
+        }.store(in: &subscriptions)
+
+        cancelButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            self?.viewModel.moveToBack.send()
+        }.store(in: &subscriptions)
+    }
+}
+
+// MARK: - Configure UI
 extension LogoutModalViewController {
     private func createContainerLabel() -> UIView {
         let view = UIView()
@@ -61,6 +113,16 @@ extension LogoutModalViewController {
         return view
     }
 
+    private func createTitleLabel() -> UILabel {
+        let label = UILabel()
+        label.font = UIFont(name: "Pretendard-SemiBold", size: 16)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(label)
+        return label
+    }
+
     private func createLogoutView() -> UIView {
         let view = UIView()
         view.backgroundColor = .black
@@ -70,7 +132,6 @@ extension LogoutModalViewController {
 
     private func createLogoutButton() -> UIButton {
         let button = UIButton()
-        button.setTitle("로그아웃", for: .normal)
         button.titleLabel?.textColor = .white
         button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -89,14 +150,13 @@ extension LogoutModalViewController {
 
     private func createCancelButton() -> UIButton {
         let button = UIButton()
-        button.setTitle("취소", for: .normal)
         button.setTitleColor(.black, for: .normal)
         button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
         cancelView.addSubview(button)
         return button
     }
-    
+
     private func createStackView() -> UIView {
         let stackView = UIStackView(arrangedSubviews: [logoutView, cancelView])
         stackView.axis = .horizontal
@@ -106,17 +166,6 @@ extension LogoutModalViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
         return stackView
-    }
-
-    private func createTitleLabel() -> UILabel {
-        let label = UILabel()
-        label.text = "로그아웃을 하시겠습니까?"
-        label.font = UIFont(name: "Pretendard-SemiBold", size: 16)
-        label.textAlignment = .center
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(label)
-        return label
     }
 
     private func style () {

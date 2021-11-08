@@ -162,11 +162,15 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
             let token = appleIDCredential.identityToken
             let tokenToUTF8 = String(data: token!, encoding: .utf8)!
+            Log.debug(tokenToUTF8)
             appleAccessToken = tokenToUTF8
 
             self.loginViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
 
             if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
+//                let name = appleIDCredential.fullName
+//                Log.debug(name)
+//                UserDefaults.standard.set(name, forKey: UserDefaultKey.userName)
                 moveToPosterList()
             }
 

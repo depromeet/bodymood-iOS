@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 class SplashViewController: UIViewController, Coordinating {
     enum Layout {
         static let imageTopSpacing: CGFloat = 44
@@ -74,14 +75,15 @@ extension SplashViewController {
         UIView.animate(withDuration: 1.5, delay: 0.3, options: .curveEaseOut, animations: {
             self.imageView.alpha = 0.0
 
-        }, completion: { done in
+        }, completion: { [weak self] done in
             if done {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-                        self.moveToPoster()
-                    } else {
-                        self.moveToLogin()
-                    }
+                    self?.moveToLogin()
+//                    if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
+//                        self.moveToPoster()
+//                    } else {
+//                        self.moveToLogin()
+//                    }
                 }
             }
         })
