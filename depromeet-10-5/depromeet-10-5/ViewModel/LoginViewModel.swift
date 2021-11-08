@@ -15,7 +15,8 @@ import KakaoSDKUser
 protocol LoginViewModelType {
     var accessToken: AnyPublisher<String, Never> { get }
     var kakaoLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
-    var appleLoginButtonDidTap: PassthroughSubject<Void,Never> { get }
+    var appleLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
+    var developerLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
     var moveToPoster: PassthroughSubject<Void, Never> { get }
     func kakaoLoginAvailable() -> Future<OAuthToken, Error>
     func kakaoLogin(accessToken: String)
@@ -23,6 +24,7 @@ protocol LoginViewModelType {
 }
 
 class LoginViewModel: LoginViewModelType {
+    
     private let accessTokenSubject = CurrentValueSubject<String, Never>(.init())
     private var authService: AuthServiceType
     private var fetchSubscription: AnyCancellable?
@@ -33,6 +35,7 @@ class LoginViewModel: LoginViewModelType {
 
     let kakaoLoginButtonDidTap =  PassthroughSubject<Void, Never>()
     let appleLoginButtonDidTap = PassthroughSubject<Void, Never>()
+    let developerLoginButtonDidTap = PassthroughSubject<Void, Never>()
     let moveToPoster = PassthroughSubject<Void, Never>()
 
     init(service: AuthServiceType) {
@@ -52,6 +55,16 @@ class LoginViewModel: LoginViewModelType {
         appleLoginButtonDidTap.sink { [weak self] _ in
             self?.moveToPoster.send()
         }.store(in: &subscriptions)
+        
+        developerLoginButtonDidTap.setFailureType(to: Error.self)
+            .combineLatest(BodyMoodAPIService.shared.getTestToken())
+            .map { $0.1 }
+            .sink { _ in
+            } receiveValue: { [weak self] model in
+                self?.saveTokens(accessToken: model.accessToken, refreshToken: model.refreshToken)
+                self?.moveToPoster.send()
+            }.store(in: &subscriptions)
+
     }
 
     func kakaoLoginAvailable() -> Future<OAuthToken, Error> {

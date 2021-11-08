@@ -265,3 +265,11 @@ extension PosterDetailViewController {
         posterHeightConstraint?.isActive = !cond
     }
 }
+
+func presentPosterList(in viewController: UIViewController) {
+    let mainVM = PosterListViewModel(useCase: PosterUseCase())
+    let mainVC = PosterListViewController(viewModel: mainVM)
+    let nav = MainNavigationController(rootViewController: mainVC)
+    nav.modalPresentationStyle = .fullScreen
+    viewController.present(nav, animated: false, completion: nil)
+}

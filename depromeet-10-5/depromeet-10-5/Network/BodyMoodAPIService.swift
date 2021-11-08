@@ -9,7 +9,7 @@ struct BodyMoodAPIService {
 
     let baseURL = "https://dev.bodymood.me"
     var token: String {
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJpc3MiOiJkZ2RnIiwiZXhwIjoxNjM2MzAwNDk1LCJpYXQiOjE2MzYyMTQwOTV9.b4l3ALd5GcBWul1Dwns684ZX9XMLI_GvZuH-HqFMc5w"
+        UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) ?? ""
     }
 
     func fetchPosterList(page: Int, size: Int) -> AnyPublisher<PosterPhotoListResponseModel, Error> {
@@ -52,6 +52,17 @@ struct BodyMoodAPIService {
             .toDataTaskPublisher()
     }
 
+    func getTestToken() -> AnyPublisher<TokenResponseModel, Error> {
+        let url = URL(string: "\(baseURL)/test-token")
+        return URLRequest(url: url!)
+            .setHttpMethod(.GET)
+            .setContentType(.json)
+            .toDataTaskPublisher()
+    }
+    
+}
+
+extension BodyMoodAPIService {
     private func convertFormField(named name: String,
                                   value: String,
                                   using boundary: String) -> String {
@@ -125,4 +136,9 @@ struct PosterAddRequestModel {
     let originImage: UIImage
     let emotion: String
     let categories: [Int]
+}
+
+struct TokenResponseModel: Decodable {
+    let accessToken: String
+    let refreshToken: String
 }
