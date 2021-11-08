@@ -12,6 +12,8 @@
 		9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B30F27060AB7007CB5BA /* LogConfig.swift */; };
 		9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B31127060B4A007CB5BA /* LoginViewModel.swift */; };
 		9624C82A273958F300D8312A /* LogoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C829273958F300D8312A /* LogoutViewModel.swift */; };
+		9624C82C273965A500D8312A /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C82B273965A500D8312A /* UserResponse.swift */; };
+		9624C82E2739664F00D8312A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C82D2739664F00D8312A /* UserService.swift */; };
 		9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665626EDD79E00E8E547 /* AppDelegate.swift */; };
 		9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665826EDD79E00E8E547 /* SceneDelegate.swift */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
@@ -124,6 +126,8 @@
 		9624B30F27060AB7007CB5BA /* LogConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfig.swift; sourceTree = "<group>"; };
 		9624B31127060B4A007CB5BA /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		9624C829273958F300D8312A /* LogoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewModel.swift; sourceTree = "<group>"; };
+		9624C82B273965A500D8312A /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
+		9624C82D2739664F00D8312A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -350,6 +354,7 @@
 			children = (
 				9641DAED2713334E001BE018 /* AuthService.swift */,
 				965EC52927279EEE00ED0420 /* EmotionService.swift */,
+				9624C82D2739664F00D8312A /* UserService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -357,11 +362,12 @@
 		967549AF2700A874007E4E95 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				96F0BBC1271B3001008013CA /* UserDefaultKey.swift */,
 				965EC52727279E5200ED0420 /* EmotionResponse.swift */,
 				9641DAE727133188001BE018 /* Auth */,
-				96F0BBC1271B3001008013CA /* UserDefaultKey.swift */,
 				E8AD75BC2723C834009A3432 /* PosterModel.swift */,
 				E8B351442725ED6F00A9C54D /* PosterTemplate.swift */,
+				9624C82B273965A500D8312A /* UserResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -818,6 +824,7 @@
 				965EC52827279E5200ED0420 /* EmotionResponse.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */,
+				9624C82E2739664F00D8312A /* UserService.swift in Sources */,
 				9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
 				E8AD75B92721CF36009A3432 /* PosterCell.swift in Sources */,
@@ -867,6 +874,7 @@
 				96A31FDD2739387800355090 /* LogoutModalViewController.swift in Sources */,
 				E8AD764D27254509009A3432 /* PosterTemplateListViewController.swift in Sources */,
 				E8B3735F272C4F2A00833052 /* PosterView.swift in Sources */,
+				9624C82C273965A500D8312A /* UserResponse.swift in Sources */,
 				E8AD75B52721BDE4009A3432 /* String+toAttributedText.swift in Sources */,
 				E8AD76422724315D009A3432 /* PosterDetailViewModel.swift in Sources */,
 				E8B3730D2729828000833052 /* UIView+toImage.swift in Sources */,

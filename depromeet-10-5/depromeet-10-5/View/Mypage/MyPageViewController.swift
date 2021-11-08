@@ -17,6 +17,7 @@ class MyPageViewController: UIViewController {
 
     private var viewModel: MypageViewModelType
     private var subscriptions = Set<AnyCancellable>()
+    private var userInfo: UserDataResponse?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,8 @@ class MyPageViewController: UIViewController {
 // MARK: - Configure bind
 extension MyPageViewController {
     private func bind() {
+        viewModel.userInfo()
+        
         viewModel.title.sink { [weak self] title in
             self?.titleLabel.text = title
         }.store(in: &subscriptions)
@@ -147,8 +150,8 @@ extension MyPageViewController {
 
     private func createUserNameLabel() -> UILabel {
         let label = UILabel()
-        label.text = "\(String(describing: UserDefaults.standard.string(forKey: UserDefaultKey.userName)!))"
         label.font = UIFont(name: "Pretendard-Bold", size: 16)
+        label.text = UserDefaults.standard.string(forKey: UserDefaultKey.userName)!
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         userInfoView.addSubview(label)

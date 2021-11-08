@@ -73,7 +73,7 @@ class LoginViewModel: LoginViewModelType {
             .sink(receiveCompletion: { [weak self] completion in
             switch completion {
             case .finished:
-                self?.kakaoUserName()
+                Log.debug("success with kakao login")
 
             case .failure(let error):
                 Log.error(error)
@@ -87,18 +87,6 @@ class LoginViewModel: LoginViewModelType {
                 self.saveTokens(accessToken: accessToken, refreshToken: refreshToken)
             }
         })
-    }
-
-    func kakaoUserName() {
-        UserApi.shared.me(){  user, error in
-            if let error = error {
-                Log.error(error)
-            } else {
-                let userName = user?.kakaoAccount?.profile?.nickname ?? "이름 없음"
-                Log.debug(userName)
-                UserDefaults.standard.set(userName, forKey: UserDefaultKey.userName)
-            }
-        }
     }
 
     func appleLogin(accessToken: String) {

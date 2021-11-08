@@ -74,8 +74,8 @@ extension LogoutModalViewController {
             self?.cancelButton.setTitle(title, for: .normal)
         }.store(in: &subscriptions)
 
-        viewModel.moveToLogout.sink {
-            Log.debug("로그아웃")
+        viewModel.moveToLogout.sink { [weak self] _ in
+            self?.logout()
         }.store(in: &subscriptions)
 
         viewModel.moveToBack.sink { [weak self] _ in
@@ -300,5 +300,46 @@ extension LogoutModalViewController {
         default:
             break
         }
+    }
+
+    private func logout() {
+        let socialProvider = UserDefaults.standard.string(forKey: UserDefaultKey.socialProvider)
+
+        if socialProvider == "KAKAO" {
+            kakaoLogout()
+        } else if socialProvider == "APPLE" {
+            appleLogout()
+        }
+    }
+
+    private func kakaoLogout() {
+        let kakaoLogout = viewModel.kakaoLogout()
+        kakaoLogout.sink(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                Log.debug("kakao logout finished")
+
+            case .failure(let error):
+                Log.error(error)
+            }
+        }, receiveValue: { [weak self] result in
+            if result == true {
+                Log.debug("로그아웃 성공")
+
+                self?.view.window?.rootViewController?.dismiss(animated: false, completion: {
+                    let loginVC = LoginViewController(viewModel: LoginViewModel(service: AuthService()))
+                    loginVC.modalPresentationStyle = .fullScreen
+
+                    let appDelegate = UIApplication.shared.delegate as? AppDelegate
+                    appDelegate?.window?.rootViewController?.present(loginVC, animated: true, completion: nil)
+                })
+            } else {
+                Log.debug("로그아웃 실패")
+            }
+        }).store(in: &subscriptions)
+    }
+
+    private func appleLogout() {
+        
     }
 }

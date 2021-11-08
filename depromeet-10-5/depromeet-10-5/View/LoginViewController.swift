@@ -168,9 +168,6 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             self.loginViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
 
             if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-//                let name = appleIDCredential.fullName
-//                Log.debug(name)
-//                UserDefaults.standard.set(name, forKey: UserDefaultKey.userName)
                 moveToPosterList()
             }
 

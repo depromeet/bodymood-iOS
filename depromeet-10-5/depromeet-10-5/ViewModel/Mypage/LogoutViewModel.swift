@@ -1,6 +1,9 @@
 import UIKit
 import Combine
 
+import KakaoSDKAuth
+import KakaoSDKUser
+
 protocol LogoutViewModelType {
     // Outputs
     var title: AnyPublisher<String, Never> { get }
@@ -8,6 +11,7 @@ protocol LogoutViewModelType {
     var cancelButtonTitle: AnyPublisher<String, Never> { get }
     var moveToLogout: PassthroughSubject<Void, Never> { get }
     var moveToBack: PassthroughSubject<Void, Never> { get }
+    func kakaoLogout() -> Future<Bool, Error>
 
     // Inputs
     var logoutButtonDidTap: PassthroughSubject<Void, Never> { get }
@@ -40,5 +44,17 @@ class LogoutViewModel: LogoutViewModelType {
         cancelButtonDidTap.sink { [weak self] _ in
             self?.moveToBack.send()
         }.store(in: &subscriptions)
+    }
+
+    func kakaoLogout() -> Future<Bool, Error> {
+        return Future { promise in
+            UserApi.shared.logout { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(true))
+                }
+            }
+        }
     }
 }
