@@ -71,7 +71,7 @@ extension PosterListViewController {
             }.store(in: &subscriptions)
 
         viewModel.moveToMypage.receive(on: DispatchQueue.main).sink { [weak self] in
-            let mypageVC = MyPageViewController(viewModel: MypageViewModel())
+            let mypageVC = MyPageViewController(viewModel: MypageViewModel(service: UserService()))
             self?.navigationController?.pushViewController(mypageVC, animated: true)
         }.store(in: &subscriptions)
 

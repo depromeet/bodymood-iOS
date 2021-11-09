@@ -11,11 +11,11 @@ import Combine
 protocol MypageViewModelType {
     // Outputs
     var title: AnyPublisher<String, Never> { get }
-    var moveToBack: PassthroughSubject<Void, Never> { get }
     var moveToUserInfo: PassthroughSubject<Void, Never> { get }
     var moveToAgreement: PassthroughSubject<Void, Never> { get }
     var moveToRemoveAccount: PassthroughSubject<Void, Never> { get }
     var moveToLogout: PassthroughSubject<Void, Never> { get }
+    func userInfo()
 
     // Inputs
     var backButtonDidTap: PassthroughSubject<Void, Never> { get }
@@ -28,8 +28,11 @@ protocol MypageViewModelType {
 class MypageViewModel: MypageViewModelType {
 
     private var subscriptions = Set<AnyCancellable>()
+    private var fetchSubscription: AnyCancellable?
+    private var userService: UserServiceType
+    private var userSubject: CurrentValueSubject<UserDataResponse, Never>?
+
     var title: AnyPublisher<String, Never> { Just("마이페이지").eraseToAnyPublisher()}
-    let moveToBack = PassthroughSubject<Void, Never>()
     let moveToUserInfo = PassthroughSubject<Void, Never>()
     let moveToAgreement = PassthroughSubject<Void, Never>()
     let moveToRemoveAccount = PassthroughSubject<Void, Never>()
@@ -41,7 +44,8 @@ class MypageViewModel: MypageViewModelType {
     let removeAccountButtonDidTap = PassthroughSubject<Void, Never>()
     let logoutButtonDidTap = PassthroughSubject<Void, Never>()
 
-    init() {
+    init(service: UserServiceType) {
+        self.userService = service
         bind()
     }
 
@@ -61,9 +65,27 @@ class MypageViewModel: MypageViewModelType {
         removeAccountButtonDidTap.sink { [weak self] _ in
             self?.moveToRemoveAccount.send()
         }.store(in: &subscriptions)
-        
+
         logoutButtonDidTap.sink { [weak self] _ in
             self?.moveToLogout.send()
         }.store(in: &subscriptions)
+    }
+
+    func userInfo() {
+        fetchSubscription = userService.userInfo().sink(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                Log.debug("success getting user info")
+            case .failure(let error):
+                Log.error(error)
+            }
+        }, receiveValue: { response in
+            UserDefaults.standard.setValue(response.data.name, forKey: UserDefaultKey.userName)
+            UserDefaults.standard.setValue(response.data.socialProvider, forKey: UserDefaultKey.socialProvider)
+        })
+    }
+    
+    func logout() {
+        
     }
 }

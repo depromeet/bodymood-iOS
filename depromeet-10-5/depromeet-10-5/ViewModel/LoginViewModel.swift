@@ -82,10 +82,11 @@ class LoginViewModel: LoginViewModelType {
     }
 
     func kakaoLogin(accessToken: String) {
-        fetchSubscription = authService.kakaoLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
+        fetchSubscription = authService.kakaoLogin(accessToken: accessToken)
+            .sink(receiveCompletion: { [weak self] completion in
             switch completion {
             case .finished:
-                Log.debug("success kakaoLogin View Model")
+                Log.debug("success with kakao login")
 
             case .failure(let error):
                 Log.error(error)
