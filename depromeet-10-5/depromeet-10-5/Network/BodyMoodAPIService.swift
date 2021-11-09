@@ -28,6 +28,15 @@ struct BodyMoodAPIService {
             .setContentType(.json)
             .toDataTaskPublisher()
     }
+    
+    func fetchUserInfo() -> AnyPublisher<UserDataResponse, Error> {
+        let url = URL(string: "\(baseURL)/api/v1/user/me")
+        return URLRequest(url: url!)
+            .setHttpMethod(.GET)
+            .setContentType(.json)
+            .setAuthToken(token)
+            .toDataTaskPublisher()
+    }
 
     func addPoster(_ requestModel: PosterAddRequestModel) -> AnyPublisher<PosterAddResponseModel, Error> {
         let boundary = "\(UUID().uuidString)"
@@ -59,7 +68,6 @@ struct BodyMoodAPIService {
             .setContentType(.json)
             .toDataTaskPublisher()
     }
-    
 }
 
 extension BodyMoodAPIService {
@@ -98,10 +106,12 @@ extension NSMutableData {
 
 enum NetworkError: Error {
     case unknownError
+    case tokenError
 }
 struct BodyMoodErrorResponse: Error, Decodable {
     let code: String
     let message: String
+    let httpResponseStatusCode: Int?
 }
 
 struct BodyMoodAPIResponse<Data: Decodable>: Decodable {

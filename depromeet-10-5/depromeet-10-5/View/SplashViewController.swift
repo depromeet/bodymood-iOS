@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import Combine
 
-class SplashViewController: UIViewController, Coordinating {
+class SplashViewController: UIViewController {
     enum Layout {
         static let imageTopSpacing: CGFloat = 44
         static let imageLeadingSpacing: CGFloat = 31
@@ -15,7 +16,7 @@ class SplashViewController: UIViewController, Coordinating {
         static let imageBottomSpacing: CGFloat = -48
     }
 
-    var coordinator: Coordinator?
+    let animationFinished = PassthroughSubject<Void, Never>()
 
     private lazy var imageView: UIImageView = { createSplashImageView() }()
 
@@ -25,9 +26,18 @@ class SplashViewController: UIViewController, Coordinating {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.setNeedsStatusBarAppearanceUpdate()
         style()
         layout()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        animate()
+    }
+
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
 }
 
@@ -47,18 +57,8 @@ extension SplashViewController {
         return imageView
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-            self.animate()
-        }
-    }
-
     private func style() {
         view.backgroundColor = .white
-
-        navigationController?.navigationBar.backgroundColor = .black
         navigationController?.isNavigationBarHidden = true
     }
 
@@ -72,21 +72,10 @@ extension SplashViewController {
     }
 
     private func animate() {
-        UIView.animate(withDuration: 1.5, delay: 0.3, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 2, animations: {
             self.imageView.alpha = 0.0
-
-        }, completion: { [weak self] done in
-            if done {
-                guard let self = self else { return }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    if let accessToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) {
-                        // TODO: 유효한 토큰인지 확인하는 로직 필요
-                        presentPosterList(in: self)
-                    } else {
-                        self.moveToLogin()
-                    }
-                }
-            }
+        }, completion: { [weak self] _ in
+            self?.animationFinished.send()
         })
     }
 }

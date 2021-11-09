@@ -307,7 +307,10 @@ extension LogoutModalViewController {
 
         if socialProvider == "KAKAO" {
             kakaoLogout()
+            logoutToServer()
         } else if socialProvider == "APPLE" {
+            logoutToServer()
+        } else {
             logoutToServer()
         }
     }
@@ -325,8 +328,6 @@ extension LogoutModalViewController {
         }, receiveValue: { [weak self] result in
             if result == true {
                 Log.debug("로그아웃 성공")
-                    self?.logoutToServer()
-
             } else {
                 Log.debug("로그아웃 실패")
             }
@@ -344,28 +345,24 @@ extension LogoutModalViewController {
             }
         }, receiveValue: {[weak self] result in
             Log.debug(result)
-            if result == true {
-                self?.clearDefaultKeys()
-                self?.moveToLogin()
-            }
+            self?.clearDefaultKeys()
+            self?.moveToLogin()
         }).store(in: &subscriptions)
     }
 
     private func clearDefaultKeys() {
-        let defaults = UserDefaults.standard
-        let dictionary = defaults.dictionaryRepresentation()
-        dictionary.keys.forEach { key in
-            defaults.removeObject(forKey: key)
-        }
+        UserDefaultKey.keys.forEach { UserDefaults.standard.removeObject(forKey: $0) }
     }
 
     private func moveToLogin() {
-        view.window?.rootViewController?.dismiss(animated: false, completion: {
-        let loginVC = LoginViewController(viewModel: LoginViewModel(service: AuthService()))
-        loginVC.modalPresentationStyle = .fullScreen
-
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        appDelegate?.window?.rootViewController?.present(loginVC, animated: true, completion: nil)
-        })
+        // TODO: 뷰전환 로직 수정 필요
+        guard let nav = presentingViewController as? UINavigationController else { return }
+        dismiss(animated: false) {
+            let loginVC = LoginViewController(viewModel: LoginViewModel(service: AuthService()))
+            loginVC.modalPresentationStyle = .fullScreen
+            nav.present(loginVC, animated: false) {
+                nav.popToRootViewController(animated: false)
+            }
+        }
     }
 }

@@ -63,7 +63,7 @@ class AuthService: AuthServiceType {
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        let accessToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken)!
+        let accessToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) ?? ""
         urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
 
         return URLSession.shared.dataTaskPublisher(for: urlRequest)

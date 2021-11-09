@@ -13,4 +13,8 @@ struct UserDefaultKey {
     static let userName: String = "userName"
     static let appleID: String = "appleID"
     static let socialProvider: String = "socialProvider"
+    
+    static var keys = [
+        accessToken, refreshToken, userName, appleID, socialProvider
+    ]
 }

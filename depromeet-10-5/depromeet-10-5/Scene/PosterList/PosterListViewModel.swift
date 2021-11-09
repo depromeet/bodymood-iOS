@@ -50,7 +50,7 @@ class PosterListViewModel: PosterListViewModelType {
                 finished.send(true)
                 if case let .failure(error) = completion {
                     let errorMsg = (error as? BodyMoodErrorResponse)?.message ?? error.localizedDescription
-                    self?.showAlert.send(errorMsg)
+//                    self?.showAlert.send(errorMsg)
                 }
             }, receiveValue: { [weak self] list in
                 self?.postersSubject.send(list.posters)

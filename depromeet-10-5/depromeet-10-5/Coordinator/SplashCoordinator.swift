@@ -13,12 +13,12 @@ class SplashCoordinator: Coordinator {
     }
 
     func start() {
-        var viewController: UIViewController & Coordinating {
-            let viewController = SplashViewController()
-            viewController.coordinator = self
-            return viewController
-        }
-
-        navigationController?.setViewControllers([viewController], animated: false)
+//        var viewController: UIViewController & Coordinating {
+//            let viewController = SplashViewController()
+//            viewController.coordinator = self
+//            return viewController
+//        }
+//
+//        navigationController?.setViewControllers([viewController], animated: false)
     }
 }

@@ -69,12 +69,13 @@ class LogoutViewModel: LogoutViewModelType {
 
                 if case let .failure(error) = completion {
                     Log.error("서버 로그아웃 실패 \(error)")
+                    promise(.success(false))
+                } else {
+                    promise(.success(true))
                 }
             }, receiveValue: { response in
                 Log.debug(response.code)
-                if response.code == "0000" {
-                    promise(.success(true))
-                } else {
+                if response.code != "0000" {
                     Log.error("웹서버 로그아웃 실패")
                 }
             })

@@ -78,6 +78,7 @@
 		E86EC942271B32E700A7DD54 /* ImageResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC941271B32E700A7DD54 /* ImageResource.swift */; };
 		E86EC944271B465300A7DD54 /* Combine+UIControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC943271B465300A7DD54 /* Combine+UIControl.swift */; };
 		E86EC947271B640F00A7DD54 /* AlbumUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */; };
+		E8833245273AF5EB003ADF25 /* InitialSceneCoodinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8833244273AF5EB003ADF25 /* InitialSceneCoodinator.swift */; };
 		E8AD75B12721A80C009A3432 /* PosterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75B02721A80C009A3432 /* PosterListViewController.swift */; };
 		E8AD75B32721A817009A3432 /* PosterListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75B22721A817009A3432 /* PosterListViewModel.swift */; };
 		E8AD75B52721BDE4009A3432 /* String+toAttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8AD75B42721BDE4009A3432 /* String+toAttributedText.swift */; };
@@ -200,6 +201,7 @@
 		E86EC941271B32E700A7DD54 /* ImageResource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageResource.swift; sourceTree = "<group>"; };
 		E86EC943271B465300A7DD54 /* Combine+UIControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+UIControl.swift"; sourceTree = "<group>"; };
 		E86EC946271B640F00A7DD54 /* AlbumUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumUseCase.swift; sourceTree = "<group>"; };
+		E8833244273AF5EB003ADF25 /* InitialSceneCoodinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialSceneCoodinator.swift; sourceTree = "<group>"; };
 		E8AD75B02721A80C009A3432 /* PosterListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterListViewController.swift; sourceTree = "<group>"; };
 		E8AD75B22721A817009A3432 /* PosterListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PosterListViewModel.swift; sourceTree = "<group>"; };
 		E8AD75B42721BDE4009A3432 /* String+toAttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+toAttributedText.swift"; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				96F0BBBF271B1704008013CA /* Coordinator.swift */,
 				9676E4C627257C110068C979 /* SplashCoordinator.swift */,
 				96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */,
+				E8833244273AF5EB003ADF25 /* InitialSceneCoodinator.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -916,6 +919,7 @@
 				9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */,
 				96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */,
 				965EC52E27280E1E00ED0420 /* EmotionCell.swift in Sources */,
+				E8833245273AF5EB003ADF25 /* InitialSceneCoodinator.swift in Sources */,
 				E8B35152272706E600A9C54D /* ExerciseListViewController.swift in Sources */,
 				966363B32736561300F81387 /* MypageViewModel.swift in Sources */,
 				E8B373132729C58E00833052 /* UIView+addDashedBorder.swift in Sources */,
@@ -1064,13 +1068,13 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3CY8UX9N2S;
+				DEVELOPMENT_TEAM = RC5265XPLQ;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet105;
+				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet1052;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1087,13 +1091,13 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3CY8UX9N2S;
+				DEVELOPMENT_TEAM = RC5265XPLQ;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet105;
+				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet1052;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

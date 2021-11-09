@@ -44,17 +44,22 @@ extension URLRequest {
     func toDataTaskPublisher<Response: Decodable>() -> AnyPublisher<Response, Error> {
         URLSession.shared.dataTaskPublisher(for: self)
             .tryMap { data, response in
-                guard let statusCode = (response as? HTTPURLResponse)?.statusCode,
-                      (200..<300).contains(statusCode) else {
+                guard let statusCode = (response as? HTTPURLResponse)?.statusCode else {
+                    throw NetworkError.unknownError
+                }
+
+                if statusCode == 401 {
+                    throw NetworkError.tokenError
+                }
+
+                guard (200..<300).contains(statusCode) else {
                     let errorResponse = try? JSONDecoder().decode(BodyMoodErrorResponse.self, from: data)
                     throw errorResponse ?? NetworkError.unknownError
                 }
+
                 return data
             }.decode(type: BodyMoodAPIResponse<Response>.self, decoder: JSONDecoder())
-            .mapError({ error -> Error in
-                print(error)
-                return (error as? BodyMoodErrorResponse) ?? NetworkError.unknownError
-            }).map(\.data)
+            .map(\.data)
             .eraseToAnyPublisher()
     }
 }
