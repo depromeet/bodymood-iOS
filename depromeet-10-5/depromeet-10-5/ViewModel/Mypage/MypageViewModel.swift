@@ -15,6 +15,7 @@ protocol MypageViewModelType {
     var moveToAgreement: PassthroughSubject<Void, Never> { get }
     var moveToRemoveAccount: PassthroughSubject<Void, Never> { get }
     var moveToLogout: PassthroughSubject<Void, Never> { get }
+    var userSubject: CurrentValueSubject<UserDataResponse?, Never> { get }
     func userInfo()
 
     // Inputs
@@ -30,7 +31,7 @@ class MypageViewModel: MypageViewModelType {
     private var subscriptions = Set<AnyCancellable>()
     private var fetchSubscription: AnyCancellable?
     private var userService: UserServiceType
-    private var userSubject: CurrentValueSubject<UserDataResponse, Never>?
+    var userSubject =  CurrentValueSubject<UserDataResponse?, Never>(nil)
 
     var title: AnyPublisher<String, Never> { Just("마이페이지").eraseToAnyPublisher()}
     let moveToUserInfo = PassthroughSubject<Void, Never>()
@@ -79,7 +80,10 @@ class MypageViewModel: MypageViewModelType {
             case .failure(let error):
                 Log.error(error)
             }
-        }, receiveValue: { response in
+        }, receiveValue: { [weak self] response in
+            
+            self?.userSubject.send(response.data)
+            
             UserDefaults.standard.setValue(response.data.name, forKey: UserDefaultKey.userName)
             UserDefaults.standard.setValue(response.data.socialProvider, forKey: UserDefaultKey.socialProvider)
         })

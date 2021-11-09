@@ -63,6 +63,11 @@ extension MyPageViewController {
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: false)
         }.store(in: &subscriptions)
+        
+        viewModel.userSubject.receive(on: DispatchQueue.main)
+            .sink { [weak self] response in
+            self?.userInfoLabel.text = response?.name
+        }.store(in: &subscriptions)
 
         navigationItem.leftBarButtonItem?.tap
             .receive(on: DispatchQueue.main)
@@ -129,7 +134,7 @@ extension MyPageViewController {
     private func createUserNameLabel() -> UILabel {
         let label = UILabel()
         label.font = UIFont(name: "Pretendard-Bold", size: 16)
-        label.text = UserDefaults.standard.string(forKey: UserDefaultKey.userName)!
+        label.text = UserDefaults.standard.string(forKey: UserDefaultKey.userName) ?? "이름 없음"
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         userInfoView.addSubview(label)

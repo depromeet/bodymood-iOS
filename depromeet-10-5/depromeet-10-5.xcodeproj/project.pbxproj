@@ -13,11 +13,11 @@
 		9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B31127060B4A007CB5BA /* LoginViewModel.swift */; };
 		9624C82A273958F300D8312A /* LogoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C829273958F300D8312A /* LogoutViewModel.swift */; };
 		9624C82C273965A500D8312A /* UserResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C82B273965A500D8312A /* UserResponse.swift */; };
-		9624C82E2739664F00D8312A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C82D2739664F00D8312A /* UserService.swift */; };
 		9624C83027397D5400D8312A /* LogoutResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624C82F27397D5400D8312A /* LogoutResponse.swift */; };
 		9637665726EDD79E00E8E547 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665626EDD79E00E8E547 /* AppDelegate.swift */; };
 		9637665926EDD79E00E8E547 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9637665826EDD79E00E8E547 /* SceneDelegate.swift */; };
 		9637666026EDD79F00E8E547 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9637665F26EDD79F00E8E547 /* Assets.xcassets */; };
+		9638D20E273AC4F7006A1F96 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9638D20D273AC4F7006A1F96 /* UserService.swift */; };
 		9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAE82713319C001BE018 /* LoginRequest.swift */; };
 		9641DAEB271331A2001BE018 /* LoginResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEA271331A2001BE018 /* LoginResponse.swift */; };
 		9641DAEE2713334E001BE018 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAED2713334E001BE018 /* AuthService.swift */; };
@@ -131,13 +131,13 @@
 		9624B31127060B4A007CB5BA /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		9624C829273958F300D8312A /* LogoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutViewModel.swift; sourceTree = "<group>"; };
 		9624C82B273965A500D8312A /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
-		9624C82D2739664F00D8312A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		9624C82F27397D5400D8312A /* LogoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutResponse.swift; sourceTree = "<group>"; };
 		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9637665F26EDD79F00E8E547 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9637666426EDD79F00E8E547 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9638D20D273AC4F7006A1F96 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		9641DAE82713319C001BE018 /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
 		9641DAEA271331A2001BE018 /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		9641DAED2713334E001BE018 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -359,10 +359,10 @@
 			isa = PBXGroup;
 			children = (
 				9641DAED2713334E001BE018 /* AuthService.swift */,
-				965EC52927279EEE00ED0420 /*
-				9624C82D2739664F00D8312A /* UserService.swift */,
+				965EC52927279EEE00ED0420 /* EmotionService.swift */,
 				E8F856A02737160D006FA900 /* BodyMoodAPIService.swift */,
 				E8F856A227371A26006FA900 /* URLRequest+.swift */,
+				9638D20D273AC4F7006A1F96 /* UserService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -870,7 +870,6 @@
 				965EC52827279E5200ED0420 /* EmotionResponse.swift in Sources */,
 				9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */,
 				9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */,
-				9624C82E2739664F00D8312A /* UserService.swift in Sources */,
 				9676E4C727257C110068C979 /* SplashCoordinator.swift in Sources */,
 				9641DAEE2713334E001BE018 /* AuthService.swift in Sources */,
 				E8AD75B92721CF36009A3432 /* PosterCell.swift in Sources */,
@@ -884,6 +883,7 @@
 				9676E4C52725745B0068C979 /* SplashViewController.swift in Sources */,
 				E8B3514C2726F7EA00A9C54D /* SelectMoodGuideView.swift in Sources */,
 				E8B3518D2727AA5C00A9C54D /* ExerciseCategoryPageViewController.swift in Sources */,
+				9638D20E273AC4F7006A1F96 /* UserService.swift in Sources */,
 				E8B351432725EB8600A9C54D /* PosterTemplateCell.swift in Sources */,
 				9641DAE92713319C001BE018 /* LoginRequest.swift in Sources */,
 				E8B35199272839B100A9C54D /* PosterEditViewModel.swift in Sources */,
@@ -1064,13 +1064,13 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RC5265XPLQ;
+				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet1052;
+				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet105;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1087,13 +1087,13 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = RC5265XPLQ;
+				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet1052;
+				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet105;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

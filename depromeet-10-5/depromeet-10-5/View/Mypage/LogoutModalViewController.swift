@@ -345,9 +345,18 @@ extension LogoutModalViewController {
         }, receiveValue: {[weak self] result in
             Log.debug(result)
             if result == true {
+                self?.clearDefaultKeys()
                 self?.moveToLogin()
             }
         }).store(in: &subscriptions)
+    }
+
+    private func clearDefaultKeys() {
+        let defaults = UserDefaults.standard
+        let dictionary = defaults.dictionaryRepresentation()
+        dictionary.keys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
     }
 
     private func moveToLogin() {

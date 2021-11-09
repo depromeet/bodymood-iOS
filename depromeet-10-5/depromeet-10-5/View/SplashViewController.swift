@@ -77,12 +77,13 @@ extension SplashViewController {
 
         }, completion: { [weak self] done in
             if done {
+                guard let self = self else { return }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                     if let accessToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) {
                         // TODO: 유효한 토큰인지 확인하는 로직 필요
                         presentPosterList(in: self)
                     } else {
-                        self?.moveToLogin()
+                        self.moveToLogin()
                     }
                 }
             }

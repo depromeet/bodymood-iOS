@@ -18,6 +18,7 @@ protocol LoginViewModelType {
     var appleLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
     var developerLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
     var moveToPoster: PassthroughSubject<Void, Never> { get }
+    var loginSuccess: PassthroughSubject<Bool, Never> { get }
     func kakaoLoginAvailable() -> Future<OAuthToken, Error>
     func kakaoLogin(accessToken: String)
     func appleLogin(accessToken: String)
@@ -37,6 +38,7 @@ class LoginViewModel: LoginViewModelType {
     let appleLoginButtonDidTap = PassthroughSubject<Void, Never>()
     let developerLoginButtonDidTap = PassthroughSubject<Void, Never>()
     let moveToPoster = PassthroughSubject<Void, Never>()
+    let loginSuccess = PassthroughSubject<Bool, Never>()
 
     init(service: AuthServiceType) {
         self.authService = service
@@ -87,18 +89,13 @@ class LoginViewModel: LoginViewModelType {
             switch completion {
             case .finished:
                 Log.debug("success with kakao login")
-
+                
             case .failure(let error):
                 Log.error(error)
             }
 
-        }, receiveValue: { response in
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                let accessToken = response.data?.accessToken ?? ""
-                let refreshToken = response.data?.refreshToken ?? ""
-
-                self.saveTokens(accessToken: accessToken, refreshToken: refreshToken)
-            }
+        }, receiveValue: { [weak self] response in
+            self?.valueDidReceived(response: response)
         })
     }
 
@@ -111,14 +108,19 @@ class LoginViewModel: LoginViewModelType {
                 Log.error(error)
             }
 
-        }, receiveValue: { response in
-            DispatchQueue.main.asyncAfter(deadline: .now()+0.5) {
-                let accessToken = response.data?.accessToken ?? ""
-                let refreshToken = response.data?.refreshToken ?? ""
-
-                self.saveTokens(accessToken: accessToken, refreshToken: refreshToken)
-            }
+        }, receiveValue: { [weak self] response in
+            self?.valueDidReceived(response: response)
         })
+    }
+
+    private func valueDidReceived(response: LoginResponse) {
+        guard let accessToken = response.data?.accessToken,
+            let refreshToken = response.data?.refreshToken else {
+                return
+            }
+
+        saveTokens(accessToken: accessToken, refreshToken: refreshToken)
+        moveToPoster.send()
     }
 
     private func saveTokens(accessToken: String, refreshToken: String) {

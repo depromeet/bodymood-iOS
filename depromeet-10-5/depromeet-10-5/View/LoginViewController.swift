@@ -53,7 +53,7 @@ class LoginViewController: UIViewController, Coordinating {
         #if DEBUG
         addDeveloperAccountLoginButton()
         #endif
-        
+
         loginViewModel.moveToPoster
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
@@ -80,7 +80,7 @@ extension LoginViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
-    
+
     private func createDeveloperLoginButton() -> UIButton {
         let button = UIButton()
         button.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
@@ -142,10 +142,6 @@ extension LoginViewController {
             case .finished:
                 self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
 
-                if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-                    self.moveToPosterList()
-                }
-
             case .failure(let error):
                 Log.debug(error)
             }
@@ -164,7 +160,7 @@ extension LoginViewController {
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
     }
-    
+
     @objc func developerLoginBtnDidTap() {
         loginViewModel.developerLoginButtonDidTap.send()
     }
