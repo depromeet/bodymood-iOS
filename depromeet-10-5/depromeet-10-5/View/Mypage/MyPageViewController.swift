@@ -5,8 +5,6 @@ class MyPageViewController: UIViewController {
     private lazy var titleLabel: UILabel = {
         createTitleLabel()
     }()
-
-    private lazy var userInfoButton: UIButton = { createUserInfoButton() }()
     private lazy var userInfoView: UIView = { createUserInfoView() }()
     private lazy var userInfoLabel: UILabel = { createUserInfoLabel() }()
     private lazy var userNameLabel: UILabel = { createUserNameLabel() }()
@@ -49,11 +47,6 @@ extension MyPageViewController {
             self?.titleLabel.text = title
         }.store(in: &subscriptions)
 
-        viewModel.moveToUserInfo.sink { [weak self] _ in
-            let viewController = UserInfoViewController(viewModel: UserInfoViewModel())
-            self?.navigationController?.pushViewController(viewController, animated: true)
-        }.store(in: &subscriptions)
-
         viewModel.moveToAgreement.sink { [weak self] _ in
             let viewController = AgreementViewController(viewModel: AgreementViewModel())
             self?.navigationController?.pushViewController(viewController, animated: true)
@@ -75,11 +68,6 @@ extension MyPageViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
-        }.store(in: &subscriptions)
-
-        userInfoButton.publisher(for: .touchUpInside)
-            .sink { [weak self] _ in
-                self?.viewModel.moveToUserInfo.send()
         }.store(in: &subscriptions)
 
         agreementButton.publisher(for: .touchUpInside)
@@ -118,16 +106,6 @@ extension MyPageViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         navigationItem.titleView = label
         return label
-    }
-
-    private func createUserInfoButton() -> UIButton {
-        let button = UIButton()
-        button.setTitle("계정 정보", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Pretendard-Regular", size: 16)
-        button.contentHorizontalAlignment = .leading
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }
 
     private func createUserInfoView() -> UIView {

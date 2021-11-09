@@ -77,13 +77,12 @@ extension SplashViewController {
 
         }, completion: { [weak self] done in
             if done {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    self?.moveToLogin()
-//                    if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-//                        self.moveToPoster()
-//                    } else {
-//                        self.moveToLogin()
-//                    }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                    if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
+                        self?.moveToPoster()
+                    } else {
+                        self?.moveToLogin()
+                    }
                 }
             }
         })

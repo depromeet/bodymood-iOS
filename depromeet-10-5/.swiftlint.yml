@@ -1,4 +1,5 @@
 excluded:
 - Pods
-- depromeet-10-5/AppDelegate.swift
-- depromeet-10-5/SceneDelegate.swift
+- depromeet-10-5/Delegate/AppDelegate.swift
+- depromeet-10-5/Delegate/SceneDelegate.swift
+- depromeet-10-5/View/Mypage/AgreementViewController.swift

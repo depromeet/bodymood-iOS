@@ -1,17 +1,17 @@
-//
-//  RemoveAccountViewModel.swift
-//  depromeet-10-5
-//
-//  Created by 허예은 on 2021/11/06.
-//
-
 import Combine
 import UIKit
 
 protocol RemoveAccountViewModelType {
-    
+    // Outputs
+    var title: AnyPublisher<String, Never> { get }
 }
 
 class RemoveAccountViewModel: RemoveAccountViewModelType {
-    
+    var title: AnyPublisher<String, Never> {
+        Just("계정 탈퇴").eraseToAnyPublisher()
+    }
+
+    deinit {
+        Log.debug(Self.self, #function)
+    }
 }
