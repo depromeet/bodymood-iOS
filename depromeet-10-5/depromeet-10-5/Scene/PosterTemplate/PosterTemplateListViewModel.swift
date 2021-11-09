@@ -42,7 +42,7 @@ class PosterTemplateListViewModel: PosterTemplateListViewModelType {
     }
 
     private func bind() {
-        selectBtnTapped.combineLatest(templateSelected)
+        selectBtnTapped.zip(templateSelected)
             .map { $0.1 }
             .sink { [weak self] index in
                 guard
@@ -51,5 +51,11 @@ class PosterTemplateListViewModel: PosterTemplateListViewModelType {
                 else { return }
                 self.moveToPosterEdit.send(type)
             }.store(in: &bag)
+
+        // data prefetch
+        ExerciseRecordUseCase().fetch().sink { _ in
+        } receiveValue: { model in
+        }.store(in: &bag)
+
     }
 }

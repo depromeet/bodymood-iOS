@@ -78,8 +78,9 @@ extension SplashViewController {
         }, completion: { [weak self] done in
             if done {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-                    if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
-                        self?.moveToPoster()
+                    if let accessToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) {
+                        // TODO: 유효한 토큰인지 확인하는 로직 필요
+                        presentPosterList(in: self)
                     } else {
                         self?.moveToLogin()
                     }
@@ -91,11 +92,6 @@ extension SplashViewController {
 
 // MARK: - Configure Actions
 extension SplashViewController {
-    private func moveToPoster() {
-        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
-        let mainVC = PosterListViewController(viewModel: mainVM)
-        self.navigationController?.pushViewController(mainVC, animated: false)
-    }
 
     private func moveToLogin() {
         let mainVM = LoginViewModel(service: AuthService())

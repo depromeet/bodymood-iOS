@@ -3,7 +3,7 @@ import Photos
 
 class PosterCell: UICollectionViewCell {
 
-    private var assetId: String?
+    private var imageUrlString: String?
 
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -23,10 +23,10 @@ class PosterCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(with asset: PHAsset) {
-        assetId = asset.localIdentifier
-        imageView.fetchImageAsset(asset, frameSize: bounds.size) { [weak self] image, _ in
-            if self?.assetId == asset.localIdentifier {
+    func update(with model: PosterPhotoResponseModel) {
+        imageUrlString = model.imageUrl
+        imageView.fetchImage(from: model.imageUrl) { [weak self] image in
+            if self?.imageUrlString == model.imageUrl {
                 self?.imageView.image = image
             }
         }

@@ -16,6 +16,7 @@ class LoginViewController: UIViewController, Coordinating {
 
     private lazy var kakaoLoginButton: UIButton = { createKakaoButton() }()
     private lazy var appleLoginButton: UIButton = { createAppleButton() }()
+    private lazy var developerLoginButton: UIButton = { createDeveloperLoginButton() }()
     private lazy var stackView: UIStackView = { createStackView() }()
     private var loginViewModel: LoginViewModelType
 
@@ -49,6 +50,15 @@ class LoginViewController: UIViewController, Coordinating {
 
         style()
         layout()
+        #if DEBUG
+        addDeveloperAccountLoginButton()
+        #endif
+        
+        loginViewModel.moveToPoster
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.moveToPosterList()
+            }.store(in: &subscriptions)
     }
 }
 
@@ -67,6 +77,15 @@ extension LoginViewController {
         button.setImage(UIImage(named: "apple_login"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.addTarget(self, action: #selector(appleLoginDidTap), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }
+    
+    private func createDeveloperLoginButton() -> UIButton {
+        let button = UIButton()
+        button.backgroundColor = #colorLiteral(red: 0.5843137503, green: 0.8235294223, blue: 0.4196078479, alpha: 1)
+        button.setTitle("🥱", for: .normal)
+        button.addTarget(self, action: #selector(developerLoginBtnDidTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
@@ -101,6 +120,13 @@ extension LoginViewController {
             appleLoginButton.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
             appleLoginButton.widthAnchor.constraint(equalToConstant: Layout.buttonWidth),
             appleLoginButton.heightAnchor.constraint(equalToConstant: Layout.buttonHeight)
+        ])
+    }
+    
+    func addDeveloperAccountLoginButton() {
+        stackView.addArrangedSubview(developerLoginButton)
+        NSLayoutConstraint.activate([
+            developerLoginButton.heightAnchor.constraint(equalToConstant: Layout.buttonHeight)
         ])
     }
 }
@@ -138,13 +164,13 @@ extension LoginViewController {
         authorizationController.presentationContextProvider = self
         authorizationController.performRequests()
     }
+    
+    @objc func developerLoginBtnDidTap() {
+        loginViewModel.developerLoginButtonDidTap.send()
+    }
 
     private func moveToPosterList() {
-        let mainVM = PosterListViewModel(useCase: AlbumUseCase())
-        let mainVC = PosterListViewController(viewModel: mainVM)
-        let nav = MainNavigationController(rootViewController: mainVC)
-        nav.modalPresentationStyle = .fullScreen
-        self.present(nav, animated: true, completion: nil)
+        presentPosterList(in: self)
     }
 }
 

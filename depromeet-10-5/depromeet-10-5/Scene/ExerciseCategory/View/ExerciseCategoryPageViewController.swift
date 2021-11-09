@@ -34,16 +34,18 @@ class ExerciseCategoryPageViewController: UIPageViewController {
         viewModel.currentIdxOfFirstDepth
             .receive(on: DispatchQueue.main)
             .sink { [weak self] idx in
-                guard let self = self else { return }
+                guard let self = self,
+                      let nextVC = self.vcList[safe: idx]
+                else { return }
                 let direction: UIPageViewController.NavigationDirection = self.previousPage < idx ? .forward : .reverse
-                self.setViewControllers([self.vcList[idx]], direction: direction, animated: true, completion: nil)
+                self.setViewControllers([nextVC], direction: direction, animated: true, completion: nil)
                 self.previousPage = idx
             }.store(in: &bag)
     }
 
     private func update(with list: [ExerciseCategoryModel]) {
         vcList = list.compactMap { model in
-            let list = model.children?.compactMap { ExerciseItemModel(english: $0.name, korean: $0.description) }
+            let list = model.children?.compactMap { $0 }
             return ExerciseListViewController(with: list ?? [], viewModel: viewModel)
         }
         if let firstVC = vcList.first {

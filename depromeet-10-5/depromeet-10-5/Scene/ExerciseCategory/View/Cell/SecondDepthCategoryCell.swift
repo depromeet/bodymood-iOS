@@ -35,9 +35,9 @@ class SecondDepthCategoryCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func update(with model: ExerciseItemModel, parentBgColor: UIColor) {
-        titleLabel.text = model.english
-        descLabel.text = model.korean
+    func update(with model: ExerciseCategoryModel, parentBgColor: UIColor) {
+        titleLabel.text = model.englishName
+        descLabel.text = model.koreanName
 
         let titleColor: UIColor = parentBgColor.isDarkColor ? .white : .black
         let descColor: UIColor = parentBgColor.isDarkColor ? .gray : .darkGray

@@ -39,8 +39,14 @@ class PosterDetailViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.setNavigationBarHidden(false, animated: true)
+        let view = self.posterImageView
+        let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
+        let image = renderer.image { ctx in
+            view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+        }
+        viewModel.viewDidAppearSignal.send(image)
     }
-    
+
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         updatePosterLayout()
@@ -59,10 +65,9 @@ extension PosterDetailViewController {
         viewModel.poster
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] asset in
-                self?.posterImageView.imageView.fetchImageAsset(asset) { image, _ in
-                    self?.posterImageView.imageView.image = image
-                }
+            .sink { [weak self] model in
+                guard let view = self?.posterImageView.imageView else { return }
+                view.fetchImage(from: model.imageUrl) { view.image = $0 }
             }.store(in: &bag)
 
         viewModel.makePoster
@@ -259,4 +264,12 @@ extension PosterDetailViewController {
         posterWidthConstraint?.isActive = cond
         posterHeightConstraint?.isActive = !cond
     }
+}
+
+func presentPosterList(in viewController: UIViewController) {
+    let mainVM = PosterListViewModel(useCase: PosterUseCase())
+    let mainVC = PosterListViewController(viewModel: mainVM)
+    let nav = MainNavigationController(rootViewController: mainVC)
+    nav.modalPresentationStyle = .fullScreen
+    viewController.present(nav, animated: false, completion: nil)
 }

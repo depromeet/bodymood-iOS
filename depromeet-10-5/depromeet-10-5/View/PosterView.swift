@@ -61,7 +61,7 @@ class PosterView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func makePoster(_ image: UIImage, _ exercises: [ExerciseItemModel], _ emotion: EmotionDataResponse) {
+    func makePoster(_ image: UIImage, _ exercises: [ExerciseCategoryModel], _ emotion: EmotionDataResponse) {
         let value1 = Int(UInt32(emotion.startColor?.dropFirst() ?? "", radix: 16) ?? 0)
         let value2 = Int(UInt32(emotion.endColor?.dropFirst() ?? "", radix: 16) ?? 0)
         imageView.addDiagonalGradiant(startColor: UIColor(rgb: value1).withAlphaComponent(0.5),
@@ -71,10 +71,10 @@ class PosterView: UIView {
         imageView.image = image
 
         exercises.enumerated().forEach { idx, model in
-            (exerciseStackView.arrangedSubviews[safe: idx] as? UILabel)?.text = model.english
+            (exerciseStackView.arrangedSubviews[safe: idx] as? UILabel)?.text = model.englishName
         }
         emotionLabel.text = emotion.englishTitle
-        
+
         updateFonts()
     }
 
@@ -85,7 +85,7 @@ class PosterView: UIView {
 
     private func updateFonts() {
         guard let label = exerciseStackView.arrangedSubviews.first as? UILabel else { return }
-        
+
         var ratio = exerciseStackView.frame.height / bounds.height
         if ratio < 0.24 { return }
 
@@ -95,24 +95,24 @@ class PosterView: UIView {
         exerciseStackView.arrangedSubviews.compactMap { $0 as? UILabel }.forEach {
             $0.font = $0.font.withSize(textSize)
         }
-        
+
         emotionLabel.font = emotionLabel.font.withSize(emotionLabel.font.pointSize / ratio)
         emotionGuideLabel.font = emotionGuideLabel.font.withSize(emotionGuideLabel.font.pointSize / ratio)
-        
+
         layoutIfNeeded()
         fixFontSizes()
     }
-    
+
     func fixFontSizes() {
         let list = exerciseStackView.arrangedSubviews.compactMap { $0 as? UILabel }
-        
+
         let maxLabelWidth = exerciseStackView.bounds.width
         var largestLabelWidth: CGFloat = 0
         list.forEach { label in
             largestLabelWidth = max(largestLabelWidth, label.text?.width(constrainedBy: label.bounds.height,
                                                        with: label.font) ?? 0)
         }
-        
+
         guard largestLabelWidth > maxLabelWidth else { return }
 
         let largestTextSize = list[0].font.pointSize
@@ -132,7 +132,7 @@ class PosterView: UIView {
             imageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             imageView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        
+
         NSLayoutConstraint.activate([
             exerciseStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             exerciseStackView.leadingAnchor.constraint(equalTo: leadingAnchor,
@@ -140,7 +140,7 @@ class PosterView: UIView {
             exerciseStackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor,
                                                         constant: -Layout.exerciseStackViewOffset)
         ])
-        
+
         NSLayoutConstraint.activate([
             emotionStackView.leadingAnchor.constraint(equalTo: leadingAnchor,
                                                       constant: Layout.emotionStackViewOffset),
@@ -150,7 +150,7 @@ class PosterView: UIView {
                                                      constant: -Layout.emotionStackViewOffset)
         ])
     }
-    
+
     enum Layout {
         static let emotionStackViewOffset: CGFloat = 10
         static let exerciseStackViewOffset: CGFloat = 5
@@ -160,14 +160,20 @@ class PosterView: UIView {
 extension String {
     func height(constrainedBy width: CGFloat, with font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let boundingBox = self.boundingRect(with: constraintRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        let boundingBox = self.boundingRect(with: constraintRect,
+                                            options: .usesLineFragmentOrigin,
+                                            attributes: [NSAttributedString.Key.font: font],
+                                            context: nil)
 
         return boundingBox.height
     }
 
     func width(constrainedBy height: CGFloat, with font: UIFont) -> CGFloat {
         let constrainedRect = CGSize(width: .greatestFiniteMagnitude, height: height)
-        let boundingBox = self.boundingRect(with: constrainedRect, options: .usesLineFragmentOrigin, attributes: [NSAttributedString.Key.font: font], context: nil)
+        let boundingBox = self.boundingRect(with: constrainedRect,
+                                            options: .usesLineFragmentOrigin,
+                                            attributes: [NSAttributedString.Key.font: font],
+                                            context: nil)
 
         return boundingBox.width
     }
