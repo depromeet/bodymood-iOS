@@ -7,6 +7,7 @@ protocol PosterListViewModelType {
     var posters: AnyPublisher<[PosterPhotoResponseModel], Never> { get }
     var title: AnyPublisher<String, Never> { get }
     var guideText: AnyPublisher<String, Never> { get }
+    var guideEnglishText: AnyPublisher<String, Never> { get }
     var moveToDetail: PassthroughSubject<PosterPhotoResponseModel, Never> { get }
     var moveToTemplate: PassthroughSubject<Void, Never> { get }
     var moveToMypage: PassthroughSubject<Void, Never> { get }
@@ -32,7 +33,8 @@ class PosterListViewModel: PosterListViewModelType {
     let maxNumOfItems = 100
     var posters: AnyPublisher<[PosterPhotoResponseModel], Never> { postersSubject.prefix(maxNumOfItems).eraseToAnyPublisher() }
     var title: AnyPublisher<String, Never> { Just("Bodymood").eraseToAnyPublisher() }
-    var guideText: AnyPublisher<String, Never> { Just("나의 Bodymood로\n이 곳을 채워주세요").eraseToAnyPublisher() }
+    var guideText: AnyPublisher<String, Never> { Just("나만의 바디무드 포스터를 만들어보세요.").eraseToAnyPublisher() }
+    var guideEnglishText: AnyPublisher<String, Never> { Just("Create your own Bodymood poster.").eraseToAnyPublisher() }
     let moveToMypage = PassthroughSubject<Void, Never>()
     let moveToDetail = PassthroughSubject<PosterPhotoResponseModel, Never>()
     let moveToTemplate = PassthroughSubject<Void, Never>()

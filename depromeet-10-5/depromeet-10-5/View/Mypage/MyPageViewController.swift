@@ -66,7 +66,7 @@ extension MyPageViewController {
         
         viewModel.userSubject.receive(on: DispatchQueue.main)
             .sink { [weak self] response in
-            self?.userInfoLabel.text = response?.name
+            self?.userNameLabel.text = response?.name
         }.store(in: &subscriptions)
 
         navigationItem.leftBarButtonItem?.tap
