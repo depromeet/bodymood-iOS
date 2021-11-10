@@ -30,7 +30,9 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
@@ -46,11 +48,11 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string></string>
+	<string>포스터 편집 기능 사용 시 포스터의 사진을 촬영하고 싶을 경우 사용</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string></string>
+	<string>포스터 편집 기능 사용 시 포스터의 사진을 촬영하고 싶을 경우 사용 (무음 기능)</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string></string>
+	<string>포스터 편집 기능 사용 시 앨범에 존재하는 이미지를 포스터의 이미지로 사용하고 싶을 경우 사용</string>
 	<key>PHPhotoLibraryPreventAutomaticLimitedAccessAlert</key>
 	<true/>
 	<key>UIAppFonts</key>
