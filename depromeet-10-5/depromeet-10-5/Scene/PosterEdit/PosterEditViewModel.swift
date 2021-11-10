@@ -15,7 +15,8 @@ protocol PosterEditViewModelType: PosterEditGuideViewModelType {
     var moveToExerciseCategory: PassthroughSubject<Void, Never> { get }
     var moveToMoodList: PassthroughSubject<Void, Never> { get }
     var activateCompleteButton: PassthroughSubject<Bool, Never> { get }
-    
+    var emotionSubject: CurrentValueSubject<[EmotionDataResponse], Never> { get }
+
     // Mediators
     var photoSelectedFromAlbum: PassthroughSubject<PHAsset, Never> { get }
     var exerciseSelected: CurrentValueSubject<[ExerciseCategoryModel], Never> { get }
@@ -49,12 +50,15 @@ class PosterEditViewModel: PosterEditViewModelType {
     let exerciseSelected = CurrentValueSubject<[ExerciseCategoryModel], Never>([])
     let emotionSelected =  CurrentValueSubject<EmotionDataResponse?, Never>(nil)
 
+    private var fetchSubscription: AnyCancellable?
     private var bag = Set<AnyCancellable>()
     private var isSelected = Array(repeating: false, count: 3)
+    var emotionSubject = CurrentValueSubject<[EmotionDataResponse], Never>(.init())
 
     init(with asset: PHAsset? = nil, templateType: PosterTemplate.TemplateType? = nil) {
         poster = .init(asset)
         title = .init(CommonText.posterEditTitle)
+        emotionCategories()
         bind()
     }
 
@@ -94,5 +98,20 @@ class PosterEditViewModel: PosterEditViewModelType {
                 self.isSelected[safe: idx] = true
                 self.activateCompleteButton.send(!self.isSelected.contains(false))
             }.store(in: &bag)
+    }
+
+    private func emotionCategories() {
+        fetchSubscription = EmotionService().emotionCategories().sink(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                Log.debug("success emotion categories")
+
+            case .failure(let error):
+                Log.error(error)
+            }
+        }, receiveValue: { response in
+            Log.debug(response.data?[0].startColor)
+            self.emotionSubject.send(response.data ?? [])
+        })
     }
 }

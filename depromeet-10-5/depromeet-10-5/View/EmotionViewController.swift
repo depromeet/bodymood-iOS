@@ -23,9 +23,13 @@ class EmotionViewController: UIViewController {
 
     private lazy var cellID = "EmotionCell"
 
-    init(viewModel: EmotionViewModelType) {
+    init(viewModel: EmotionViewModelType, emotions: [EmotionDataResponse]) {
         self.emotionViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        self.uploadEmotions(emotions: emotions)
     }
 
     required init?(coder: NSCoder) {
@@ -43,8 +47,6 @@ class EmotionViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.dataSource = self
-        collectionView.delegate = self
         bind()
     }
 
@@ -53,15 +55,6 @@ class EmotionViewController: UIViewController {
     }
 
     private func bind() {
-        let emotionCategories =
-        emotionViewModel.emotionCategories()
-
-        emotionCategories.receive(on: DispatchQueue.main)
-            .sink { [weak self] response in
-                Log.debug("success bind method in view")
-                self?.uploadEmotions(emotions: response)
-        }.store(in: &subscriptions)
-
         emotionViewModel.canEnableButton.receive(on: DispatchQueue.main).sink { [weak self] canEnable in
             Log.debug(canEnable)
             self?.bottomButton.isEnabled = canEnable
@@ -87,7 +80,7 @@ class EmotionViewController: UIViewController {
         for emotion in emotions {
             Log.debug(emotion)
         }
-
+        
         collectionView.reloadData()
     }
 }
@@ -409,6 +402,10 @@ extension EmotionViewController: UICollectionViewDelegateFlowLayout {
         minimumInteritemSpacingForSectionAt section: Int)
     -> CGFloat {
         return 0
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
 
     func collectionView(

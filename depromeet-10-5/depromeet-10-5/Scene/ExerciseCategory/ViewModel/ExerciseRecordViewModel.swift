@@ -10,7 +10,7 @@ protocol ExerciseRecordViewModelType: ExerciseListViewModelType {
     var canEnableButton: CurrentValueSubject<Bool, Never> { get }
     var canShowButton: CurrentValueSubject<Bool, Never> { get }
     var currentIdxOfFirstDepth: CurrentValueSubject<Int, Never> { get }
-    
+
     // Inputs
     var selectBtnTapped: PassthroughSubject<Void, Never> { get }
 }
@@ -39,7 +39,7 @@ class ExerciseRecordViewModel: ExerciseRecordViewModelType {
     let canShowButton = CurrentValueSubject<Bool, Never>(true)
     let bgColorHexPair: CurrentValueSubject<(Int, Int), Never>
     let firstDepthCategories = CurrentValueSubject<[ExerciseCategoryModel], Never>([])
- 
+
     let selectBtnTapped = PassthroughSubject<Void, Never>()
     let currentIdxOfFirstDepth = CurrentValueSubject<Int, Never>(-1)
     let itemTapped = PassthroughSubject<Int, Never>()
