@@ -83,6 +83,7 @@ extension LogoutModalViewController {
         }.store(in: &subscriptions)
 
         logoutButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            self?.logoutButton.isEnabled = false
             self?.viewModel.moveToLogout.send()
         }.store(in: &subscriptions)
 
@@ -132,6 +133,7 @@ extension LogoutModalViewController {
 
     private func createLogoutButton() -> UIButton {
         let button = UIButton()
+        button.isEnabled = true
         button.titleLabel?.textColor = .white
         button.titleLabel?.font = UIFont(name: "Pretendard-Bold", size: 16)
         button.translatesAutoresizingMaskIntoConstraints = false
