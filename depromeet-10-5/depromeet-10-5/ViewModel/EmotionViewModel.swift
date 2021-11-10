@@ -8,8 +8,6 @@ protocol EmotionViewModelType {
     var selectButtonDidTap: PassthroughSubject<Void, Never> { get }
     var canShowButton: CurrentValueSubject<Bool, Never> { get }
     var itemTapped: PassthroughSubject<Int, Never> { get }
-
-    func emotionCategories() -> AnyPublisher<[EmotionDataResponse], Never>
 }
 
 class EmotionViewModel: EmotionViewModelType {
@@ -41,21 +39,5 @@ class EmotionViewModel: EmotionViewModelType {
             self?.buttonTitle.send("선택 완료")
             self?.canEnableButton.send(true)
         }.store(in: &subscriptions)
-    }
-
-    func emotionCategories() -> AnyPublisher<[EmotionDataResponse], Never> {
-        fetchSubscription = emotionService.emotionCategories().sink(receiveCompletion: { completion in
-            switch completion {
-            case .finished:
-                Log.debug("success emotion categories")
-
-            case .failure(let error):
-                Log.error(error)
-            }
-        }, receiveValue: { response in
-            self.emotionSubject.send(response.data ?? [])
-        })
-
-        return emotionSubject.eraseToAnyPublisher()
     }
 }

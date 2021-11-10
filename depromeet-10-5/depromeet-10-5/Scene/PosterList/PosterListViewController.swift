@@ -8,6 +8,7 @@ class PosterListViewController: UIViewController {
     private lazy var dataSource: DataSource = { createDataSource() }()
     private let refreshControl = UIRefreshControl()
     private lazy var addButton: UIButton = { createAddButton() }()
+    private lazy var guideEnglishLabel: UILabel = { createGuideEnglishLabel() }()
     private lazy var guideLabel: UILabel = { createGuideLabel() }()
     private lazy var mypageButton: UIButton = {
         createMypageButton() }()
@@ -54,6 +55,7 @@ extension PosterListViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] posters in
                 self?.guideLabel.isHidden = !posters.isEmpty
+                self?.guideEnglishLabel.isHidden = !posters.isEmpty
                 self?.updateList(with: posters)
             }.store(in: &subscriptions)
 
@@ -64,6 +66,13 @@ extension PosterListViewController {
                                                                         alignment: .center)
             }.store(in: &subscriptions)
 
+        viewModel.guideEnglishText
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] text in
+                self?.guideEnglishLabel.attributedText = text.toAttributedText(minimumLineHeight: Style.lineHeight, alignment: .center)
+                
+            }).store(in: &subscriptions)
+        
         viewModel.title
             .receive(on: DispatchQueue.main)
             .sink { [weak self] title in
@@ -198,11 +207,22 @@ extension PosterListViewController {
         return view
     }
 
+    private func createGuideEnglishLabel() -> UILabel {
+        let view = UILabel()
+        view.numberOfLines = 0
+        view.font = UIFont.systemFont(ofSize: 18)
+        view.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        view.font = UIFont(name: "PlayfairDisplay-Bold", size: 18)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
+        return view
+    }
     private func createGuideLabel() -> UILabel {
         let view = UILabel()
         view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 18)
         view.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        view.font = UIFont(name: "Pretendard-Bold", size: 12)
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
         return view
@@ -266,6 +286,14 @@ extension PosterListViewController {
             guideLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
                                                  constant: -Layout.horizontalInset),
             guideLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            guideEnglishLabel.bottomAnchor.constraint(equalTo: guideLabel.bottomAnchor, constant: -26),
+            guideEnglishLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                constant: Layout.horizontalInset),
+            guideEnglishLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                 constant: -Layout.horizontalInset),
         ])
     }
 

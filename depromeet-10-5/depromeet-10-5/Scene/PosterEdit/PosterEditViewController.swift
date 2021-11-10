@@ -31,10 +31,12 @@ class PosterEditViewController: UIViewController {
     private var bag = Set<AnyCancellable>()
 
     private var selectedEmotion: EmotionDataResponse?
-
+    var emotions: [EmotionDataResponse] = []
+    
     init(viewModel: PosterEditViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        self.bind()
     }
 
     required init?(coder: NSCoder) {
@@ -51,7 +53,7 @@ class PosterEditViewController: UIViewController {
 
         style()
         layout()
-        bind()
+//        bind()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -73,6 +75,11 @@ extension PosterEditViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isEnabled in
                 self?.navigationItem.rightBarButtonItem?.isEnabled = isEnabled
+            }.store(in: &bag)
+
+        viewModel.emotionSubject.receive(on: DispatchQueue.main)
+            .sink { [weak self] response in
+                self?.emotions = response
             }.store(in: &bag)
 
         navigationItem.leftBarButtonItem?.tap
@@ -143,7 +150,7 @@ extension PosterEditViewController {
             .sink { [weak self] _ in
                 guard let self = self else { return }
                 let emotionVM = EmotionViewModel(service: EmotionService())
-                let emotionVC = EmotionViewController(viewModel: emotionVM)
+                let emotionVC = EmotionViewController(viewModel: emotionVM, emotions: self.emotions)
                 emotionVC.delegate = self
                 self.navigationController?.pushViewController(emotionVC, animated: true)
             }.store(in: &bag)

@@ -1,5 +1,9 @@
+disabled_rules:
+- line_length
+- trailing_whitespace
 excluded:
 - Pods
 - depromeet-10-5/Delegate/AppDelegate.swift
 - depromeet-10-5/Delegate/SceneDelegate.swift
 - depromeet-10-5/View/Mypage/AgreementViewController.swift
+- depromeet-10-5/Scene/PosterEdit/PosterEditViewController.swift

@@ -162,6 +162,9 @@ extension AlbumViewController {
 	private func style() {
 		view.backgroundColor = .white
 
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.barTintColor = .white
+
 		navigationController?.navigationBar.titleTextAttributes = [
 			.font: UIFont.systemFont(ofSize: 16),
 			.foregroundColor: UIColor.black
@@ -198,4 +201,9 @@ extension AlbumViewController: UICollectionViewDelegate {
         selectButton.isEnabled = shouldSelect
         return shouldSelect
 	}
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let value = scrollView.panGestureRecognizer.translation(in: scrollView).y
+        navigationController?.setNavigationBarHidden(value < 0, animated: true)
+    }
 }
