@@ -51,24 +51,37 @@ class LoginViewController: UIViewController, Coordinating {
 
         style()
         layout()
+        bind()
         #if DEBUG
         addDeveloperAccountLoginButton()
         #endif
+        
+    }
+}
 
+extension LoginViewController {
+    private func bind() {
         loginViewModel.moveToPoster
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.moveToPosterList()
             }.store(in: &subscriptions)
+        
+        kakaoLoginButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            self?.kakaoLoginButtonDidTap()
+        }.store(in: &subscriptions)
+        
+        appleLoginButton.publisher(for: .touchUpInside)
+            .sink { [weak self] _ in
+                self?.appleLoginDidTap()
+            }.store(in: &subscriptions)
     }
 }
-
 extension LoginViewController {
     private func createKakaoButton() -> UIButton {
         let button = UIButton()
         button.setImage(UIImage(named: "kakao_login"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(kakaoLoginButtonDidTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
@@ -77,7 +90,6 @@ extension LoginViewController {
         let button = UIButton()
         button.setImage(UIImage(named: "apple_login"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
-        button.addTarget(self, action: #selector(appleLoginDidTap), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
@@ -134,9 +146,9 @@ extension LoginViewController {
 
 // MARK: - Configure Actions
 extension LoginViewController {
-    @objc func kakaoLoginButtonDidTap() {
+    private func kakaoLoginButtonDidTap() {
         let kakaoLogin = loginViewModel.kakaoLoginAvailable()
-
+        
         kakaoLogin.sink( receiveCompletion: { [weak self] completion in
             guard let self = self else { return }
             switch completion {
@@ -151,7 +163,7 @@ extension LoginViewController {
         }).store(in: &subscriptions)
     }
 
-    @objc func appleLoginDidTap() {
+    private func appleLoginDidTap() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
         request.requestedScopes = [.fullName, .email]
