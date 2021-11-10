@@ -23,6 +23,7 @@ class LoginViewController: UIViewController, Coordinating {
     private var subscriptions: Set<AnyCancellable> = []
     private var kakaoAccessToken: String?
     private var appleAccessToken: String?
+    private var userInfo: UserDataResponse?
 
     init(viewModel: LoginViewModelType) {
         self.loginViewModel = viewModel
@@ -32,7 +33,7 @@ class LoginViewController: UIViewController, Coordinating {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     deinit {
         Log.debug(Self.self, #function)
     }
@@ -166,7 +167,19 @@ extension LoginViewController {
     }
 
     private func moveToPosterList() {
+        loginViewModel.userInfo()
+        receiveUserInfo()
         presentPosterList(in: self)
+    }
+
+    private func receiveUserInfo() {
+        loginViewModel.userSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] response in
+                UserDefaults.standard.setValue(response?.name, forKey: UserDefaultKey.userName)
+                UserDefaults.standard.setValue(response?.socialProvider, forKey: UserDefaultKey.socialProvider)
+                Log.debug("success with login view controller")
+        }.store(in: &subscriptions)
     }
 }
 
@@ -186,10 +199,10 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             let tokenToUTF8 = String(data: token!, encoding: .utf8)!
             Log.debug(tokenToUTF8)
             appleAccessToken = tokenToUTF8
-
+            
             self.loginViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
-
-            if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != "" {
+            
+            if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil {
                 moveToPosterList()
             }
 

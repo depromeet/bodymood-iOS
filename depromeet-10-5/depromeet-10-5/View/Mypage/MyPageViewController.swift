@@ -41,8 +41,6 @@ class MyPageViewController: UIViewController {
 // MARK: - Configure bind
 extension MyPageViewController {
     private func bind() {
-        viewModel.userInfo()
-
         viewModel.title.sink { [weak self] title in
             self?.titleLabel.text = title
         }.store(in: &subscriptions)
@@ -62,11 +60,6 @@ extension MyPageViewController {
             viewController.modalPresentationStyle = .overCurrentContext
             viewController.modalTransitionStyle = .crossDissolve
             self?.present(viewController, animated: false)
-        }.store(in: &subscriptions)
-        
-        viewModel.userSubject.receive(on: DispatchQueue.main)
-            .sink { [weak self] response in
-            self?.userNameLabel.text = response?.name
         }.store(in: &subscriptions)
 
         navigationItem.leftBarButtonItem?.tap

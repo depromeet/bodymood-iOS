@@ -6,7 +6,7 @@ class InitialSceneCoodinator {
     var bag = Set<AnyCancellable>()
     
     let tokenErrorOccured = CurrentValueSubject<Bool, Never>(false)
-    let splashVC = SplashViewController()
+    let splashVC = SplashViewController(viewModel: SplashViewModel(userService: UserService()))
     var mainNav: UINavigationController = {
         let mainVM = PosterListViewModel(useCase: PosterUseCase())
         let mainVC = PosterListViewController(viewModel: mainVM)

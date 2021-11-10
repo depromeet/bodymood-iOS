@@ -88,8 +88,4 @@ class MypageViewModel: MypageViewModelType {
             UserDefaults.standard.setValue(response.data.socialProvider, forKey: UserDefaultKey.socialProvider)
         })
     }
-    
-    func logout() {
-        
-    }
 }

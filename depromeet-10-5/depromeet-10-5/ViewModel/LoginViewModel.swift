@@ -20,13 +20,17 @@ protocol LoginViewModelType {
     var moveToPoster: PassthroughSubject<Void, Never> { get }
     var loginSuccess: PassthroughSubject<Bool, Never> { get }
     func kakaoLoginAvailable() -> Future<OAuthToken, Error>
+    var userSubject: CurrentValueSubject<UserDataResponse?, Never> { get }
     func kakaoLogin(accessToken: String)
     func appleLogin(accessToken: String)
+    func userInfo()
 }
 
 class LoginViewModel: LoginViewModelType {
     
     private let accessTokenSubject = CurrentValueSubject<String, Never>(.init())
+    var userSubject =  CurrentValueSubject<UserDataResponse?, Never>(nil)
+
     private var authService: AuthServiceType
     private var fetchSubscription: AnyCancellable?
     private var subscriptions =  Set<AnyCancellable>()
@@ -101,6 +105,7 @@ class LoginViewModel: LoginViewModelType {
 
     func appleLogin(accessToken: String) {
         fetchSubscription = authService.appleLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
+            Log.debug(completion)
             switch completion {
             case .finished:
                 Log.debug("success Apple Login View Model")
@@ -109,6 +114,7 @@ class LoginViewModel: LoginViewModelType {
             }
 
         }, receiveValue: { [weak self] response in
+            Log.debug(response.code)
             self?.valueDidReceived(response: response)
         })
     }
@@ -127,5 +133,22 @@ class LoginViewModel: LoginViewModelType {
         UserDefaults.standard.setValue(accessToken, forKey: UserDefaultKey.accessToken)
         UserDefaults.standard.setValue(refreshToken, forKey: UserDefaultKey.refreshToken)
         self.accessTokenSubject.send(accessToken)
+    }
+
+    func userInfo() {
+        fetchSubscription = UserService().userInfo().sink(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                Log.debug("success getting user info")
+            case .failure(let error):
+                Log.error(error)
+            }
+        }, receiveValue: { [weak self] response in
+            
+            self?.userSubject.send(response.data)
+            
+            UserDefaults.standard.setValue(response.data.name, forKey: UserDefaultKey.userName)
+            UserDefaults.standard.setValue(response.data.socialProvider, forKey: UserDefaultKey.socialProvider)
+        })
     }
 }

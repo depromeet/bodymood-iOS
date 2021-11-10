@@ -19,16 +19,27 @@ class SplashViewController: UIViewController {
     let animationFinished = PassthroughSubject<Void, Never>()
 
     private lazy var imageView: UIImageView = { createSplashImageView() }()
+    private var viewModel: SplashViewModelType
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-
+    
+    init(viewModel: SplashViewModelType) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setNeedsStatusBarAppearanceUpdate()
         style()
         layout()
+        bind()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -38,6 +49,12 @@ class SplashViewController: UIViewController {
 
     override var prefersStatusBarHidden: Bool {
         return true
+    }
+}
+
+extension SplashViewController {
+    private func bind() {
+        viewModel.userInfo()
     }
 }
 

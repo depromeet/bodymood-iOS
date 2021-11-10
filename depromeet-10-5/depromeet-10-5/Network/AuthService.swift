@@ -39,7 +39,6 @@ class AuthService: AuthServiceType {
     func appleLogin(accessToken: String) -> AnyPublisher<LoginResponse, Error> {
         let url = URL(string: "\(URLConsts.baseURL)/auth/apple")
         let parameters = ["accessToken": accessToken]
-
         var urlRequest = URLRequest(url: url!)
         urlRequest.httpMethod = "POST"
         urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")

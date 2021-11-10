@@ -77,7 +77,8 @@ extension PosterEditViewController {
                 self?.navigationItem.rightBarButtonItem?.isEnabled = isEnabled
             }.store(in: &bag)
 
-        viewModel.emotionSubject.receive(on: DispatchQueue.main)
+        viewModel.emotionSubject
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] response in
                 self?.emotions = response
             }.store(in: &bag)
