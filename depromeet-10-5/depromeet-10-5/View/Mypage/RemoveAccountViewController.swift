@@ -62,7 +62,7 @@ extension RemoveAccountViewController {
 
     private func createContentLabel() -> UILabel {
         let label = UILabel()
-        label.text = "Comimg Soon"
+        label.text = "Coming Soon"
         label.font = UIFont(name: "PlayfairDisplay-Bold", size: 35)
         label.textColor = .lightGray
         label.textAlignment = .center

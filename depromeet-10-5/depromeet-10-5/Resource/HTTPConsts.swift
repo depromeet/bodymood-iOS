@@ -8,5 +8,5 @@
 import Foundation
 
 class URLConsts {
-    static let baseURL = "https://dev.bodymood.me/api/v1"
+    static let baseURL = "https://bodymood.me/api/v1"
 }

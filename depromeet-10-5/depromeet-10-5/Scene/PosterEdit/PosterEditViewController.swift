@@ -36,7 +36,6 @@ class PosterEditViewController: UIViewController {
     init(viewModel: PosterEditViewModelType) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        self.bind()
     }
 
     required init?(coder: NSCoder) {
@@ -53,7 +52,7 @@ class PosterEditViewController: UIViewController {
 
         style()
         layout()
-//        bind()
+        bind()
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -161,9 +161,12 @@ extension AlbumViewController {
 
 	private func style() {
 		view.backgroundColor = .white
-
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = .white
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.view.backgroundColor = .clear
+        self.navigationController?.navigationBar.backgroundColor = .clear
 
 		navigationController?.navigationBar.titleTextAttributes = [
 			.font: UIFont.systemFont(ofSize: 16),

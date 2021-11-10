@@ -7,7 +7,7 @@ struct BodyMoodAPIService {
 
     private init() {}
 
-    let baseURL = "https://dev.bodymood.me"
+    let baseURL = "https://bodymood.me"
     var token: String {
         UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) ?? ""
     }
