@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "9637665226EDD79E00E8E547"
                BuildableName = "depromeet-10-5.app"
-               BlueprintName = "depromeet-10-5"
-               ReferencedContainer = "container:depromeet-10-5.xcodeproj">
+               BlueprintName = "Bodymood"
+               ReferencedContainer = "container:Bodymood.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,8 +46,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9637665226EDD79E00E8E547"
             BuildableName = "depromeet-10-5.app"
-            BlueprintName = "depromeet-10-5"
-            ReferencedContainer = "container:depromeet-10-5.xcodeproj">
+            BlueprintName = "Bodymood"
+            ReferencedContainer = "container:Bodymood.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,8 +63,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "9637665226EDD79E00E8E547"
             BuildableName = "depromeet-10-5.app"
-            BlueprintName = "depromeet-10-5"
-            ReferencedContainer = "container:depromeet-10-5.xcodeproj">
+            BlueprintName = "Bodymood"
+            ReferencedContainer = "container:Bodymood.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

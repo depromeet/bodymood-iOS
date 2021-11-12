@@ -56,7 +56,6 @@ class LoginViewController: UIViewController, Coordinating {
         #if DEBUG
         addDeveloperAccountLoginButton()
         #endif
-        
     }
 }
 
@@ -65,9 +64,18 @@ extension LoginViewController {
         loginViewModel.moveToPoster
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.activityIndicator.stopAnimating()
                 self?.moveToPosterList()
             }.store(in: &subscriptions)
+        
+        loginViewModel.loginSubject
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] success in
+                if success {
+                    self?.moveToPosterList()
+                } else {
+                    self?.loginFailureAlert()
+                }
+        }.store(in: &subscriptions)
         
         kakaoLoginButton.publisher(for: .touchUpInside).sink { [weak self] _ in
             self?.kakaoLoginButtonDidTap()
@@ -77,6 +85,8 @@ extension LoginViewController {
             .sink { [weak self] _ in
                 self?.appleLoginDidTap()
             }.store(in: &subscriptions)
+        
+       
     }
 }
 extension LoginViewController {
@@ -197,11 +207,13 @@ extension LoginViewController {
                 self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
 
             case .failure(let error):
-                        Log.debug(error)
+                Log.error(error)
+                self.loginFailureAlert()
             }
         }, receiveValue: { [weak self] result in
                 self?.kakaoAccessToken = result.accessToken
         }).store(in: &subscriptions)
+        activityIndicator.stopAnimating()
     }
     
     private func kakaoAccountLogin() {
@@ -216,12 +228,13 @@ extension LoginViewController {
                 self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
         
             case .failure(let error):
-                        Log.debug(error)
+                Log.error(error)
+                self.loginFailureAlert()
             }
         }, receiveValue: { [weak self] result in
                 self?.kakaoAccessToken = result.accessToken
         }).store(in: &subscriptions)
-        
+        activityIndicator.stopAnimating()
     }
     
     private func appleLoginDidTap() {
@@ -240,6 +253,7 @@ extension LoginViewController {
     }
 
     private func moveToPosterList() {
+        activityIndicator.stopAnimating()
         loginViewModel.userInfo()
         receiveUserInfo()
         presentPosterList(in: self)
@@ -248,11 +262,16 @@ extension LoginViewController {
     private func receiveUserInfo() {
         loginViewModel.userSubject
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] response in
+            .sink { response in
                 UserDefaults.standard.setValue(response?.name, forKey: UserDefaultKey.userName)
                 UserDefaults.standard.setValue(response?.socialProvider, forKey: UserDefaultKey.socialProvider)
-                Log.debug("success with login view controller")
         }.store(in: &subscriptions)
+    }
+    
+    private func loginFailureAlert() {
+        let alert = UIAlertController(title: "로그인 실패", message: "로그인을 다시 시도해주세요", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "확인", style: .default))
+        present(alert, animated: true, completion: nil)
     }
 }
 
@@ -266,17 +285,14 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization) {
+            activityIndicator.startAnimating()
         switch authorization.credential {
         case let appleIDCredential as ASAuthorizationAppleIDCredential:
-            let token = appleIDCredential.identityToken
-            let tokenToUTF8 = String(data: token!, encoding: .utf8)!
-            Log.debug(tokenToUTF8)
-            appleAccessToken = tokenToUTF8
-            
-            self.loginViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
-            
-            if UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) != nil {
-                moveToPosterList()
+            if let token = appleIDCredential.identityToken {
+                let tokenToUTF8 = String(data: token, encoding: .utf8)
+                appleAccessToken = tokenToUTF8
+                
+                self.loginViewModel.appleLogin(accessToken: self.appleAccessToken ?? "")
             }
 
         default:

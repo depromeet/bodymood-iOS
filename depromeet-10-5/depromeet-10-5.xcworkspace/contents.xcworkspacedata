@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:depromeet-10-5.xcodeproj">
+      location = "group:/Users/heoyeeun/Documents/github/bodymood-iOS/depromeet-10-5/Bodymood.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

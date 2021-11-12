@@ -133,7 +133,7 @@
 		9624C82B273965A500D8312A /* UserResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResponse.swift; sourceTree = "<group>"; };
 		9624C82F27397D5400D8312A /* LogoutResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutResponse.swift; sourceTree = "<group>"; };
 		9631FDAB273B933400D0F496 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
-		9637665326EDD79E00E8E547 /* depromeet-10-5.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "depromeet-10-5.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9637665326EDD79E00E8E547 /* Bodymood.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bodymood.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9637665626EDD79E00E8E547 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9637665826EDD79E00E8E547 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9637665F26EDD79F00E8E547 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -280,7 +280,7 @@
 		9637665426EDD79E00E8E547 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9637665326EDD79E00E8E547 /* depromeet-10-5.app */,
+				9637665326EDD79E00E8E547 /* Bodymood.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -689,9 +689,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		9637665226EDD79E00E8E547 /* depromeet-10-5 */ = {
+		9637665226EDD79E00E8E547 /* Bodymood */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9637666726EDD79F00E8E547 /* Build configuration list for PBXNativeTarget "depromeet-10-5" */;
+			buildConfigurationList = 9637666726EDD79F00E8E547 /* Build configuration list for PBXNativeTarget "Bodymood" */;
 			buildPhases = (
 				B6335C51DB8F205CEC1BE665 /* [CP] Check Pods Manifest.lock */,
 				9637664F26EDD79E00E8E547 /* Sources */,
@@ -704,9 +704,9 @@
 			);
 			dependencies = (
 			);
-			name = "depromeet-10-5";
+			name = Bodymood;
 			productName = "depromeet-10-5";
-			productReference = 9637665326EDD79E00E8E547 /* depromeet-10-5.app */;
+			productReference = 9637665326EDD79E00E8E547 /* Bodymood.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -723,7 +723,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 9637664E26EDD79E00E8E547 /* Build configuration list for PBXProject "depromeet-10-5" */;
+			buildConfigurationList = 9637664E26EDD79E00E8E547 /* Build configuration list for PBXProject "Bodymood" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -736,7 +736,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				9637665226EDD79E00E8E547 /* depromeet-10-5 */,
+				9637665226EDD79E00E8E547 /* Bodymood */,
 			);
 		};
 /* End PBXProject section */
@@ -1064,7 +1064,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1088,7 +1088,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1105,7 +1105,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		9637664E26EDD79E00E8E547 /* Build configuration list for PBXProject "depromeet-10-5" */ = {
+		9637664E26EDD79E00E8E547 /* Build configuration list for PBXProject "Bodymood" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9637666526EDD79F00E8E547 /* Debug */,
@@ -1114,7 +1114,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		9637666726EDD79F00E8E547 /* Build configuration list for PBXNativeTarget "depromeet-10-5" */ = {
+		9637666726EDD79F00E8E547 /* Build configuration list for PBXNativeTarget "Bodymood" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				9637666826EDD79F00E8E547 /* Debug */,

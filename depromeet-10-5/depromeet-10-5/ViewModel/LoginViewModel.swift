@@ -21,6 +21,7 @@ protocol LoginViewModelType {
     var loginSuccess: PassthroughSubject<Bool, Never> { get }
     func kakaoLoginAvailable(isTalk: Bool) -> Future<OAuthToken, Error>
     var userSubject: CurrentValueSubject<UserDataResponse?, Never> { get }
+    var loginSubject: PassthroughSubject<Bool, Never> { get }
     func kakaoLogin(accessToken: String)
     func appleLogin(accessToken: String)
     func userInfo()
@@ -30,6 +31,7 @@ class LoginViewModel: LoginViewModelType {
     
     private let accessTokenSubject = CurrentValueSubject<String, Never>(.init())
     var userSubject =  CurrentValueSubject<UserDataResponse?, Never>(nil)
+    var loginSubject =  PassthroughSubject<Bool, Never>()
 
     private var authService: AuthServiceType
     private var fetchSubscription: AnyCancellable?
@@ -73,8 +75,7 @@ class LoginViewModel: LoginViewModelType {
 
     }
 
-    func kakaoLoginAvailable(isTalk: Bool) ->
-    Future<OAuthToken, Error> {
+    func kakaoLoginAvailable(isTalk: Bool) -> Future<OAuthToken, Error> {
         if isTalk {
             return Future { promise in
                 if UserApi.isKakaoTalkLoginAvailable() {
@@ -120,16 +121,16 @@ class LoginViewModel: LoginViewModelType {
 
     func appleLogin(accessToken: String) {
         fetchSubscription = authService.appleLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
-            Log.debug(completion)
             switch completion {
             case .finished:
                 Log.debug("success Apple Login View Model")
+                
             case .failure(let error):
                 Log.error(error)
             }
 
         }, receiveValue: { [weak self] response in
-            Log.debug(response.code)
+            self?.loginSubject.send(true)
             self?.valueDidReceived(response: response)
         })
     }
