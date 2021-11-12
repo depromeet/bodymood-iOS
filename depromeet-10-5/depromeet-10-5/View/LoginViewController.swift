@@ -147,22 +147,58 @@ extension LoginViewController {
 // MARK: - Configure Actions
 extension LoginViewController {
     private func kakaoLoginButtonDidTap() {
-        let kakaoLogin = loginViewModel.kakaoLoginAvailable()
+        let alert = UIAlertController(title: "카카오 로그인", message: "카카오 로그인 방식을 선택해주세요.", preferredStyle: .actionSheet)
+        let talkButton = UIAlertAction(title: "카카오톡으로 로그인", style: .default) { [weak self] _ in
+            self?.kakaoTalkLogin()
+        }
+        
+        let accountButton = UIAlertAction(title: "카카오 계정으로 로그인", style: .default) { [weak self] _ in
+            self?.kakaoAccountLogin()
+        }
+        
+        let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(talkButton)
+        alert.addAction(accountButton)
+        alert.addAction(cancelButton)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func kakaoTalkLogin() {
+        let kakaoLogin = loginViewModel.kakaoLoginAvailable(isTalk: true)
         
         kakaoLogin.sink( receiveCompletion: { [weak self] completion in
             guard let self = self else { return }
+            
             switch completion {
             case .finished:
                 self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
-
+        
             case .failure(let error):
-                Log.debug(error)
+                        Log.debug(error)
             }
         }, receiveValue: { [weak self] result in
-            self?.kakaoAccessToken = result.accessToken
+                self?.kakaoAccessToken = result.accessToken
         }).store(in: &subscriptions)
     }
-
+    
+    private func kakaoAccountLogin() {
+        let kakaoLogin = loginViewModel.kakaoLoginAvailable(isTalk: false)
+        
+        kakaoLogin.sink( receiveCompletion: { [weak self] completion in
+            guard let self = self else { return }
+            
+            switch completion {
+            case .finished:
+                self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
+        
+            case .failure(let error):
+                        Log.debug(error)
+            }
+        }, receiveValue: { [weak self] result in
+                self?.kakaoAccessToken = result.accessToken
+        }).store(in: &subscriptions)
+    }
+    
     private func appleLoginDidTap() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()
