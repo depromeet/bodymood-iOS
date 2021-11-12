@@ -217,7 +217,6 @@ extension LoginViewController {
     }
     
     private func kakaoAccountLogin() {
-        activityIndicator.startAnimating()
         let kakaoLogin = loginViewModel.kakaoLoginAvailable(isTalk: false)
         
         kakaoLogin.sink( receiveCompletion: { [weak self] completion in
@@ -234,7 +233,6 @@ extension LoginViewController {
         }, receiveValue: { [weak self] result in
                 self?.kakaoAccessToken = result.accessToken
         }).store(in: &subscriptions)
-        activityIndicator.stopAnimating()
     }
     
     private func appleLoginDidTap() {
