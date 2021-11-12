@@ -65,6 +65,7 @@ extension LoginViewController {
         loginViewModel.moveToPoster
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
+                self?.activityIndicator.stopAnimating()
                 self?.moveToPosterList()
             }.store(in: &subscriptions)
         
@@ -194,7 +195,7 @@ extension LoginViewController {
             switch completion {
             case .finished:
                 self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
-                self.activityIndicator.stopAnimating()
+
             case .failure(let error):
                         Log.debug(error)
             }
@@ -213,7 +214,6 @@ extension LoginViewController {
             switch completion {
             case .finished:
                 self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
-                self.activityIndicator.stopAnimating()
         
             case .failure(let error):
                         Log.debug(error)
