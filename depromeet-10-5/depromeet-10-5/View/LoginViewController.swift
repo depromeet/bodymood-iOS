@@ -18,6 +18,7 @@ class LoginViewController: UIViewController, Coordinating {
     private lazy var appleLoginButton: UIButton = { createAppleButton() }()
     private lazy var developerLoginButton: UIButton = { createDeveloperLoginButton() }()
     private lazy var stackView: UIStackView = { createStackView() }()
+    private lazy var activityIndicator: UIActivityIndicatorView = { createActivityIndicator() }()
     private var loginViewModel: LoginViewModelType
 
     private var subscriptions: Set<AnyCancellable> = []
@@ -112,6 +113,18 @@ extension LoginViewController {
         view.addSubview(stackView)
         return stackView
     }
+    
+    private func createActivityIndicator() -> UIActivityIndicatorView {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.center = self.view.center
+        activityIndicator.color = .gray
+        activityIndicator.style = .large
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.stopAnimating()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(activityIndicator)
+        return activityIndicator
+    }
 
     func style() {
         view.backgroundColor = .white
@@ -134,6 +147,13 @@ extension LoginViewController {
             appleLoginButton.widthAnchor.constraint(equalToConstant: Layout.buttonWidth),
             appleLoginButton.heightAnchor.constraint(equalToConstant: Layout.buttonHeight)
         ])
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 50)
+        ])
     }
     
     func addDeveloperAccountLoginButton() {
@@ -147,22 +167,63 @@ extension LoginViewController {
 // MARK: - Configure Actions
 extension LoginViewController {
     private func kakaoLoginButtonDidTap() {
-        let kakaoLogin = loginViewModel.kakaoLoginAvailable()
+        let alert = UIAlertController(title: "카카오 로그인", message: "카카오 로그인 방식을 선택해주세요.", preferredStyle: .actionSheet)
+        let talkButton = UIAlertAction(title: "카카오톡으로 로그인", style: .default) { [weak self] _ in
+            self?.kakaoTalkLogin()
+        }
+        
+        let accountButton = UIAlertAction(title: "카카오 계정으로 로그인", style: .default) { [weak self] _ in
+            self?.kakaoAccountLogin()
+        }
+        
+        let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(talkButton)
+        alert.addAction(accountButton)
+        alert.addAction(cancelButton)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func kakaoTalkLogin() {
+        activityIndicator.startAnimating()
+    
+        let kakaoLogin = loginViewModel.kakaoLoginAvailable(isTalk: true)
         
         kakaoLogin.sink( receiveCompletion: { [weak self] completion in
             guard let self = self else { return }
+            
             switch completion {
             case .finished:
                 self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
-
+                self.activityIndicator.stopAnimating()
             case .failure(let error):
-                Log.debug(error)
+                        Log.debug(error)
             }
         }, receiveValue: { [weak self] result in
-            self?.kakaoAccessToken = result.accessToken
+                self?.kakaoAccessToken = result.accessToken
         }).store(in: &subscriptions)
     }
-
+    
+    private func kakaoAccountLogin() {
+        activityIndicator.startAnimating()
+        let kakaoLogin = loginViewModel.kakaoLoginAvailable(isTalk: false)
+        
+        kakaoLogin.sink( receiveCompletion: { [weak self] completion in
+            guard let self = self else { return }
+            
+            switch completion {
+            case .finished:
+                self.loginViewModel.kakaoLogin(accessToken: self.kakaoAccessToken ?? "")
+                self.activityIndicator.stopAnimating()
+        
+            case .failure(let error):
+                        Log.debug(error)
+            }
+        }, receiveValue: { [weak self] result in
+                self?.kakaoAccessToken = result.accessToken
+        }).store(in: &subscriptions)
+        
+    }
+    
     private func appleLoginDidTap() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         let request = appleIDProvider.createRequest()

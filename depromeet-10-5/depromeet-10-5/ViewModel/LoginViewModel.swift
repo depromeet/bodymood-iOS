@@ -19,7 +19,7 @@ protocol LoginViewModelType {
     var developerLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
     var moveToPoster: PassthroughSubject<Void, Never> { get }
     var loginSuccess: PassthroughSubject<Bool, Never> { get }
-    func kakaoLoginAvailable() -> Future<OAuthToken, Error>
+    func kakaoLoginAvailable(isTalk: Bool) -> Future<OAuthToken, Error>
     var userSubject: CurrentValueSubject<UserDataResponse?, Never> { get }
     func kakaoLogin(accessToken: String)
     func appleLogin(accessToken: String)
@@ -73,10 +73,25 @@ class LoginViewModel: LoginViewModelType {
 
     }
 
-    func kakaoLoginAvailable() -> Future<OAuthToken, Error> {
+    func kakaoLoginAvailable(isTalk: Bool) ->
+    Future<OAuthToken, Error> {
+        if isTalk {
+            return Future { promise in
+                if UserApi.isKakaoTalkLoginAvailable() {
+                    UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
+                        if let error = error {
+                            promise(.failure(error))
+                        } else {
+                            promise(.success(oauthToken!))
+                        }
+                    }
+                }
+            }
+        }
+        
         return Future { promise in
             if UserApi.isKakaoTalkLoginAvailable() {
-                UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
+                UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
                     if let error = error {
                         promise(.failure(error))
                     } else {
