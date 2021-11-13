@@ -80,7 +80,7 @@ extension AgreementViewController {
         scrollView.backgroundColor = .white
         scrollView.contentSize = contentSize
         scrollView.autoresizingMask = .flexibleHeight
-        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(scrollView)
         return scrollView
@@ -131,7 +131,7 @@ extension AgreementViewController {
         ])
         
         NSLayoutConstraint.activate([
-            agreementTextView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
+            agreementTextView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: 20),
             agreementTextView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
             agreementTextView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             agreementTextView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
