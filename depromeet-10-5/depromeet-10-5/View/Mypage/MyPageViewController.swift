@@ -51,7 +51,7 @@ extension MyPageViewController {
         }.store(in: &subscriptions)
 
         viewModel.moveToRemoveAccount.sink { [weak self] _ in
-            let viewController = RemoveAccountViewController(viewModel: RemoveAccountViewModel())
+            let viewController = RemoveAccountViewController(viewModel: RemoveAccountViewModel(service: AuthService()))
             self?.navigationController?.pushViewController(viewController, animated: true)
         }.store(in: &subscriptions)
 

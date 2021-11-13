@@ -67,7 +67,7 @@ extension LoginViewController {
                 self?.moveToPosterList()
             }.store(in: &subscriptions)
         
-        loginViewModel.loginSubject
+        loginViewModel.loginIsSuccess
             .receive(on: DispatchQueue.main)
             .sink { [weak self] success in
                 if success {
@@ -85,8 +85,6 @@ extension LoginViewController {
             .sink { [weak self] _ in
                 self?.appleLoginDidTap()
             }.store(in: &subscriptions)
-        
-       
     }
 }
 extension LoginViewController {

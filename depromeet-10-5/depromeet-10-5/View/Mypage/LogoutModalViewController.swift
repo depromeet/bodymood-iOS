@@ -338,7 +338,7 @@ extension LogoutModalViewController {
 
     private func logoutToServer() {
         let logout = viewModel.logout()
-        logout.sink ( receiveCompletion: { [weak self] completion in
+        logout.sink ( receiveCompletion: { completion in
             switch completion {
             case .finished:
                 Log.debug("웹 서버 로그인 성공")

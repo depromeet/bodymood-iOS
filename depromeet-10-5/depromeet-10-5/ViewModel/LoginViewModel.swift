@@ -18,10 +18,9 @@ protocol LoginViewModelType {
     var appleLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
     var developerLoginButtonDidTap: PassthroughSubject<Void, Never> { get }
     var moveToPoster: PassthroughSubject<Void, Never> { get }
-    var loginSuccess: PassthroughSubject<Bool, Never> { get }
+    var loginIsSuccess: PassthroughSubject<Bool, Never> { get }
     func kakaoLoginAvailable(isTalk: Bool) -> Future<OAuthToken, Error>
     var userSubject: CurrentValueSubject<UserDataResponse?, Never> { get }
-    var loginSubject: PassthroughSubject<Bool, Never> { get }
     func kakaoLogin(accessToken: String)
     func appleLogin(accessToken: String)
     func userInfo()
@@ -31,7 +30,7 @@ class LoginViewModel: LoginViewModelType {
     
     private let accessTokenSubject = CurrentValueSubject<String, Never>(.init())
     var userSubject =  CurrentValueSubject<UserDataResponse?, Never>(nil)
-    var loginSubject =  PassthroughSubject<Bool, Never>()
+    var loginisSuccess =  PassthroughSubject<Bool, Never>()
 
     private var authService: AuthServiceType
     private var fetchSubscription: AnyCancellable?
@@ -44,7 +43,7 @@ class LoginViewModel: LoginViewModelType {
     let appleLoginButtonDidTap = PassthroughSubject<Void, Never>()
     let developerLoginButtonDidTap = PassthroughSubject<Void, Never>()
     let moveToPoster = PassthroughSubject<Void, Never>()
-    let loginSuccess = PassthroughSubject<Bool, Never>()
+    let loginIsSuccess = PassthroughSubject<Bool, Never>()
 
     init(service: AuthServiceType) {
         self.authService = service
@@ -77,7 +76,7 @@ class LoginViewModel: LoginViewModelType {
 
     func kakaoLoginAvailable(isTalk: Bool) -> Future<OAuthToken, Error> {
         if isTalk {
-            return Future { promise in
+            return Future { [weak self] promise in
                 if UserApi.isKakaoTalkLoginAvailable() {
                     UserApi.shared.loginWithKakaoTalk { (oauthToken, error) in
                         if let error = error {
@@ -86,18 +85,18 @@ class LoginViewModel: LoginViewModelType {
                             promise(.success(oauthToken!))
                         }
                     }
+                } else {
+                    self?.loginisSuccess.send(false)
                 }
             }
         }
         
         return Future { promise in
-            if UserApi.isKakaoTalkLoginAvailable() {
-                UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
-                    if let error = error {
-                        promise(.failure(error))
-                    } else {
-                        promise(.success(oauthToken!))
-                    }
+            UserApi.shared.loginWithKakaoAccount { (oauthToken, error) in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(oauthToken!))
                 }
             }
         }
@@ -108,34 +107,38 @@ class LoginViewModel: LoginViewModelType {
             .sink(receiveCompletion: { [weak self] completion in
             switch completion {
             case .finished:
+                self?.loginIsSuccess.send(true)
                 Log.debug("success with kakao login")
-                
+
             case .failure(let error):
+                self?.loginIsSuccess.send(false)
                 Log.error(error)
             }
 
         }, receiveValue: { [weak self] response in
+            Log.debug(response.code)
             self?.valueDidReceived(response: response)
         })
     }
 
     func appleLogin(accessToken: String) {
-        fetchSubscription = authService.appleLogin(accessToken: accessToken).sink(receiveCompletion: { completion in
+        fetchSubscription = authService.appleLogin(accessToken: accessToken).sink(receiveCompletion: { [weak self] completion in
             switch completion {
             case .finished:
                 Log.debug("success Apple Login View Model")
                 
             case .failure(let error):
+                self?.loginIsSuccess.send(false)
                 Log.error(error)
             }
 
         }, receiveValue: { [weak self] response in
-            self?.loginSubject.send(true)
+            self?.loginisSuccess.send(true)
             self?.valueDidReceived(response: response)
         })
     }
 
-    private func valueDidReceived(response: LoginResponse) {
+    private func valueDidReceived(response: AuthResponse) {
         guard let accessToken = response.data?.accessToken,
             let refreshToken = response.data?.refreshToken else {
                 return
