@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5DFE960D847EFA3C1FE17CF5 /* Pods_depromeet_10_5.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7BC365CD3E3383551B38498 /* Pods_depromeet_10_5.framework */; };
 		9610B3082702379B00539F99 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9610B3072702379B00539F99 /* LoginViewController.swift */; };
 		9624B31027060AB7007CB5BA /* LogConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B30F27060AB7007CB5BA /* LogConfig.swift */; };
 		9624B31227060B4A007CB5BA /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9624B31127060B4A007CB5BA /* LoginViewModel.swift */; };
@@ -65,6 +64,7 @@
 		96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */; };
 		96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBF271B1704008013CA /* Coordinator.swift */; };
 		96F0BBC2271B3001008013CA /* UserDefaultKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBC1271B3001008013CA /* UserDefaultKey.swift */; };
+		DAF827E37F3B7774A5341FD1 /* Pods_Bodymood.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520FAD0DE746FFFE70AA77E5 /* Pods_Bodymood.framework */; };
 		E8002DE526EDDE09000621CB /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = E8002DE426EDDE09000621CB /* .swiftlint.yml */; };
 		E81DD0EC271C4919002855DC /* Combine+UIBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */; };
 		E83C14D02725CD9A007B2E11 /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E83C14CF2725CD9A007B2E11 /* PageIndicator.swift */; };
@@ -125,6 +125,8 @@
 
 /* Begin PBXFileReference section */
 		2F1F868ABCFD46B1358F5CC0 /* Pods-depromeet-10-5.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.debug.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.debug.xcconfig"; sourceTree = "<group>"; };
+		520FAD0DE746FFFE70AA77E5 /* Pods_Bodymood.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bodymood.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5C7D5906FC42099A36FD3493 /* Pods-Bodymood.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bodymood.release.xcconfig"; path = "Target Support Files/Pods-Bodymood/Pods-Bodymood.release.xcconfig"; sourceTree = "<group>"; };
 		815C56450EE98D41841E0C7B /* Pods-depromeet-10-5.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-depromeet-10-5.release.xcconfig"; path = "Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5.release.xcconfig"; sourceTree = "<group>"; };
 		9610B3072702379B00539F99 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9624B30F27060AB7007CB5BA /* LogConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfig.swift; sourceTree = "<group>"; };
@@ -186,7 +188,7 @@
 		96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		96F0BBBF271B1704008013CA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		96F0BBC1271B3001008013CA /* UserDefaultKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKey.swift; sourceTree = "<group>"; };
-		D7BC365CD3E3383551B38498 /* Pods_depromeet_10_5.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_depromeet_10_5.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A55BFD699854C212AF2856B4 /* Pods-Bodymood.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bodymood.debug.xcconfig"; path = "Target Support Files/Pods-Bodymood/Pods-Bodymood.debug.xcconfig"; sourceTree = "<group>"; };
 		E8002DE426EDDE09000621CB /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		E81DD0EB271C4919002855DC /* Combine+UIBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Combine+UIBarButtonItem.swift"; sourceTree = "<group>"; };
 		E83C14CF2725CD9A007B2E11 /* PageIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageIndicator.swift; sourceTree = "<group>"; };
@@ -250,7 +252,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5DFE960D847EFA3C1FE17CF5 /* Pods_depromeet_10_5.framework in Frameworks */,
+				DAF827E37F3B7774A5341FD1 /* Pods_Bodymood.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,7 +262,7 @@
 		5DF095F6CE8421FCD47CA979 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D7BC365CD3E3383551B38498 /* Pods_depromeet_10_5.framework */,
+				520FAD0DE746FFFE70AA77E5 /* Pods_Bodymood.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -494,6 +496,8 @@
 			children = (
 				2F1F868ABCFD46B1358F5CC0 /* Pods-depromeet-10-5.debug.xcconfig */,
 				815C56450EE98D41841E0C7B /* Pods-depromeet-10-5.release.xcconfig */,
+				A55BFD699854C212AF2856B4 /* Pods-Bodymood.debug.xcconfig */,
+				5C7D5906FC42099A36FD3493 /* Pods-Bodymood.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -783,15 +787,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Bodymood/Pods-Bodymood-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-Bodymood/Pods-Bodymood-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-depromeet-10-5/Pods-depromeet-10-5-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Bodymood/Pods-Bodymood-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B6335C51DB8F205CEC1BE665 /* [CP] Check Pods Manifest.lock */ = {
@@ -809,7 +813,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-depromeet-10-5-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Bodymood-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1056,7 +1060,7 @@
 		};
 		9637666826EDD79F00E8E547 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2F1F868ABCFD46B1358F5CC0 /* Pods-depromeet-10-5.debug.xcconfig */;
+			baseConfigurationReference = A55BFD699854C212AF2856B4 /* Pods-Bodymood.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1065,7 +1069,7 @@
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = 3CY8UX9N2S;
+				DEVELOPMENT_TEAM = RC5265XPLQ;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1080,7 +1084,7 @@
 		};
 		9637666926EDD79F00E8E547 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 815C56450EE98D41841E0C7B /* Pods-depromeet-10-5.release.xcconfig */;
+			baseConfigurationReference = 5C7D5906FC42099A36FD3493 /* Pods-Bodymood.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1089,7 +1093,7 @@
 				CODE_SIGN_ENTITLEMENTS = "depromeet-10-5/depromeet-10-5.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 6;
-				DEVELOPMENT_TEAM = 3CY8UX9N2S;
+				DEVELOPMENT_TEAM = RC5265XPLQ;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

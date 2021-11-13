@@ -105,8 +105,12 @@ extension AgreementViewController {
     private func style() {
         scrollView.delegate = self
         navigationController?.interactivePopGestureRecognizer?.delegate = self
+        navigationController?.view.backgroundColor = .white
+        navigationController?.navigationBar.backgroundColor = .clear
+        navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = .white
+        navigationController?.navigationBar.shadowImage = UIImage()
+        
         view.backgroundColor = .white
         navigationItem.leftBarButtonItem = .init(
             image: UIImage(named: "back_black"),

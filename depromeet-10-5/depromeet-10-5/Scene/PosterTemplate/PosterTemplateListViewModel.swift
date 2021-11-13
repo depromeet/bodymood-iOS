@@ -28,8 +28,8 @@ class PosterTemplateListViewModel: PosterTemplateListViewModelType {
     init() {
         let list: [PosterTemplate] = [
             .init(identifier: 0, imageName: "poster_template1", type: .normal),
-            .init(identifier: 1, imageName: "poster_tbd", type: nil),
-            .init(identifier: 2, imageName: "poster_tbd", type: nil)
+//            .init(identifier: 1, imageName: "poster_tbd", type: nil),
+//            .init(identifier: 2, imageName: "poster_tbd", type: nil)
         ]
         templates = .init(list)
         selectBtnTitle = .init(CommonText.selectTemplateBtnText)

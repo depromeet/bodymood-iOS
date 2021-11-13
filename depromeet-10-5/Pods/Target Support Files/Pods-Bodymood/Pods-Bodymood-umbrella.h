@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_depromeet_10_5VersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_depromeet_10_5VersionString[];
+FOUNDATION_EXPORT double Pods_BodymoodVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_BodymoodVersionString[];
 
