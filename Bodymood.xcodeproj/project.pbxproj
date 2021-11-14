@@ -266,6 +266,82 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		9624A09D2741533B00E4FCF7 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				9624B31127060B4A007CB5BA /* LoginViewModel.swift */,
+				9610B3072702379B00539F99 /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		9624A09E2741534900E4FCF7 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				9631FDAB273B933400D0F496 /* SplashViewModel.swift */,
+				9676E4C42725745B0068C979 /* SplashViewController.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		9624A09F2741535800E4FCF7 /* Emotion */ = {
+			isa = PBXGroup;
+			children = (
+				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
+				96DAF9CF2727017100B21E08 /* EmotionViewController.swift */,
+				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
+			);
+			path = Emotion;
+			sourceTree = "<group>";
+		};
+		9624A0A02741536400E4FCF7 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				96F0BBB6271B0ED6008013CA /* CameraViewController.swift */,
+				96AB433B273512E3001B2808 /* CameraViewModel.swift */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
+		9624A0A12741539200E4FCF7 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				9624A0A4274153C200E4FCF7 /* Logout */,
+				966363B22736561300F81387 /* MypageViewModel.swift */,
+				966363B0273649D200F81387 /* MyPageViewController.swift */,
+				9624A0A3274153AA00E4FCF7 /* Agreement */,
+				9624A0A22741539C00E4FCF7 /* RemoveAccount */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		9624A0A22741539C00E4FCF7 /* RemoveAccount */ = {
+			isa = PBXGroup;
+			children = (
+				966363C127368D1B00F81387 /* RemoveAccountViewModel.swift */,
+				966363BA27366A8300F81387 /* RemoveAccountViewController.swift */,
+			);
+			path = RemoveAccount;
+			sourceTree = "<group>";
+		};
+		9624A0A3274153AA00E4FCF7 /* Agreement */ = {
+			isa = PBXGroup;
+			children = (
+				966363B827366A7100F81387 /* AgreementViewController.swift */,
+				966363BF27368D1100F81387 /* AgreementViewModel.swift */,
+			);
+			path = Agreement;
+			sourceTree = "<group>";
+		};
+		9624A0A4274153C200E4FCF7 /* Logout */ = {
+			isa = PBXGroup;
+			children = (
+				9624C829273958F300D8312A /* LogoutViewModel.swift */,
+				96A31FDC2739387800355090 /* LogoutModalViewController.swift */,
+			);
+			path = Logout;
+			sourceTree = "<group>";
+		};
 		9637664A26EDD79E00E8E547 = {
 			isa = PBXGroup;
 			children = (
@@ -299,7 +375,6 @@
 				967549B22700A9EB007E4E95 /* Resource */,
 				9676E4CC27258A210068C979 /* Storyboard */,
 				967549AD2700A866007E4E95 /* View */,
-				967549B02700A879007E4E95 /* ViewModel */,
 				E8B3517527279A1B00A9C54D /* Scene */,
 			);
 			path = Bodymood;
@@ -315,37 +390,9 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
-		966363AF273649C500F81387 /* Mypage */ = {
-			isa = PBXGroup;
-			children = (
-				966363B0273649D200F81387 /* MyPageViewController.swift */,
-				966363B827366A7100F81387 /* AgreementViewController.swift */,
-				966363BA27366A8300F81387 /* RemoveAccountViewController.swift */,
-				96A31FDC2739387800355090 /* LogoutModalViewController.swift */,
-			);
-			path = Mypage;
-			sourceTree = "<group>";
-		};
-		966363BC27368A1200F81387 /* Mypage */ = {
-			isa = PBXGroup;
-			children = (
-				966363B22736561300F81387 /* MypageViewModel.swift */,
-				966363BF27368D1100F81387 /* AgreementViewModel.swift */,
-				966363C127368D1B00F81387 /* RemoveAccountViewModel.swift */,
-				9624C829273958F300D8312A /* LogoutViewModel.swift */,
-			);
-			path = Mypage;
-			sourceTree = "<group>";
-		};
 		967549AD2700A866007E4E95 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				966363AF273649C500F81387 /* Mypage */,
-				96DAF9CC2726D81E00B21E08 /* Camera */,
-				E8AD75B62721CF20009A3432 /* Cells */,
-				9610B3072702379B00539F99 /* LoginViewController.swift */,
-				9676E4C42725745B0068C979 /* SplashViewController.swift */,
-				96DAF9CF2727017100B21E08 /* EmotionViewController.swift */,
 				E8B3735E272C4F2A00833052 /* PosterView.swift */,
 				E8BBC0C6272ED2E100EEBD5E /* MainNavigationController.swift */,
 			);
@@ -375,18 +422,6 @@
 				9624C82B273965A500D8312A /* UserResponse.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		967549B02700A879007E4E95 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				966363BC27368A1200F81387 /* Mypage */,
-				9624B31127060B4A007CB5BA /* LoginViewModel.swift */,
-				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
-				96AB433B273512E3001B2808 /* CameraViewModel.swift */,
-				9631FDAB273B933400D0F496 /* SplashViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		967549B22700A9EB007E4E95 /* Resource */ = {
@@ -462,14 +497,6 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
-		96DAF9CC2726D81E00B21E08 /* Camera */ = {
-			isa = PBXGroup;
-			children = (
-				96F0BBB6271B0ED6008013CA /* CameraViewController.swift */,
-			);
-			path = Camera;
-			sourceTree = "<group>";
-		};
 		96F0BBAF271AF939008013CA /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
@@ -524,14 +551,6 @@
 			path = PhotoAlbum;
 			sourceTree = "<group>";
 		};
-		E8AD75B62721CF20009A3432 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		E8AD7643272437A3009A3432 /* Constant */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,12 +563,17 @@
 		E8B3517527279A1B00A9C54D /* Scene */ = {
 			isa = PBXGroup;
 			children = (
-				E87D25622737CE800056F14C /* PhotoAlbum */,
-				E8F856A42737A76D006FA900 /* PosterDetail */,
+				9624A09E2741534900E4FCF7 /* Splash */,
+				9624A09D2741533B00E4FCF7 /* Login */,
 				E8F8569C27369BA2006FA900 /* PosterList */,
+				E8F856A42737A76D006FA900 /* PosterDetail */,
 				E8B3519A27283A5400A9C54D /* PosterTemplate */,
 				E8B35195272830C600A9C54D /* PosterEdit */,
+				9624A0A02741536400E4FCF7 /* Camera */,
+				E87D25622737CE800056F14C /* PhotoAlbum */,
+				9624A09F2741535800E4FCF7 /* Emotion */,
 				E8B3517627279A4500A9C54D /* ExerciseCategory */,
+				9624A0A12741539200E4FCF7 /* MyPage */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
