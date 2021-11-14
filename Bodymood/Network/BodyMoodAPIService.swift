@@ -6,8 +6,11 @@ struct BodyMoodAPIService {
     static let shared = BodyMoodAPIService()
 
     private init() {}
-
+#if DEBUG
+    let baseURL = "https://dev.bodymood.me"
+#else
     let baseURL = "https://bodymood.me"
+#endif
     var token: String {
         UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) ?? ""
     }

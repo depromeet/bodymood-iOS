@@ -51,6 +51,10 @@ class DefaultBottomButton: UIButton {
             label.heightAnchor.constraint(equalToConstant: 56)
         ])
     }
+
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return bounds.contains(point) ? self : nil
+    }
 }
 
 class BottomButtonListView: UIView {
