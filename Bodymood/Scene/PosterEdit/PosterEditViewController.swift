@@ -189,10 +189,11 @@ extension PosterEditViewController {
                 self.navigationController?.pushViewController(categoryVC, animated: true)
             }.store(in: &bag)
         
-        viewModel.moveToMoodList
+        viewModel.moveToEmotionList
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
+                
                 let emotionVM = EmotionViewModel(service: EmotionService())
                 let emotionVC = EmotionViewController(viewModel: emotionVM, emotions: self.emotions)
                 emotionVC.delegate = self

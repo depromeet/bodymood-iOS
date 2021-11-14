@@ -269,8 +269,8 @@
 		9624A09D2741533B00E4FCF7 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				9624B31127060B4A007CB5BA /* LoginViewModel.swift */,
 				9610B3072702379B00539F99 /* LoginViewController.swift */,
+				9624B31127060B4A007CB5BA /* LoginViewModel.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -278,8 +278,8 @@
 		9624A09E2741534900E4FCF7 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
-				9631FDAB273B933400D0F496 /* SplashViewModel.swift */,
 				9676E4C42725745B0068C979 /* SplashViewController.swift */,
+				9631FDAB273B933400D0F496 /* SplashViewModel.swift */,
 			);
 			path = Splash;
 			sourceTree = "<group>";
@@ -287,9 +287,9 @@
 		9624A09F2741535800E4FCF7 /* Emotion */ = {
 			isa = PBXGroup;
 			children = (
-				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
 				96DAF9CF2727017100B21E08 /* EmotionViewController.swift */,
 				965EC52B27279FA600ED0420 /* EmotionViewModel.swift */,
+				965EC52D27280E1E00ED0420 /* EmotionCell.swift */,
 			);
 			path = Emotion;
 			sourceTree = "<group>";
@@ -571,8 +571,8 @@
 				E8B35195272830C600A9C54D /* PosterEdit */,
 				9624A0A02741536400E4FCF7 /* Camera */,
 				E87D25622737CE800056F14C /* PhotoAlbum */,
-				9624A09F2741535800E4FCF7 /* Emotion */,
 				E8B3517627279A4500A9C54D /* ExerciseCategory */,
+				9624A09F2741535800E4FCF7 /* Emotion */,
 				9624A0A12741539200E4FCF7 /* MyPage */,
 			);
 			path = Scene;
@@ -661,9 +661,9 @@
 		E8B3519A27283A5400A9C54D /* PosterTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				E8B351422725EB8600A9C54D /* PosterTemplateCell.swift */,
 				E8AD764C27254509009A3432 /* PosterTemplateListViewController.swift */,
 				E864150927257D9600D58B3E /* PosterTemplateListViewModel.swift */,
+				E8B351422725EB8600A9C54D /* PosterTemplateCell.swift */,
 				E83C14CF2725CD9A007B2E11 /* PageIndicator.swift */,
 			);
 			path = PosterTemplate;
