@@ -24,7 +24,6 @@ class EmotionViewModel: EmotionViewModelType {
 
     let selectButtonDidTap = PassthroughSubject<Void, Never>()
     let itemTapped = PassthroughSubject<Int, Never>()
-
     init(service: EmotionServiceType) {
         self.emotionService = service
         bind()
@@ -38,6 +37,7 @@ class EmotionViewModel: EmotionViewModelType {
         itemTapped.sink { [weak self] _ in
             self?.buttonTitle.send("선택 완료")
             self?.canEnableButton.send(true)
+        
         }.store(in: &subscriptions)
     }
 }
