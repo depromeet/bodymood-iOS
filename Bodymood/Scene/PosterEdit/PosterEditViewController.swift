@@ -3,12 +3,13 @@ import Combine
 
 protocol PosterEditDelegate: AnyObject {
     func photo(image: UIImage)
-    func emotion(emotion: EmotionDataResponse)
+    func emotion(emotion: EmotionDataResponse, index: Int)
 }
 
 extension PosterEditViewController: PosterEditDelegate {
-    func emotion(emotion: EmotionDataResponse) {
+    func emotion(emotion: EmotionDataResponse, index: Int) {
         self.posterEditGuideView.selectMoodGuideView.update(with: emotion)
+        selectedIndex = index
         self.updateCheckBox(index: 2)
         selectedEmotion = emotion
     }
@@ -31,6 +32,7 @@ class PosterEditViewController: UIViewController {
     private var bag = Set<AnyCancellable>()
 
     private var selectedEmotion: EmotionDataResponse?
+    private var selectedIndex: Int?
     var emotions: [EmotionDataResponse] = []
     
     init(viewModel: PosterEditViewModelType) {
@@ -195,7 +197,7 @@ extension PosterEditViewController {
                 guard let self = self else { return }
                 
                 let emotionVM = EmotionViewModel(service: EmotionService())
-                let emotionVC = EmotionViewController(viewModel: emotionVM, emotions: self.emotions)
+                let emotionVC = EmotionViewController(viewModel: emotionVM, emotions: self.emotions, selectedIndex: self.selectedIndex ?? 17)
                 emotionVC.delegate = self
                 self.navigationController?.pushViewController(emotionVC, animated: true)
             }.store(in: &bag)

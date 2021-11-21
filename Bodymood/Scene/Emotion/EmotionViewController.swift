@@ -23,17 +23,30 @@ class EmotionViewController: UIViewController {
     private lazy var bottomButton: DefaultBottomButton = { createBottomButtonView() }()
     private lazy var oldGradientLayer: CAGradientLayer = { createGradientLayer() }()
     
-    init(viewModel: EmotionViewModelType, emotions: [EmotionDataResponse]) {
+    init(viewModel: EmotionViewModelType, emotions: [EmotionDataResponse], selectedIndex: Int) {
         self.emotionViewModel = viewModel
-        
+        self.selectedIndex = selectedIndex
         super.init(nibName: nil, bundle: nil)
 
         collectionView.dataSource = self
         collectionView.delegate = self
         self.uploadEmotions(emotions: emotions)
-        let startColor =  hexStringToUIColor(hex: "#C1C1C1")
-        let endColor = hexStringToUIColor(hex: "#979797")
-
+        
+        let startColor = selectedIndex != 17
+        ? hexStringToUIColor(hex: emotions[selectedIndex].startColor ?? "#C1C1C1")
+        : hexStringToUIColor(hex: "#C1C1C1")
+        
+        let endColor = selectedIndex != 17
+        ? hexStringToUIColor(hex: emotions[selectedIndex].endColor ?? "#979797")
+        : hexStringToUIColor(hex: "#979797")
+        
+        if selectedIndex != 17 {
+            enableEmotion = true
+            emotionViewModel.itemTapped.send(selectedIndex)
+            collectionView.reloadData()
+            button(indexPath: selectedIndex)
+        }
+        
         gradient(startColor: startColor, endColor: endColor)
         self.gradient(startColor: startColor, endColor: endColor)
     }
@@ -54,6 +67,7 @@ class EmotionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        Log.debug(selectedIndex)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -83,7 +97,7 @@ class EmotionViewController: UIViewController {
         bottomButton.publisher(for: .touchUpInside)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.delegate?.emotion(emotion: (self?.selectedEmotion)!)
+                self?.delegate?.emotion(emotion: (self?.selectedEmotion)!, index: self!.selectedIndex)
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &subscriptions)
         
@@ -97,10 +111,6 @@ class EmotionViewController: UIViewController {
     func uploadEmotions(emotions: [EmotionDataResponse]) {
         for index in 0..<emotions.count {
             emotionData.insert(emotions[index], at: index)
-        }
-
-        for emotion in emotions {
-            Log.debug(emotion)
         }
         
         collectionView.reloadData()
@@ -179,16 +189,19 @@ extension EmotionViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.backgroundColor = .clear
-
-        let backButton = UIButton(type: .custom)
-        if let image = UIImage(named: "back") {
-            backButton.setImage(image, for: .normal)
+        
+        if !enableEmotion {
+            let backButton = UIButton(type: .custom)
+            if let image = UIImage(named: "back") {
+                backButton.setImage(image, for: .normal)
+            }
+            backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+            backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+            let leftBarButton = UIBarButtonItem(customView: backButton)
+            navigationItem.leftBarButtonItem = leftBarButton
+            navigationItem.leftBarButtonItem?.tintColor = .white
         }
-        backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        let leftBarButton = UIBarButtonItem(customView: backButton)
-        navigationItem.leftBarButtonItem = leftBarButton
-        navigationItem.leftBarButtonItem?.tintColor = .white
+        
 
         view.backgroundColor = .white
     }
@@ -282,11 +295,6 @@ extension EmotionViewController {
     @objc func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
     }
-
-    @objc func selectButtonDidTap() {
-        delegate?.emotion(emotion: selectedEmotion)
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 // MARK: - Configure Collection View
@@ -314,6 +322,7 @@ extension EmotionViewController: UICollectionViewDataSource {
 
         if enableEmotion {
             if indexPath.row == selectedIndex {
+                Log.debug(selectedIndex)
                 cell.selected()
 
                 let startColor = hexStringToUIColor(hex: emotionData[selectedIndex].startColor ?? "#C1C1C1")
@@ -333,19 +342,19 @@ extension EmotionViewController: UICollectionViewDataSource {
 extension EmotionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-       button(indexPath: indexPath)
+        button(indexPath: indexPath.row)
 
         collectionView.reloadData()
         emotionViewModel.itemTapped.send(indexPath.item)
     }
     
-    private func button(indexPath: IndexPath) {
-        selectedIndex = indexPath.row
-        selectedEmotion = emotionData[indexPath.row]
+    private func button(indexPath: Int) {
+        selectedIndex = indexPath
+        selectedEmotion = emotionData[indexPath]
 
         let backButton = UIButton(type: .custom)
 
-        let fontColor = emotionData[indexPath.row].fontColor ?? "#ffffff"
+        let fontColor = emotionData[indexPath].fontColor ?? "#ffffff"
 
         if fontColor == "#ffffff" {
             isDark = false
@@ -354,6 +363,7 @@ extension EmotionViewController: UICollectionViewDelegate {
             if let image = UIImage(named: "back") {
                 backButton.setImage(image, for: .normal)
             }
+            
         } else if fontColor == "#000000" {
             isDark = true
             setNeedsStatusBarAppearanceUpdate()
