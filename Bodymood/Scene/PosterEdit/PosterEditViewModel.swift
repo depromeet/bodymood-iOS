@@ -110,7 +110,6 @@ class PosterEditViewModel: PosterEditViewModelType {
                 Log.error(error)
             }
         }, receiveValue: { response in
-            Log.debug(response.data?[0].startColor)
             self.emotionSubject.send(response.data ?? [])
         })
     }
