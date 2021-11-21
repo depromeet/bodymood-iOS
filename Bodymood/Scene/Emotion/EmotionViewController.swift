@@ -31,6 +31,7 @@ class EmotionViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         self.uploadEmotions(emotions: emotions)
+        
         let startColor = selectedIndex != 17
         ? hexStringToUIColor(hex: emotions[selectedIndex].startColor ?? "#C1C1C1")
         : hexStringToUIColor(hex: "#C1C1C1")
@@ -188,16 +189,19 @@ extension EmotionViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.backgroundColor = .clear
-
-        let backButton = UIButton(type: .custom)
-        if let image = UIImage(named: "back") {
-            backButton.setImage(image, for: .normal)
+        
+        if !enableEmotion {
+            let backButton = UIButton(type: .custom)
+            if let image = UIImage(named: "back") {
+                backButton.setImage(image, for: .normal)
+            }
+            backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+            backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+            let leftBarButton = UIBarButtonItem(customView: backButton)
+            navigationItem.leftBarButtonItem = leftBarButton
+            navigationItem.leftBarButtonItem?.tintColor = .white
         }
-        backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        let leftBarButton = UIBarButtonItem(customView: backButton)
-        navigationItem.leftBarButtonItem = leftBarButton
-        navigationItem.leftBarButtonItem?.tintColor = .white
+        
 
         view.backgroundColor = .white
     }
