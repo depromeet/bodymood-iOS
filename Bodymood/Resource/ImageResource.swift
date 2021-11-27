@@ -8,4 +8,5 @@ enum ImageResource {
     static let check = UIImage(named: "check")
     static let share = UIImage(named: "share")
     static let viewModule = UIImage(named: "view_module")
+    static let delete = UIImage(named: "delete")
 }

@@ -40,7 +40,7 @@ struct BodyMoodAPIService {
             .setAuthToken(token)
             .toDataTaskPublisher()
     }
-
+    
     func addPoster(_ requestModel: PosterAddRequestModel) -> AnyPublisher<PosterAddResponseModel, Error> {
         let boundary = "\(UUID().uuidString)"
         let url = URL(string: "\(baseURL)/api/v1/posters")
@@ -62,6 +62,25 @@ struct BodyMoodAPIService {
             .setAuthToken(token)
             .setHttpBody(httpBody as Data)
             .toDataTaskPublisher()
+    }
+    
+    func deletePoster(posterID: Int) -> AnyPublisher<BodyMoodAPIResponse<String>, Error> {
+        let url = URL(string: "\(baseURL)/api/v1/posters/\(posterID)")
+        
+        var urlRequest = URLRequest(url: url!)
+        urlRequest.httpMethod = "DELETE"
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+
+        let accessToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) ?? ""
+        urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        
+        return URLSession.shared.dataTaskPublisher(for: urlRequest)
+            .map { $0.data }
+            .decode(
+                type: BodyMoodAPIResponse.self,
+                decoder: JSONDecoder())
+            .receive(on: RunLoop.main)
+            .eraseToAnyPublisher()
     }
 
     func getTestToken() -> AnyPublisher<TokenResponseModel, Error> {
