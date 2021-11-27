@@ -8,7 +8,7 @@ extension URLRequest {
     }
 
     enum HttpMethod: String {
-        case GET, POST
+        case GET, POST, DELETE
     }
 
     func setHttpMethod(_ method: HttpMethod) -> Self {

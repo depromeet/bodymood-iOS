@@ -7,6 +7,8 @@ protocol PosterDetailViewModelType {
     var shareBtnTapped: PassthroughSubject<Void, Never> { get }
     var completeBtnTapped: PassthroughSubject<Void, Never> { get }
     var viewDidAppearSignal: PassthroughSubject<UIImage, Never> { get }
+    var deletePoster: PassthroughSubject<Void, Never> { get }
+    
     // Outputs
     var poster: CurrentValueSubject<PosterPhotoResponseModel?, Never> { get }
     var makePoster: CurrentValueSubject<(UIImage, [ExerciseCategoryModel], EmotionDataResponse)?, Never> { get }
@@ -21,6 +23,7 @@ class PosterDetailViewModel: PosterDetailViewModelType {
     let shareBtnTapped = PassthroughSubject<Void, Never>()
     let completeBtnTapped = PassthroughSubject<Void, Never>()
     let viewDidAppearSignal = PassthroughSubject<UIImage, Never>()
+    let deletePoster = PassthroughSubject<Void, Never>()
 
     let poster: CurrentValueSubject<PosterPhotoResponseModel?, Never>
     let title: CurrentValueSubject<String, Never>
@@ -81,6 +84,22 @@ class PosterDetailViewModel: PosterDetailViewModelType {
                 }
             } receiveValue: { _ in
             }.store(in: &bag)
+        
+        deletePoster
+            .compactMap { [weak self] _ -> Int? in
+                self?.poster.value?.photoId
+            }.flatMap { posterID -> AnyPublisher<BodyMoodAPIResponse<String>, Error> in
+                BodyMoodAPIService.shared.deletePoster(posterID: posterID)
+            }.sink { completion in
+                switch completion {
+                case .finished:
+                    Log.debug("삭제성공")
+                case .failure(let error):
+                    Log.debug("삭제실패", error)
+                }
+            } receiveValue: { _ in
+            }.store(in: &bag)
+
     }
 }
 

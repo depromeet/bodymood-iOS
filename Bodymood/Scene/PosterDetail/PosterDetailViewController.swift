@@ -107,6 +107,7 @@ extension PosterDetailViewController {
             bottomButtonView.buttons.first?.publisher(for: .touchUpInside)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] _ in
+                    self?.viewModel.deletePoster.send()
                     self?.navigationController?.popToRootViewController(animated: true)
                 }.store(in: &bag)
             

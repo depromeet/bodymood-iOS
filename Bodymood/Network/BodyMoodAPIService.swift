@@ -67,20 +67,11 @@ struct BodyMoodAPIService {
     func deletePoster(posterID: Int) -> AnyPublisher<BodyMoodAPIResponse<String>, Error> {
         let url = URL(string: "\(baseURL)/api/v1/posters/\(posterID)")
         
-        var urlRequest = URLRequest(url: url!)
-        urlRequest.httpMethod = "DELETE"
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        let accessToken = UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) ?? ""
-        urlRequest.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
-        
-        return URLSession.shared.dataTaskPublisher(for: urlRequest)
-            .map { $0.data }
-            .decode(
-                type: BodyMoodAPIResponse.self,
-                decoder: JSONDecoder())
-            .receive(on: RunLoop.main)
-            .eraseToAnyPublisher()
+        return URLRequest(url: url!)
+            .setHttpMethod(.DELETE)
+            .setAuthToken(token)
+            .setContentType(.json)
+            .toDataTaskPublisher()
     }
 
     func getTestToken() -> AnyPublisher<TokenResponseModel, Error> {
