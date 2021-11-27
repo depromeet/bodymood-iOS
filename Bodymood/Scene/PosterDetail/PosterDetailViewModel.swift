@@ -30,7 +30,8 @@ class PosterDetailViewModel: PosterDetailViewModelType {
     let makePoster = CurrentValueSubject<(UIImage, [ExerciseCategoryModel], EmotionDataResponse)?, Never>(nil)
 
     private var bag = Set<AnyCancellable>()
-
+    private var fetchSubscription: Cancellable?
+    
     init(with poster: PosterPhotoResponseModel? = nil, mode: PosterDetailContentMode, templateType: PosterTemplate.TemplateType? = nil) {
         self.poster = .init(poster)
         switch mode {

@@ -13,6 +13,7 @@ class PosterDetailViewController: UIViewController {
 
     private let viewModel: PosterDetailViewModelType
     private var bag = Set<AnyCancellable>()
+    private var posterID: Int?
 
     init(viewModel: PosterDetailViewModelType) {
         self.viewModel = viewModel
@@ -66,8 +67,10 @@ extension PosterDetailViewController {
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] model in
+                self?.posterID = model.photoId
                 guard let view = self?.posterImageView.imageView else { return }
                 view.fetchImage(from: model.imageUrl) { view.image = $0 }
+                
             }.store(in: &bag)
 
         viewModel.makePoster
@@ -98,8 +101,15 @@ extension PosterDetailViewController {
         let shareButton: UIButton?
         switch mode {
         case .general:
-            bottomButtonView.setButtonImages([ImageResource.share?.withTintColor(.white, renderingMode: .alwaysOriginal)])
-            shareButton = bottomButtonView.buttons.first
+            bottomButtonView.setButtonImages([ImageResource.delete?.withTintColor(.white, renderingMode: .alwaysOriginal), ImageResource.share?.withTintColor(.white, renderingMode: .alwaysOriginal)])
+            
+            shareButton = bottomButtonView.buttons.last
+            bottomButtonView.buttons.first?.publisher(for: .touchUpInside)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    self?.navigationController?.popToRootViewController(animated: true)
+                }.store(in: &bag)
+            
         case .editing:
             bottomButtonView.setButtonImages([ImageResource.viewModule?.withTintColor(.white, renderingMode: .alwaysOriginal),
                                               ImageResource.share?.withTintColor(.white, renderingMode: .alwaysOriginal)])
