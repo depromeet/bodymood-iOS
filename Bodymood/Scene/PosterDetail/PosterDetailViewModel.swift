@@ -16,6 +16,7 @@ protocol PosterDetailViewModelType {
     var shareBtnTitle: CurrentValueSubject<String, Never> { get }
     var showShareBottomSheet: PassthroughSubject<Void, Never> { get }
     var contentMode: CurrentValueSubject<PosterDetailContentMode, Never> { get }
+    var popVC: PassthroughSubject<Void, Never> { get }
 }
 
 class PosterDetailViewModel: PosterDetailViewModelType {
@@ -31,6 +32,7 @@ class PosterDetailViewModel: PosterDetailViewModelType {
     let showShareBottomSheet = PassthroughSubject<Void, Never>()
     let contentMode: CurrentValueSubject<PosterDetailContentMode, Never>
     let makePoster = CurrentValueSubject<(UIImage, [ExerciseCategoryModel], EmotionDataResponse)?, Never>(nil)
+    let popVC = PassthroughSubject<Void, Never>()
 
     private var bag = Set<AnyCancellable>()
     private var fetchSubscription: Cancellable?
@@ -88,15 +90,17 @@ class PosterDetailViewModel: PosterDetailViewModelType {
         deletePoster
             .compactMap { [weak self] _ -> Int? in
                 self?.poster.value?.photoId
-            }.flatMap { posterID -> AnyPublisher<BodyMoodAPIResponse<String>, Error> in
-                BodyMoodAPIService.shared.deletePoster(posterID: posterID)
-            }.sink { completion in
+            }.first()
+            .flatMap { posterID -> AnyPublisher<String, Error> in
+                return BodyMoodAPIService.shared.deletePoster(posterID: posterID)
+            }.sink { [weak self] completion in
                 switch completion {
                 case .finished:
                     Log.debug("삭제성공")
                 case .failure(let error):
                     Log.debug("삭제실패", error)
                 }
+                self?.popVC.send()
             } receiveValue: { _ in
             }.store(in: &bag)
 

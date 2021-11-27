@@ -64,7 +64,7 @@ struct BodyMoodAPIService {
             .toDataTaskPublisher()
     }
     
-    func deletePoster(posterID: Int) -> AnyPublisher<BodyMoodAPIResponse<String>, Error> {
+    func deletePoster(posterID: Int) -> AnyPublisher<String, Error> {
         let url = URL(string: "\(baseURL)/api/v1/posters/\(posterID)")
         
         return URLRequest(url: url!)

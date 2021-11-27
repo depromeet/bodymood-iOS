@@ -95,6 +95,12 @@ extension PosterDetailViewController {
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &bag)
+        
+        viewModel.popVC
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.navigationController?.popToRootViewController(animated: true)
+            }.store(in: &bag)
     }
 
     private func configure(with mode: PosterDetailContentMode) {
@@ -108,7 +114,6 @@ extension PosterDetailViewController {
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] _ in
                     self?.viewModel.deletePoster.send()
-                    self?.navigationController?.popToRootViewController(animated: true)
                 }.store(in: &bag)
             
         case .editing:
