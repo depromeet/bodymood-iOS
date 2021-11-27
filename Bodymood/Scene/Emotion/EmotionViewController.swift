@@ -47,7 +47,6 @@ class EmotionViewController: UIViewController {
             button(indexPath: selectedIndex)
         }
         
-        gradient(startColor: startColor, endColor: endColor)
         self.gradient(startColor: startColor, endColor: endColor)
     }
 
@@ -201,7 +200,6 @@ extension EmotionViewController {
             navigationItem.leftBarButtonItem = leftBarButton
             navigationItem.leftBarButtonItem?.tintColor = .white
         }
-        
 
         view.backgroundColor = .white
     }
@@ -212,23 +210,48 @@ extension EmotionViewController {
         if let oldLayer = view.layer.sublayers?.filter({$0.name == gradientLayerName}).first {
             oldLayer.removeFromSuperlayer()
         }
-
+            
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
-        gradientLayer.locations = [0, 1]
         gradientLayer.startPoint = .init(x: 0, y: 0)
         gradientLayer.endPoint = .init(x: 1, y: 1)
-        gradientLayer.frame = view.bounds
         gradientLayer.name = gradientLayerName
 
         view.layer.insertSublayer(gradientLayer, at: 0)
 
-        let gradientAnimation = CABasicAnimation(keyPath: "locations")
-        gradientAnimation.fromValue = [0, 0.1]
-        gradientAnimation.toValue = [0, 1.0]
-        gradientAnimation.duration = 2.0
-        gradientAnimation.repeatCount = 1
-        gradientLayer.add(gradientAnimation, forKey: nil)
+        let gradientAnimation = makeAnimationGroup(previousGroup: nil, startColor.cgColor, endColor.cgColor)
+        gradientAnimation.beginTime = 0.0
+        gradientLayer.add(gradientAnimation, forKey: "backgroundColor")
+        
+        gradientLayer.frame = view.bounds
+    }
+    
+    private func makeAnimationGroup(previousGroup: CAAnimationGroup? = nil, _ startColor: CGColor, _ endColor: CGColor) -> CAAnimationGroup {
+        let animDuration: CFTimeInterval = 1.5
+        
+        let anim1 = CABasicAnimation(keyPath: #keyPath(CAGradientLayer.backgroundColor))
+        anim1.fromValue = startColor
+        anim1.toValue = endColor
+        anim1.duration = animDuration
+        anim1.beginTime = 0.0
+
+        let anim2 = CABasicAnimation(keyPath: #keyPath(CAGradientLayer.backgroundColor))
+        anim2.fromValue = endColor
+        anim2.toValue = startColor
+        anim2.duration = animDuration
+        anim2.beginTime = anim1.beginTime + anim1.duration
+
+        let group = CAAnimationGroup()
+        group.animations = [anim1, anim2]
+        group.repeatCount = .greatestFiniteMagnitude
+        group.duration = anim2.beginTime + anim2.duration
+        group.isRemovedOnCompletion = false
+
+        if let previousGroup = previousGroup {
+            // Offset groups by 0.33 seconds for effect
+            group.beginTime = previousGroup.beginTime + 0.33
+        }
+
+        return group
     }
 
     func layout() {
