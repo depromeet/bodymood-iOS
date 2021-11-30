@@ -113,7 +113,7 @@ extension PosterDetailViewController {
             bottomButtonView.buttons.first?.publisher(for: .touchUpInside)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] _ in
-                    self?.viewModel.deletePoster.send()
+                    self?.deleteAlert()
                 }.store(in: &bag)
             
         case .editing:
@@ -140,6 +140,20 @@ extension PosterDetailViewController {
                 let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
                 self.present(activityVC, animated: true, completion: nil)
             }.store(in: &bag)
+    }
+    
+    private func deleteAlert() {
+        let alertController = UIAlertController(title: "포스터 삭제", message: "포스터를 삭제하시겠습니까?", preferredStyle: .alert)
+        
+        let confirmButton = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.viewModel.deletePoster.send()
+        }
+        let cancelButton = UIAlertAction(title: "취소", style: .cancel)
+        
+        alertController.addAction(confirmButton)
+        alertController.addAction(cancelButton)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 
