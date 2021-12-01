@@ -13,6 +13,7 @@ class PosterDetailViewController: UIViewController {
 
     private let viewModel: PosterDetailViewModelType
     private var bag = Set<AnyCancellable>()
+    private var posterID: Int?
 
     init(viewModel: PosterDetailViewModelType) {
         self.viewModel = viewModel
@@ -66,8 +67,10 @@ extension PosterDetailViewController {
             .compactMap { $0 }
             .receive(on: DispatchQueue.main)
             .sink { [weak self] model in
+                self?.posterID = model.photoId
                 guard let view = self?.posterImageView.imageView else { return }
                 view.fetchImage(from: model.imageUrl) { view.image = $0 }
+                
             }.store(in: &bag)
 
         viewModel.makePoster
@@ -92,14 +95,27 @@ extension PosterDetailViewController {
             .sink { [weak self] _ in
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &bag)
+        
+        viewModel.popVC
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.navigationController?.popToRootViewController(animated: true)
+            }.store(in: &bag)
     }
 
     private func configure(with mode: PosterDetailContentMode) {
         let shareButton: UIButton?
         switch mode {
         case .general:
-            bottomButtonView.setButtonImages([ImageResource.share?.withTintColor(.white, renderingMode: .alwaysOriginal)])
-            shareButton = bottomButtonView.buttons.first
+            bottomButtonView.setButtonImages([ImageResource.delete?.withTintColor(.white, renderingMode: .alwaysOriginal), ImageResource.share?.withTintColor(.white, renderingMode: .alwaysOriginal)])
+            
+            shareButton = bottomButtonView.buttons.last
+            bottomButtonView.buttons.first?.publisher(for: .touchUpInside)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] _ in
+                    self?.deleteAlert()
+                }.store(in: &bag)
+            
         case .editing:
             bottomButtonView.setButtonImages([ImageResource.viewModule?.withTintColor(.white, renderingMode: .alwaysOriginal),
                                               ImageResource.share?.withTintColor(.white, renderingMode: .alwaysOriginal)])
@@ -124,6 +140,20 @@ extension PosterDetailViewController {
                 let activityVC = UIActivityViewController(activityItems: [image], applicationActivities: nil)
                 self.present(activityVC, animated: true, completion: nil)
             }.store(in: &bag)
+    }
+    
+    private func deleteAlert() {
+        let alertController = UIAlertController(title: "포스터 삭제", message: "포스터를 삭제하시겠습니까?", preferredStyle: .alert)
+        
+        let confirmButton = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.viewModel.deletePoster.send()
+        }
+        let cancelButton = UIAlertAction(title: "취소", style: .cancel)
+        
+        alertController.addAction(confirmButton)
+        alertController.addAction(cancelButton)
+        
+        present(alertController, animated: true, completion: nil)
     }
 }
 

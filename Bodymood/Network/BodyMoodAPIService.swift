@@ -6,8 +6,11 @@ struct BodyMoodAPIService {
     static let shared = BodyMoodAPIService()
 
     private init() {}
-
+#if DEBUG
+    let baseURL = "https://dev.bodymood.me"
+#else
     let baseURL = "https://bodymood.me"
+#endif
     var token: String {
         UserDefaults.standard.string(forKey: UserDefaultKey.accessToken) ?? ""
     }
@@ -37,7 +40,7 @@ struct BodyMoodAPIService {
             .setAuthToken(token)
             .toDataTaskPublisher()
     }
-
+    
     func addPoster(_ requestModel: PosterAddRequestModel) -> AnyPublisher<PosterAddResponseModel, Error> {
         let boundary = "\(UUID().uuidString)"
         let url = URL(string: "\(baseURL)/api/v1/posters")
@@ -58,6 +61,16 @@ struct BodyMoodAPIService {
             .setContentType(.multipart(boundary: boundary))
             .setAuthToken(token)
             .setHttpBody(httpBody as Data)
+            .toDataTaskPublisher()
+    }
+    
+    func deletePoster(posterID: Int) -> AnyPublisher<String, Error> {
+        let url = URL(string: "\(baseURL)/api/v1/posters/\(posterID)")
+        
+        return URLRequest(url: url!)
+            .setHttpMethod(.DELETE)
+            .setAuthToken(token)
+            .setContentType(.json)
             .toDataTaskPublisher()
     }
 

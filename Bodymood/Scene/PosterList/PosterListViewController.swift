@@ -45,6 +45,8 @@ class PosterListViewController: UIViewController {
 
         navigationItem.leftBarButtonItems = []
         navigationItem.hidesBackButton = true
+        
+        viewModel.loadImage()
     }
 }
 

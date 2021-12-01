@@ -7,6 +7,8 @@ protocol PosterDetailViewModelType {
     var shareBtnTapped: PassthroughSubject<Void, Never> { get }
     var completeBtnTapped: PassthroughSubject<Void, Never> { get }
     var viewDidAppearSignal: PassthroughSubject<UIImage, Never> { get }
+    var deletePoster: PassthroughSubject<Void, Never> { get }
+    
     // Outputs
     var poster: CurrentValueSubject<PosterPhotoResponseModel?, Never> { get }
     var makePoster: CurrentValueSubject<(UIImage, [ExerciseCategoryModel], EmotionDataResponse)?, Never> { get }
@@ -14,6 +16,7 @@ protocol PosterDetailViewModelType {
     var shareBtnTitle: CurrentValueSubject<String, Never> { get }
     var showShareBottomSheet: PassthroughSubject<Void, Never> { get }
     var contentMode: CurrentValueSubject<PosterDetailContentMode, Never> { get }
+    var popVC: PassthroughSubject<Void, Never> { get }
 }
 
 class PosterDetailViewModel: PosterDetailViewModelType {
@@ -21,6 +24,7 @@ class PosterDetailViewModel: PosterDetailViewModelType {
     let shareBtnTapped = PassthroughSubject<Void, Never>()
     let completeBtnTapped = PassthroughSubject<Void, Never>()
     let viewDidAppearSignal = PassthroughSubject<UIImage, Never>()
+    let deletePoster = PassthroughSubject<Void, Never>()
 
     let poster: CurrentValueSubject<PosterPhotoResponseModel?, Never>
     let title: CurrentValueSubject<String, Never>
@@ -28,9 +32,11 @@ class PosterDetailViewModel: PosterDetailViewModelType {
     let showShareBottomSheet = PassthroughSubject<Void, Never>()
     let contentMode: CurrentValueSubject<PosterDetailContentMode, Never>
     let makePoster = CurrentValueSubject<(UIImage, [ExerciseCategoryModel], EmotionDataResponse)?, Never>(nil)
+    let popVC = PassthroughSubject<Void, Never>()
 
     private var bag = Set<AnyCancellable>()
-
+    private var fetchSubscription: Cancellable?
+    
     init(with poster: PosterPhotoResponseModel? = nil, mode: PosterDetailContentMode, templateType: PosterTemplate.TemplateType? = nil) {
         self.poster = .init(poster)
         switch mode {
@@ -80,6 +86,24 @@ class PosterDetailViewModel: PosterDetailViewModelType {
                 }
             } receiveValue: { _ in
             }.store(in: &bag)
+        
+        deletePoster
+            .compactMap { [weak self] _ -> Int? in
+                self?.poster.value?.photoId
+            }.first()
+            .flatMap { posterID -> AnyPublisher<String, Error> in
+                return BodyMoodAPIService.shared.deletePoster(posterID: posterID)
+            }.sink { [weak self] completion in
+                switch completion {
+                case .finished:
+                    Log.debug("삭제성공")
+                case .failure(let error):
+                    Log.debug("삭제실패", error)
+                }
+                self?.popVC.send()
+            } receiveValue: { _ in
+            }.store(in: &bag)
+
     }
 }
 

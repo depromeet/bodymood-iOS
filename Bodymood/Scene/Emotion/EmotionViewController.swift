@@ -2,6 +2,19 @@ import UIKit
 import Combine
 
 class EmotionViewController: UIViewController {
+    private lazy var cellID = "EmotionCell"
+    
+    private var emotionData: [EmotionDataResponse] = []
+    private var emotionViewModel: EmotionViewModelType
+    private var subscriptions = Set<AnyCancellable>()
+    private var fetchSubscription: AnyCancellable?
+    private var selectedIndex: Int = 17
+    private var isDark: Bool = false
+    private var enableEmotion: Bool = false
+    weak var delegate: PosterEditDelegate?
+
+    var selectedEmotion: EmotionDataResponse!
+
     private lazy var collectionViewFlowLayout: UICollectionViewFlowLayout = { createCollectionViewFlowLayout() }()
     private lazy var firstTitleLabel: UILabel = { createFirstTitleLabel() }()
     private lazy var secondTitleLabel: UILabel = { createSecondTitleLabel() }()
@@ -9,27 +22,32 @@ class EmotionViewController: UIViewController {
     private lazy var contentView: UIView = { createContentView() }()
     private lazy var bottomButton: DefaultBottomButton = { createBottomButtonView() }()
     private lazy var oldGradientLayer: CAGradientLayer = { createGradientLayer() }()
-
-    private var emotionData: [EmotionDataResponse] = []
-    private var emotionViewModel: EmotionViewModelType
-    private var subscriptions = Set<AnyCancellable>()
-    private var fetchSubscription: AnyCancellable?
-    private var selectedIndex: Int = 17
-    private var isDark: Bool = false
-
-    weak var delegate: PosterEditDelegate?
-
-    var selectedEmotion: EmotionDataResponse!
-
-    private lazy var cellID = "EmotionCell"
-
-    init(viewModel: EmotionViewModelType, emotions: [EmotionDataResponse]) {
+    
+    init(viewModel: EmotionViewModelType, emotions: [EmotionDataResponse], selectedIndex: Int) {
         self.emotionViewModel = viewModel
+        self.selectedIndex = selectedIndex
         super.init(nibName: nil, bundle: nil)
 
         collectionView.dataSource = self
         collectionView.delegate = self
         self.uploadEmotions(emotions: emotions)
+        
+        let startColor = selectedIndex != 17
+        ? hexStringToUIColor(hex: emotions[selectedIndex].startColor ?? "#C1C1C1")
+        : hexStringToUIColor(hex: "#C1C1C1")
+        
+        let endColor = selectedIndex != 17
+        ? hexStringToUIColor(hex: emotions[selectedIndex].endColor ?? "#979797")
+        : hexStringToUIColor(hex: "#979797")
+        
+        if selectedIndex != 17 {
+            enableEmotion = true
+            emotionViewModel.itemTapped.send(selectedIndex)
+            collectionView.reloadData()
+            button(indexPath: selectedIndex)
+        }
+        
+        self.gradient(startColor: startColor, endColor: endColor)
     }
 
     required init?(coder: NSCoder) {
@@ -48,6 +66,7 @@ class EmotionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
+        Log.debug(selectedIndex)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -56,8 +75,18 @@ class EmotionViewController: UIViewController {
 
     private func bind() {
         emotionViewModel.canEnableButton.receive(on: DispatchQueue.main).sink { [weak self] canEnable in
-            Log.debug(canEnable)
+            
             self?.bottomButton.isEnabled = canEnable
+            self?.enableEmotion = canEnable
+            
+            if canEnable {
+                self?.firstTitleLabel.isHidden = true
+                self?.secondTitleLabel.isHidden = true
+            } else {
+                self?.firstTitleLabel.isHidden = false
+                self?.secondTitleLabel.isHidden = false
+            }
+            
         }.store(in: &subscriptions)
 
         emotionViewModel.buttonTitle.receive(on: DispatchQueue.main).sink { [weak self] title in
@@ -67,18 +96,20 @@ class EmotionViewController: UIViewController {
         bottomButton.publisher(for: .touchUpInside)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
-                self?.delegate?.emotion(emotion: (self?.selectedEmotion)!)
+                self?.delegate?.emotion(emotion: (self?.selectedEmotion)!, index: self!.selectedIndex)
                 self?.navigationController?.popViewController(animated: true)
             }.store(in: &subscriptions)
+        
+        navigationItem.leftBarButtonItem?.tap
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.navigationController?.popViewController(animated: true)
+        }.store(in: &subscriptions)
     }
 
     func uploadEmotions(emotions: [EmotionDataResponse]) {
         for index in 0..<emotions.count {
             emotionData.insert(emotions[index], at: index)
-        }
-
-        for emotion in emotions {
-            Log.debug(emotion)
         }
         
         collectionView.reloadData()
@@ -157,25 +188,20 @@ extension EmotionViewController {
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.backgroundColor = .clear
-
-        let backButton = UIButton(type: .custom)
-        if let image = UIImage(named: "back") {
-            backButton.setImage(image, for: .normal)
+        
+        if !enableEmotion {
+            let backButton = UIButton(type: .custom)
+            if let image = UIImage(named: "back") {
+                backButton.setImage(image, for: .normal)
+            }
+            backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+            backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
+            let leftBarButton = UIBarButtonItem(customView: backButton)
+            navigationItem.leftBarButtonItem = leftBarButton
+            navigationItem.leftBarButtonItem?.tintColor = .white
         }
-        backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
-        backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-        let leftBarButton = UIBarButtonItem(customView: backButton)
-        navigationItem.leftBarButtonItem = leftBarButton
-        navigationItem.leftBarButtonItem?.tintColor = .white
 
         view.backgroundColor = .white
-
-        let startColor =  UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0))
-        let endColor = UIColor(cgColor: CGColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0))
-
-        gradient(startColor: startColor, endColor: endColor)
-
-        oldGradientLayer.colors = [startColor, endColor]
     }
 
     func gradient(startColor: UIColor, endColor: UIColor) {
@@ -184,30 +210,48 @@ extension EmotionViewController {
         if let oldLayer = view.layer.sublayers?.filter({$0.name == gradientLayerName}).first {
             oldLayer.removeFromSuperlayer()
         }
-
+            
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
-        gradientLayer.locations = [0, 1]
         gradientLayer.startPoint = .init(x: 0, y: 0)
         gradientLayer.endPoint = .init(x: 1, y: 1)
-        gradientLayer.frame = view.bounds
         gradientLayer.name = gradientLayerName
 
         view.layer.insertSublayer(gradientLayer, at: 0)
 
-        let gradientAnimation = CABasicAnimation(keyPath: "locations")
-        gradientAnimation.fromValue = [0, 0.1]
-        gradientAnimation.toValue = [0, 1.0]
-        gradientAnimation.duration = 2.0
-        gradientAnimation.repeatCount = 1
-        gradientLayer.add(gradientAnimation, forKey: nil)
+        let gradientAnimation = makeAnimationGroup(previousGroup: nil, startColor.cgColor, endColor.cgColor)
+        gradientAnimation.beginTime = 0.0
+        gradientLayer.add(gradientAnimation, forKey: "backgroundColor")
+        
+        gradientLayer.frame = view.bounds
     }
+    
+    private func makeAnimationGroup(previousGroup: CAAnimationGroup? = nil, _ startColor: CGColor, _ endColor: CGColor) -> CAAnimationGroup {
+        let animDuration: CFTimeInterval = 1.5
+        
+        let anim1 = CABasicAnimation(keyPath: #keyPath(CAGradientLayer.backgroundColor))
+        anim1.fromValue = startColor
+        anim1.toValue = endColor
+        anim1.duration = animDuration
+        anim1.beginTime = 0.0
 
-    override func viewWillLayoutSubviews() {
-        let startColor =  UIColor(cgColor: CGColor(red: 193/255, green: 193/255, blue: 193/255, alpha: 1.0))
-        let endColor = UIColor(cgColor: CGColor(red: 100/255, green: 100/255, blue: 100/255, alpha: 1.0))
+        let anim2 = CABasicAnimation(keyPath: #keyPath(CAGradientLayer.backgroundColor))
+        anim2.fromValue = endColor
+        anim2.toValue = startColor
+        anim2.duration = animDuration
+        anim2.beginTime = anim1.beginTime + anim1.duration
 
-        gradient(startColor: startColor, endColor: endColor)
+        let group = CAAnimationGroup()
+        group.animations = [anim1, anim2]
+        group.repeatCount = .greatestFiniteMagnitude
+        group.duration = anim2.beginTime + anim2.duration
+        group.isRemovedOnCompletion = false
+
+        if let previousGroup = previousGroup {
+            // Offset groups by 0.33 seconds for effect
+            group.beginTime = previousGroup.beginTime + 0.33
+        }
+
+        return group
     }
 
     func layout() {
@@ -274,11 +318,6 @@ extension EmotionViewController {
     @objc func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
     }
-
-    @objc func selectButtonDidTap() {
-        delegate?.emotion(emotion: selectedEmotion)
-        navigationController?.popViewController(animated: true)
-    }
 }
 
 // MARK: - Configure Collection View
@@ -300,47 +339,22 @@ extension EmotionViewController: UICollectionViewDataSource {
         cell.backgroundColor = .clear
         cell.koreanTitleLabel.text = emotionData[indexPath.row].koreanTitle
         cell.englishTitleLabel.text = emotionData[indexPath.row].englishTitle
-        cell.setLabelColor(color: hexStringToUIColor(
-            hex: emotionData[selectedIndex == 17 ? 0: selectedIndex].fontColor ?? "#FFFFFF")
+        cell.labelColor(color: hexStringToUIColor(
+            hex: emotionData[!enableEmotion ? 0: selectedIndex].fontColor ?? "#FFFFFF")
         )
 
-        if selectedIndex != 17 {
+        if enableEmotion {
             if indexPath.row == selectedIndex {
-                cell.koreanTitleLabel.font = UIFont(name: "Pretendard-ExtraBold", size: 18)
-                cell.koreanTitleLabel.layer.shadowColor = UIColor.black.cgColor
-                cell.koreanTitleLabel.layer.shadowRadius = 1.0
-                cell.koreanTitleLabel.layer.shadowOpacity = 0.25
-                cell.koreanTitleLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
-                cell.koreanTitleLabel.layer.masksToBounds = false
-                cell.koreanTitleLabel.alpha = 1
+                Log.debug(selectedIndex)
+                cell.selected()
 
-                cell.englishTitleLabel.font = UIFont(name: "PlayfairDisplay-Bold", size: 12)
-                cell.englishTitleLabel.layer.shadowColor = UIColor.black.cgColor
-                cell.englishTitleLabel.layer.shadowRadius = 1.0
-                cell.englishTitleLabel.layer.shadowOpacity = 0.25
-                cell.englishTitleLabel.layer.shadowOffset = CGSize(width: 2, height: 2)
-                cell.englishTitleLabel.layer.masksToBounds = false
-                cell.englishTitleLabel.alpha = 1
-
-                let startColor = hexStringToUIColor(hex: emotionData[selectedIndex].startColor!)
-                let endColor = hexStringToUIColor(hex: emotionData[selectedIndex].endColor!)
+                let startColor = hexStringToUIColor(hex: emotionData[selectedIndex].startColor ?? "#C1C1C1")
+                let endColor = hexStringToUIColor(hex: emotionData[selectedIndex].endColor ?? "#979797")
 
                 gradient(startColor: startColor, endColor: endColor)
 
             } else {
-                cell.koreanTitleLabel.font = UIFont(name: "Pretendard-SemiBold", size: 18)
-                cell.koreanTitleLabel.layer.shadowRadius = 0.0
-                cell.koreanTitleLabel.layer.shadowOpacity = 0.0
-                cell.koreanTitleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
-                cell.koreanTitleLabel.layer.masksToBounds = false
-                cell.koreanTitleLabel.alpha = 0.5
-
-                cell.englishTitleLabel.font = UIFont(name: "PlayfairDisplay-Regular", size: 12)
-                cell.englishTitleLabel.layer.shadowRadius = 0.0
-                cell.englishTitleLabel.layer.shadowOpacity = 0.0
-                cell.englishTitleLabel.layer.shadowOffset = CGSize(width: 0, height: 0)
-                cell.englishTitleLabel.layer.masksToBounds = false
-                cell.englishTitleLabel.alpha = 0.5
+                cell.notSelected()
             }
         }
 
@@ -350,15 +364,20 @@ extension EmotionViewController: UICollectionViewDataSource {
 
 extension EmotionViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedIndex = indexPath.row
-        selectedEmotion = emotionData[selectedIndex]
+        
+        button(indexPath: indexPath.row)
 
-        firstTitleLabel.isHidden = true
-        secondTitleLabel.isHidden = true
+        collectionView.reloadData()
+        emotionViewModel.itemTapped.send(indexPath.item)
+    }
+    
+    private func button(indexPath: Int) {
+        selectedIndex = indexPath
+        selectedEmotion = emotionData[indexPath]
 
         let backButton = UIButton(type: .custom)
 
-        let fontColor = emotionData[indexPath.row].fontColor ?? "#ffffff"
+        let fontColor = emotionData[indexPath].fontColor ?? "#ffffff"
 
         if fontColor == "#ffffff" {
             isDark = false
@@ -367,6 +386,7 @@ extension EmotionViewController: UICollectionViewDelegate {
             if let image = UIImage(named: "back") {
                 backButton.setImage(image, for: .normal)
             }
+            
         } else if fontColor == "#000000" {
             isDark = true
             setNeedsStatusBarAppearanceUpdate()
@@ -378,12 +398,9 @@ extension EmotionViewController: UICollectionViewDelegate {
 
         backButton.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
         backButton.addTarget(self, action: #selector(backButtonDidTap), for: .touchUpInside)
-
+        
         let leftBarButton = UIBarButtonItem(customView: backButton)
         navigationItem.leftBarButtonItem = leftBarButton
-
-        collectionView.reloadData()
-        emotionViewModel.itemTapped.send(indexPath.item)
     }
 }
 

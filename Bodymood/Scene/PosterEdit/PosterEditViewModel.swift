@@ -13,7 +13,7 @@ protocol PosterEditViewModelType: PosterEditGuideViewModelType {
     var moveToCamera: PassthroughSubject<Void, Never> { get }
     var moveToAlbum: PassthroughSubject<Void, Never> { get }
     var moveToExerciseCategory: PassthroughSubject<Void, Never> { get }
-    var moveToMoodList: PassthroughSubject<Void, Never> { get }
+    var moveToEmotionList: PassthroughSubject<Void, Never> { get }
     var activateCompleteButton: PassthroughSubject<Bool, Never> { get }
     var emotionSubject: CurrentValueSubject<[EmotionDataResponse], Never> { get }
 
@@ -43,7 +43,7 @@ class PosterEditViewModel: PosterEditViewModelType {
     let title: CurrentValueSubject<String, Never>
     let moveToCamera = PassthroughSubject<Void, Never>()
     let moveToAlbum = PassthroughSubject<Void, Never>()
-    let moveToMoodList = PassthroughSubject<Void, Never>()
+    let moveToEmotionList = PassthroughSubject<Void, Never>()
     let moveToExerciseCategory = PassthroughSubject<Void, Never>()
     let activateCompleteButton = PassthroughSubject<Bool, Never>()
     let photoSelectedFromAlbum = PassthroughSubject<PHAsset, Never>()
@@ -89,7 +89,7 @@ class PosterEditViewModel: PosterEditViewModelType {
 
         selectMoodBtnTapped
             .sink { [weak self] _ in
-                self?.moveToMoodList.send()
+                self?.moveToEmotionList.send()
             }.store(in: &bag)
 
         itemSelected
@@ -110,7 +110,6 @@ class PosterEditViewModel: PosterEditViewModelType {
                 Log.error(error)
             }
         }, receiveValue: { response in
-            Log.debug(response.data?[0].startColor)
             self.emotionSubject.send(response.data ?? [])
         })
     }
