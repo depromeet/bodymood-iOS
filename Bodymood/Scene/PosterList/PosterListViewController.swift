@@ -223,6 +223,7 @@ extension PosterListViewController {
                                      bottom: Layout.btnContentInset,
                                      right: Layout.btnContentInset)
         view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.insertSubview(view, aboveSubview: collectionView)
         self.view.addSubview(view)
         return view
     }

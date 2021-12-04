@@ -175,9 +175,16 @@ extension PosterDetailViewController {
 
     private func style() {
         view.backgroundColor = .white
-
-        let backIcon = ImageResource.leftArrow?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        navigationItem.leftBarButtonItem = .init(image: backIcon, style: .plain, target: nil, action: nil)
+        
+        if viewModel.contentMode.value == .editing {
+            navigationItem.leftBarButtonItems = []
+            navigationItem.hidesBackButton = true
+            
+        } else {
+            let backIcon = ImageResource.leftArrow?.withTintColor(.black, renderingMode: .alwaysOriginal)
+            navigationItem.leftBarButtonItem = .init(image: backIcon, style: .plain, target: nil, action: nil)
+            
+        }
     }
 
     private func layout() {
