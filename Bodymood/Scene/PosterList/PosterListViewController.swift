@@ -10,6 +10,8 @@ class PosterListViewController: UIViewController {
     private lazy var addButton: UIButton = { createAddButton() }()
     private lazy var guideEnglishLabel: UILabel = { createGuideEnglishLabel() }()
     private lazy var guideLabel: UILabel = { createGuideLabel() }()
+    private lazy var buttonClickEnglishLabel: UILabel = { createButtonClickEnglishLabel() }()
+    private lazy var buttonClickLabel: UILabel = { createButtonClickLabel() }()
     private lazy var mypageButton: UIButton = {
         createMypageButton() }()
 
@@ -58,6 +60,8 @@ extension PosterListViewController {
             .sink { [weak self] posters in
                 self?.guideLabel.isHidden = !posters.isEmpty
                 self?.guideEnglishLabel.isHidden = !posters.isEmpty
+                self?.buttonClickLabel.isHidden = !posters.isEmpty
+                self?.buttonClickEnglishLabel.isHidden = !posters.isEmpty
                 self?.updateList(with: posters)
             }.store(in: &subscriptions)
 
@@ -72,6 +76,20 @@ extension PosterListViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] text in
                 self?.guideEnglishLabel.attributedText = text.toAttributedText(minimumLineHeight: Style.lineHeight, alignment: .center)
+                
+            }).store(in: &subscriptions)
+        
+        viewModel.buttonClickLabel
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] text in
+                self?.buttonClickLabel.attributedText = text.toAttributedText(minimumLineHeight: 14,
+                                                                        alignment: .center)
+            }.store(in: &subscriptions)
+
+        viewModel.buttonClickEnglishLabel
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] text in
+                self?.buttonClickEnglishLabel.attributedText = text.toAttributedText(minimumLineHeight: 25, alignment: .center)
                 
             }).store(in: &subscriptions)
         
@@ -219,11 +237,34 @@ extension PosterListViewController {
         self.view.addSubview(view)
         return view
     }
+    
     private func createGuideLabel() -> UILabel {
         let view = UILabel()
         view.numberOfLines = 0
         view.font = UIFont.systemFont(ofSize: 18)
         view.textColor = #colorLiteral(red: 0.6666666667, green: 0.6666666667, blue: 0.6666666667, alpha: 1)
+        view.font = UIFont(name: "Pretendard-Bold", size: 12)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
+        return view
+    }
+    
+    private func createButtonClickEnglishLabel() -> UILabel {
+        let view = UILabel()
+        view.numberOfLines = 0
+        view.font = UIFont.systemFont(ofSize: 18)
+        view.textColor = .black
+        view.font = UIFont(name: "PlayfairDisplay-Bold", size: 18)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(view)
+        return view
+    }
+    
+    private func createButtonClickLabel() -> UILabel {
+        let view = UILabel()
+        view.numberOfLines = 0
+        view.font = UIFont.systemFont(ofSize: 18)
+        view.textColor = .black
         view.font = UIFont(name: "Pretendard-Bold", size: 12)
         view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(view)
@@ -295,8 +336,25 @@ extension PosterListViewController {
             guideEnglishLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
                                                 constant: Layout.horizontalInset),
             guideEnglishLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
-                                                 constant: -Layout.horizontalInset),
+                                                 constant: -Layout.horizontalInset)
         ])
+        
+        NSLayoutConstraint.activate([
+            buttonClickLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                constant: Layout.horizontalInset),
+            buttonClickLabel.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -36),
+            buttonClickLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                 constant: -Layout.horizontalInset)
+        ])
+        
+        NSLayoutConstraint.activate([
+            buttonClickEnglishLabel.bottomAnchor.constraint(equalTo: buttonClickLabel.topAnchor, constant: -10),
+            buttonClickEnglishLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                constant: Layout.horizontalInset),
+            buttonClickEnglishLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                 constant: -Layout.horizontalInset)
+        ])
+        
     }
 
     private func setPosterListViewLayout() {
