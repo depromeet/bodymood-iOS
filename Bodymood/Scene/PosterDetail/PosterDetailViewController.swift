@@ -51,7 +51,6 @@ class PosterDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        HackleTracker.track(key: "posterDetailView", pageName: .posterDetail, eventType: .viewWillAppear)
     }
 
     override func viewWillLayoutSubviews() {
@@ -139,7 +138,12 @@ extension PosterDetailViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
-                HackleTracker.track(key: "shareButtonPosterDetailView", pageName: .posterDetail, eventType: .click, object: .shareButton)
+                if self.viewModel.contentMode.value == .general {
+                    HackleTracker.track(key: "shareButtonPosterDetailViewGeneral", pageName: .posterDetail, eventType: .click, object: .shareButton)
+                    
+                } else if self.viewModel.contentMode.value == .editing {
+                    HackleTracker.track(key: "shareButtonPosterDetailViewEditing", pageName: .posterDetail, eventType: .click, object: .shareButton)
+                }
                 
                 let view = self.posterImageView
                 let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
