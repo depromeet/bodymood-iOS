@@ -29,6 +29,11 @@ class RemoveAccountViewController: UIViewController {
         layout()
         bind()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "removeAccountView", pageName: .removeAccount, eventType: .viewWillAppear)
+    }
 }
 
 // MARK: - Configure bind

@@ -59,6 +59,9 @@ class EmotionViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "emotionView", pageName: .emotion, eventType: .viewWillAppear)
+        
         style()
         layout()
     }

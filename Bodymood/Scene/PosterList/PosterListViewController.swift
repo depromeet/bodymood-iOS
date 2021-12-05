@@ -33,13 +33,15 @@ class PosterListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         style()
         layout()
         bind()
     }
 
     override func viewWillAppear(_ animated: Bool) {
+        HackleTracker.track(key: "posterListView", pageName: .posterList, eventType: .viewWillAppear)
+        
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.black,
             .font: UIFont(name: "PlayfairDisplay-Bold", size: 25) ?? UIFont.boldSystemFont(ofSize: 25)

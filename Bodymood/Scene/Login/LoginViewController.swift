@@ -47,6 +47,7 @@ class LoginViewController: UIViewController, Coordinating {
 
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = true
+        HackleTracker.track(key: "loginView", pageName: .login, eventType: .viewWillAppear)
     }
 
     override func viewDidLoad() {
@@ -85,6 +86,7 @@ extension LoginViewController {
         
         appleLoginButton.publisher(for: .touchUpInside)
             .sink { [weak self] _ in
+                HackleTracker.track(key: "appleButtonLogin", pageName: .login, eventType: .click, object: .appleButton)
                 self?.appleLoginDidTap()
             }.store(in: &subscriptions)
     }
@@ -181,10 +183,12 @@ extension LoginViewController {
     private func kakaoLoginButtonDidTap() {
         let alert = UIAlertController(title: "카카오 로그인", message: "카카오 로그인 방식을 선택해주세요.", preferredStyle: .actionSheet)
         let talkButton = UIAlertAction(title: "카카오톡으로 로그인", style: .default) { [weak self] _ in
+            HackleTracker.track(key: "kakaoTalkButtonLogin", pageName: .login, eventType: .click, object: .kakaoTalkButton)
             self?.kakaoTalkLogin()
         }
         
         let accountButton = UIAlertAction(title: "카카오 계정으로 로그인", style: .default) { [weak self] _ in
+            HackleTracker.track(key: "kakaoAccountButtonLogin", pageName: .login, eventType: .click, object: .kakaoAccountButton)
             self?.kakaoAccountLogin()
         }
         
@@ -248,8 +252,6 @@ extension LoginViewController {
     }
 
     @objc func developerLoginBtnDidTap() {
-        let event = Hackle.event(key: "developerLogin", properties: ["page_name": "login", "event_type": "BUTTON", "object": "developer"])
-        hackleApp?.track(event: event)
         loginViewModel.developerLoginButtonDidTap.send()
     }
 

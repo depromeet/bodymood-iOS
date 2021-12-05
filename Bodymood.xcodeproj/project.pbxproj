@@ -60,6 +60,7 @@
 		96AB433C273512E3001B2808 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AB433B273512E3001B2808 /* CameraViewModel.swift */; };
 		96AB5B11272F0C5500EC2485 /* UIView+DashedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */; };
 		96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DAF9CF2727017100B21E08 /* EmotionViewController.swift */; };
+		96DF30AA275D01800051B86B /* HackleTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DF30A9275D01800051B86B /* HackleTracker.swift */; };
 		96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBB6271B0ED6008013CA /* CameraViewController.swift */; };
 		96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */; };
 		96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBF271B1704008013CA /* Coordinator.swift */; };
@@ -183,6 +184,7 @@
 		96AB433B273512E3001B2808 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DashedCircle.swift"; sourceTree = "<group>"; };
 		96DAF9CF2727017100B21E08 /* EmotionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionViewController.swift; sourceTree = "<group>"; };
+		96DF30A9275D01800051B86B /* HackleTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackleTracker.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		96F0BBBF271B1704008013CA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 				E8F856A02737160D006FA900 /* BodyMoodAPIService.swift */,
 				E8F856A227371A26006FA900 /* URLRequest+.swift */,
 				9638D20D273AC4F7006A1F96 /* UserService.swift */,
+				96DF30A9275D01800051B86B /* HackleTracker.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -851,6 +854,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8B3518B2727A87900A9C54D /* UIViewController+embed.swift in Sources */,
+				96DF30AA275D01800051B86B /* HackleTracker.swift in Sources */,
 				96AB433C273512E3001B2808 /* CameraViewModel.swift in Sources */,
 				E8AD75BD2723C834009A3432 /* PosterModel.swift in Sources */,
 				E8B3518027279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift in Sources */,
