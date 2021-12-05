@@ -42,15 +42,17 @@ class HackleTracker {
         case homeButton = "HomeButton"
         case logoutConfirmButton = "LogoutConfirmButton"
         case logoutCancelButton = "LogoutCancelButton"
+        case removeAccountConfirmButton = "RemoveAccountConfirmButton"
+        case removeAccountCancelButton = "RemoveAccountCancelButton"
     }
     
     static func track(key: String, pageName: PageType, eventType: EventType) {
-        let event = Hackle.event(key: key, properties: ["page_name": pageName, "event_type": eventType])
+        let event = Hackle.event(key: key, properties: ["page_name": pageName.rawValue, "event_type": eventType.rawValue])
         Hackle.app()?.track(event: event)
     }
     
     static func track(key: String, pageName: PageType, eventType: EventType, object: ButtonType) {
-        let event = Hackle.event(key: key, properties: ["page_name": pageName, "event_type": eventType, "object": object])
+        let event = Hackle.event(key: key, properties: ["page_name": pageName.rawValue, "event_type": eventType.rawValue, "object": object.rawValue])
         Hackle.app()?.track(event: event)
     }
 }
