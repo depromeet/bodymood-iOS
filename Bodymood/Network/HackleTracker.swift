@@ -35,6 +35,8 @@ class HackleTracker {
         case kakaoTalkButton = "KakaoTalkButton"
         case kakaoAccountButton = "KakaoAccountButton"
         case appleButton = "AppleButton"
+        case posterCompleteButton = "PosterCompleteButton"
+        case posterDetailButton = "PosterDetailButton"
         case deleteButton = "DeleteButton"
         case deleteConfirmButton = "DeleteConfirmButton"
         case deleteCancelButton = "DeleteCancelButton"

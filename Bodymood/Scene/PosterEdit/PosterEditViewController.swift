@@ -98,7 +98,9 @@ extension PosterEditViewController {
                 let detailVM = PosterDetailViewModel(image: image, exercises: exercises, emotion: emotion)
                 let detailVC = PosterDetailViewController(viewModel: detailVM)
                 self.navigationController?.pushViewController(detailVC, animated: true)
-
+                
+                HackleTracker.track(key: "posterCompleteButton", pageName: .posterDetail, eventType: .click, object: .posterCompleteButton)
+                
                 self.viewModel.completeBtnTapped.send()
             }.store(in: &bag)
     }

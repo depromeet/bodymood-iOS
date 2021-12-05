@@ -86,6 +86,7 @@ class PosterListViewModel: PosterListViewModelType {
 
         posterSelected
             .sink { [weak self] index in
+                HackleTracker.track(key: "posterDetailButton", pageName: .posterDetail, eventType: .click, object: .posterDetailButton)
                 guard let poster = self?.postersSubject.value[safe: index] else { return }
                 self?.moveToDetail.send(poster)
             }.store(in: &subscriptions)
