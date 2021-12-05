@@ -2,7 +2,6 @@ import Combine
 import UIKit
 
 import AuthenticationServices
-import Hackle
 import KakaoSDKAuth
 import KakaoSDKCommon
 import KakaoSDKUser
@@ -26,7 +25,6 @@ class LoginViewController: UIViewController, Coordinating {
     private var kakaoAccessToken: String?
     private var appleAccessToken: String?
     private var userInfo: UserDataResponse?
-    private let hackleApp = Hackle.app()
 
     init(viewModel: LoginViewModelType) {
         self.loginViewModel = viewModel
