@@ -52,6 +52,7 @@ class CameraViewController: UIViewController, Coordinating {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        HackleTracker.track(key: "cameraView", pageName: .camera, eventType: .viewWillAppear)
         style()
     }
 

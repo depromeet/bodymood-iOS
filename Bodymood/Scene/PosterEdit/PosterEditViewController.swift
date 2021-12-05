@@ -51,10 +51,15 @@ class PosterEditViewController: UIViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         style()
         layout()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "posterEditView", pageName: .posterEdit, eventType: .viewWillAppear)
     }
 
     override func viewDidAppear(_ animated: Bool) {

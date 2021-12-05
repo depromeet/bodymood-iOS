@@ -6,9 +6,11 @@
 //
 
 import UIKit
+
 import KakaoSDKCommon
 import KakaoSDKAuth
 import AuthenticationServices
+import Hackle
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -36,7 +38,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Log.debug("Revoked Notification")
             // 로그인 페이지 이동
         }
-
+        
+        Hackle.initialize(sdkKey: "fLl0vNDEDmSXx3IU2RDuALUCjpWarC5v")
         return true
     }
 

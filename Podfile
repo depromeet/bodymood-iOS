@@ -8,5 +8,5 @@ target 'Bodymood' do
   # Pods for depromeet-10-5
     pod 'SwiftLint'
     pod 'KakaoSDK'
-
+    pod 'Hackle', '~> 2.1.0'
 end

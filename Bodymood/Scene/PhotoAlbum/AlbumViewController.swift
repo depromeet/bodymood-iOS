@@ -44,6 +44,11 @@ class AlbumViewController: UIViewController {
 		layout()
 		bind()
 	}
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "albumView", pageName: .photoAlbum, eventType: .viewWillAppear)
+    }
 
 	private func bind() {
 		viewModel.photos

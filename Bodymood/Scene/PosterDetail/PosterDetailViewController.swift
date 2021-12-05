@@ -31,7 +31,7 @@ class PosterDetailViewController: UIViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         style()
         layout()
         bind()
@@ -39,6 +39,7 @@ class PosterDetailViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         navigationController?.setNavigationBarHidden(false, animated: true)
         let view = self.posterImageView
         let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
@@ -46,6 +47,11 @@ class PosterDetailViewController: UIViewController {
             view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
         }
         viewModel.viewDidAppearSignal.send(image)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "posterDetailView", pageName: .posterDetail, eventType: .viewWillAppear)
     }
 
     override func viewWillLayoutSubviews() {
@@ -113,6 +119,7 @@ extension PosterDetailViewController {
             bottomButtonView.buttons.first?.publisher(for: .touchUpInside)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] _ in
+                    HackleTracker.track(key: "deleteButtonPosterDetailView", pageName: .posterDetail, eventType: .click, object: .deleteButton)
                     self?.deleteAlert()
                 }.store(in: &bag)
             
@@ -123,6 +130,7 @@ extension PosterDetailViewController {
             bottomButtonView.buttons.first?.publisher(for: .touchUpInside)
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] _ in
+                    HackleTracker.track(key: "homeButtonPosterDetailView", pageName: .posterDetail, eventType: .click, object: .homeButton)
                     self?.navigationController?.popToRootViewController(animated: true)
                 }.store(in: &bag)
         }
@@ -131,6 +139,8 @@ extension PosterDetailViewController {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 guard let self = self else { return }
+                HackleTracker.track(key: "shareButtonPosterDetailView", pageName: .posterDetail, eventType: .click, object: .shareButton)
+                
                 let view = self.posterImageView
                 let renderer = UIGraphicsImageRenderer(size: view.bounds.size)
                 let image = renderer.image { ctx in
@@ -146,9 +156,13 @@ extension PosterDetailViewController {
         let alertController = UIAlertController(title: "포스터 삭제", message: "포스터를 삭제하시겠습니까?", preferredStyle: .alert)
         
         let confirmButton = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            HackleTracker.track(key: "deleteConfirmButtonPosterDetailView", pageName: .posterDetail, eventType: .click, object: .deleteConfirmButton)
             self?.viewModel.deletePoster.send()
         }
-        let cancelButton = UIAlertAction(title: "취소", style: .cancel)
+        
+        let cancelButton = UIAlertAction(title: "취소", style: .cancel) { _ in
+            HackleTracker.track(key: "deleteCancelButtonPosterDetailView", pageName: .posterDetail, eventType: .click, object: .deleteCancelButton)
+        }
         
         alertController.addAction(confirmButton)
         alertController.addAction(cancelButton)
@@ -175,9 +189,16 @@ extension PosterDetailViewController {
 
     private func style() {
         view.backgroundColor = .white
-
-        let backIcon = ImageResource.leftArrow?.withTintColor(.black, renderingMode: .alwaysOriginal)
-        navigationItem.leftBarButtonItem = .init(image: backIcon, style: .plain, target: nil, action: nil)
+        
+        if viewModel.contentMode.value == .editing {
+            navigationItem.leftBarButtonItems = []
+            navigationItem.hidesBackButton = true
+            
+        } else {
+            let backIcon = ImageResource.leftArrow?.withTintColor(.black, renderingMode: .alwaysOriginal)
+            navigationItem.leftBarButtonItem = .init(image: backIcon, style: .plain, target: nil, action: nil)
+            
+        }
     }
 
     private func layout() {

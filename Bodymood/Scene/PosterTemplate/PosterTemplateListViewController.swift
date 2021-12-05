@@ -28,10 +28,15 @@ class PosterTemplateListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         style()
         layout()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "posterTemplateView", pageName: .posterTemplate, eventType: .viewWillAppear)
     }
 }
 

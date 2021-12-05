@@ -69,6 +69,7 @@ class PosterEditViewModel: PosterEditViewModelType {
     private func bind() {
         completeBtnTapped
             .sink { [weak self] _ in
+                
                 print("completeBtnTapped")
             }.store(in: &bag)
 
