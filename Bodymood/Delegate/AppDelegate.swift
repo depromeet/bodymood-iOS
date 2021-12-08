@@ -5,6 +5,7 @@
 //  Created by 허예은 on 2021/09/12.
 //
 
+import Foundation
 import UIKit
 
 import KakaoSDKCommon
@@ -16,10 +17,27 @@ import Hackle
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
+//    private var kakaoAPIKey: String {
+//        get {
+//            guard let filePath = Bundle.main.path(forResource: "BodymoodInfo", ofType: "plist") else {
+//                fatalError("파일 경로가 존재하지 않습니다.")
+//            }
+//
+//            let plist = NSDictionary(contentsOfFile: filePath)
+//
+//            guard let value = plist?.object(forKey: "KAKAO_API_KEY") as? String else {
+//                fatalError("카카오 API Key를 불러오지 못하였습니다.")
+//            }
+//            return value
+//        }
+//    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-        KakaoSDKCommon.initSDK(appKey: "1f1d9175f9c1e2682cf32d234475f94a") // initialize Kakao SDK
+        let kakaoAPIKey = Bundle.main.kakaoAPIKey
+        KakaoSDKCommon.initSDK(appKey: kakaoAPIKey) // initialize Kakao SDK
+        
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: UserDefaultKey.appleID) ?? "", completion: { credentialState, error in
             switch credentialState {
@@ -39,7 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 로그인 페이지 이동
         }
         
-        Hackle.initialize(sdkKey: "fLl0vNDEDmSXx3IU2RDuALUCjpWarC5v")
+        let hackleAPIKey = Bundle.main.hackleAPIKey
+        Hackle.initialize(sdkKey: hackleAPIKey)
         return true
     }
 
