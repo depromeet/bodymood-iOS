@@ -20,8 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-        let kakaoAPIKey = Bundle.main.kakaoAPIKey
-        KakaoSDKCommon.initSDK(appKey: kakaoAPIKey) // initialize Kakao SDK
+        KakaoSDKCommon.initSDK(appKey:  Bundle.main.kakaoAPIKey) // initialize Kakao SDK
         
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: UserDefaultKey.appleID) ?? "", completion: { credentialState, error in
@@ -42,8 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // 로그인 페이지 이동
         }
         
-        let hackleAPIKey = Bundle.main.hackleAPIKey
-        Hackle.initialize(sdkKey: hackleAPIKey)
+        Hackle.initialize(sdkKey: Bundle.main.hackleAPIKey)
         return true
     }
 
