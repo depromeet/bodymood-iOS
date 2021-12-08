@@ -40,7 +40,15 @@
 
 ## 🗂 Version Update 
 > Bodymood의 개발 과정이 궁금해요 💻
-### v1.0.0
-- [앱 스토어 배포](https://github.com/depromeet/bodymood-iOS/releases/tag/v1.0.0)
+
+### [v1.0.1](https://github.com/depromeet/bodymood-iOS/releases/tag/v1.0.1)
+- 사용자 피드백 반영
+- 감정/운동 선택 부분 버그 수정
+- 포스터 템플릿 이미 변경
+- 요가 카테고리 추가
+- Landscape 모드 차단
+
+### [v1.0.0](https://github.com/depromeet/bodymood-iOS/releases/tag/v1.0.0)
+- 앱 스토어 배포
 
 
