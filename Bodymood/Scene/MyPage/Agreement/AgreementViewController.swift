@@ -33,6 +33,11 @@ class AgreementViewController: UIViewController {
         layout()
         bind()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "agreementView", pageName: .agreement, eventType: .viewWillAppear)
+    }
 }
 
 // MARK: - Configure bind

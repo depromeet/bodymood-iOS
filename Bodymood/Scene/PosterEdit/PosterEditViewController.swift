@@ -51,10 +51,15 @@ class PosterEditViewController: UIViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         style()
         layout()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "posterEditView", pageName: .posterEdit, eventType: .viewWillAppear)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -93,7 +98,9 @@ extension PosterEditViewController {
                 let detailVM = PosterDetailViewModel(image: image, exercises: exercises, emotion: emotion)
                 let detailVC = PosterDetailViewController(viewModel: detailVM)
                 self.navigationController?.pushViewController(detailVC, animated: true)
-
+                
+                HackleTracker.track(key: "posterCompleteButton", pageName: .posterDetail, eventType: .click, object: .posterCompleteButton)
+                
                 self.viewModel.completeBtnTapped.send()
             }.store(in: &bag)
     }

@@ -32,6 +32,11 @@ class ExerciseRecordViewController: UIViewController {
         layout()
         bind()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "exerciseRecordView", pageName: .exerciseCategory, eventType: .viewWillAppear)
+    }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return blendedBGColor.isDarkColor ? .lightContent : .darkContent

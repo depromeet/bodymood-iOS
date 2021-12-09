@@ -22,6 +22,8 @@
 		9641DAEB271331A2001BE018 /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEA271331A2001BE018 /* AuthResponse.swift */; };
 		9641DAEE2713334E001BE018 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAED2713334E001BE018 /* AuthService.swift */; };
 		9641DAF0271333EB001BE018 /* HTTPConsts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9641DAEF271333EB001BE018 /* HTTPConsts.swift */; };
+		965BC2992760893100D4429C /* BodymoodInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 965BC295276080C400D4429C /* BodymoodInfo.plist */; };
+		965BC29B2760898F00D4429C /* Bodymood++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965BC29A2760898F00D4429C /* Bodymood++Bundle.swift */; };
 		965EC52827279E5200ED0420 /* EmotionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EC52727279E5200ED0420 /* EmotionResponse.swift */; };
 		965EC52A27279EEE00ED0420 /* EmotionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EC52927279EEE00ED0420 /* EmotionService.swift */; };
 		965EC52C27279FA600ED0420 /* EmotionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965EC52B27279FA600ED0420 /* EmotionViewModel.swift */; };
@@ -60,6 +62,7 @@
 		96AB433C273512E3001B2808 /* CameraViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AB433B273512E3001B2808 /* CameraViewModel.swift */; };
 		96AB5B11272F0C5500EC2485 /* UIView+DashedCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */; };
 		96DAF9D02727017100B21E08 /* EmotionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DAF9CF2727017100B21E08 /* EmotionViewController.swift */; };
+		96DF30AA275D01800051B86B /* HackleTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96DF30A9275D01800051B86B /* HackleTracker.swift */; };
 		96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBB6271B0ED6008013CA /* CameraViewController.swift */; };
 		96F0BBBE271B16F8008013CA /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */; };
 		96F0BBC0271B1704008013CA /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0BBBF271B1704008013CA /* Coordinator.swift */; };
@@ -145,6 +148,8 @@
 		9641DAED2713334E001BE018 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		9641DAEF271333EB001BE018 /* HTTPConsts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPConsts.swift; sourceTree = "<group>"; };
 		964EBDD5272418A60093AA76 /* Bodymood.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Bodymood.entitlements; sourceTree = "<group>"; };
+		965BC295276080C400D4429C /* BodymoodInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = BodymoodInfo.plist; sourceTree = "<group>"; };
+		965BC29A2760898F00D4429C /* Bodymood++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bodymood++Bundle.swift"; sourceTree = "<group>"; };
 		965EC52727279E5200ED0420 /* EmotionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionResponse.swift; sourceTree = "<group>"; };
 		965EC52927279EEE00ED0420 /* EmotionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionService.swift; sourceTree = "<group>"; };
 		965EC52B27279FA600ED0420 /* EmotionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionViewModel.swift; sourceTree = "<group>"; };
@@ -183,6 +188,7 @@
 		96AB433B273512E3001B2808 /* CameraViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewModel.swift; sourceTree = "<group>"; };
 		96AB5B10272F0C5500EC2485 /* UIView+DashedCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+DashedCircle.swift"; sourceTree = "<group>"; };
 		96DAF9CF2727017100B21E08 /* EmotionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmotionViewController.swift; sourceTree = "<group>"; };
+		96DF30A9275D01800051B86B /* HackleTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HackleTracker.swift; sourceTree = "<group>"; };
 		96F0BBB6271B0ED6008013CA /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		96F0BBBD271B16F8008013CA /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 		96F0BBBF271B1704008013CA /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
@@ -365,6 +371,7 @@
 		9637665526EDD79E00E8E547 /* Bodymood */ = {
 			isa = PBXGroup;
 			children = (
+				965BC29C27608AB400D4429C /* API_KEY */,
 				E8AD7643272437A3009A3432 /* Constant */,
 				96F0BBAF271AF939008013CA /* Coordinator */,
 				967549B52700AA9A007E4E95 /* Delegate */,
@@ -390,6 +397,15 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		965BC29C27608AB400D4429C /* API_KEY */ = {
+			isa = PBXGroup;
+			children = (
+				965BC295276080C400D4429C /* BodymoodInfo.plist */,
+				965BC29A2760898F00D4429C /* Bodymood++Bundle.swift */,
+			);
+			path = API_KEY;
+			sourceTree = "<group>";
+		};
 		967549AD2700A866007E4E95 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -407,6 +423,7 @@
 				E8F856A02737160D006FA900 /* BodyMoodAPIService.swift */,
 				E8F856A227371A26006FA900 /* URLRequest+.swift */,
 				9638D20D273AC4F7006A1F96 /* UserService.swift */,
+				96DF30A9275D01800051B86B /* HackleTracker.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -778,6 +795,7 @@
 				9676119E272BEB78001A887B /* PlayfairDisplay-ExtraBold.ttf in Resources */,
 				967611A0272BEB7D001A887B /* PlayfairDisplay-Italic.ttf in Resources */,
 				96761197272BEB65001A887B /* Pretendard-Regular.otf in Resources */,
+				965BC2992760893100D4429C /* BodymoodInfo.plist in Resources */,
 				96761199272BEB6A001A887B /* Pretendard-Thin.otf in Resources */,
 				96761191272BEB57001A887B /* Pretendard-Black.otf in Resources */,
 				96761195272BEB60001A887B /* Pretendard-Light.otf in Resources */,
@@ -851,6 +869,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E8B3518B2727A87900A9C54D /* UIViewController+embed.swift in Sources */,
+				96DF30AA275D01800051B86B /* HackleTracker.swift in Sources */,
 				96AB433C273512E3001B2808 /* CameraViewModel.swift in Sources */,
 				E8AD75BD2723C834009A3432 /* PosterModel.swift in Sources */,
 				E8B3518027279B6B00A9C54D /* ExerciseCategoryAPIResponseModel.swift in Sources */,
@@ -913,6 +932,7 @@
 				E8AD7646272437CF009A3432 /* CommonLayout.swift in Sources */,
 				965EC52C27279FA600ED0420 /* EmotionViewModel.swift in Sources */,
 				96F0BBB7271B0ED6008013CA /* CameraViewController.swift in Sources */,
+				965BC29B2760898F00D4429C /* Bodymood++Bundle.swift in Sources */,
 				E8B3518F2727BAE500A9C54D /* UIView+addDiagonalGradiant.swift in Sources */,
 				E8B3517A27279A9200A9C54D /* ExerciseRecordViewController.swift in Sources */,
 				E8AD75BB2721D175009A3432 /* Collection+subscript.swift in Sources */,
@@ -1074,13 +1094,14 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Bodymood/Bodymood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet105;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1098,13 +1119,14 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = Bodymood/Bodymood.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_TEAM = 3CY8UX9N2S;
 				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = yeahsilver.depromeet105;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

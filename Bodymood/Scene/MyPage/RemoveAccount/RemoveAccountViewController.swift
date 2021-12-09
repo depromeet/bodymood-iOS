@@ -29,6 +29,11 @@ class RemoveAccountViewController: UIViewController {
         layout()
         bind()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "removeAccountView", pageName: .removeAccount, eventType: .viewWillAppear)
+    }
 }
 
 // MARK: - Configure bind
@@ -157,10 +162,13 @@ extension RemoveAccountViewController {
     private func removeCheckAlert() {
         let alert = UIAlertController(title: "계정 삭제", message: "계정을 삭제하시겠습니까?", preferredStyle: .alert)
         let okButton = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            HackleTracker.track(key: "removeAccountConfirmButton", pageName: .removeAccount, eventType: .viewWillAppear, object: .removeAccountConfirmButton)
             self?.removeAccount()
         }
         
-        let cancelButton = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        let cancelButton = UIAlertAction(title: "취소", style: .cancel) { _ in
+            HackleTracker.track(key: "removeAccountCancelButton", pageName: .removeAccount, eventType: .viewWillAppear, object: .removeAccountCancelButton)
+        }
         
         alert.addAction(okButton)
         alert.addAction(cancelButton)

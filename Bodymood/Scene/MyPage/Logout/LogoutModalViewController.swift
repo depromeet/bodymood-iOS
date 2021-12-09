@@ -38,6 +38,11 @@ class LogoutModalViewController: UIViewController {
 
         panGesture()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "logoutView", pageName: .logout, eventType: .viewWillAppear)
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -83,11 +88,15 @@ extension LogoutModalViewController {
         }.store(in: &subscriptions)
 
         logoutButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            HackleTracker.track(key: "logoutConfirmButtonLogin", pageName: .logout, eventType: .click, object: .logoutConfirmButton)
+            
             self?.logoutButton.isEnabled = false
             self?.viewModel.moveToLogout.send()
         }.store(in: &subscriptions)
 
         cancelButton.publisher(for: .touchUpInside).sink { [weak self] _ in
+            HackleTracker.track(key: "logoutCancelButtonLogin", pageName: .logout, eventType: .click, object: .logoutCancelButton)
+            
             self?.viewModel.moveToBack.send()
         }.store(in: &subscriptions)
     }

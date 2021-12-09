@@ -43,10 +43,14 @@ class LogoutViewModel: LogoutViewModelType {
 
     private func bind() {
         logoutButtonDidTap.sink { [weak self] _ in
+            HackleTracker.track(key: "logoutConfirmButtonLogin", pageName: .logout, eventType: .click, object: .logoutConfirmButton)
+            
             self?.moveToLogout.send()
         }.store(in: &subscriptions)
 
         cancelButtonDidTap.sink { [weak self] _ in
+            HackleTracker.track(key: "logoutCancelButtonLogin", pageName: .logout, eventType: .click, object: .logoutCancelButton)
+            
             self?.moveToBack.send()
         }.store(in: &subscriptions)
     }

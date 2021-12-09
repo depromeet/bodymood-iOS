@@ -5,19 +5,23 @@
 //  Created by 허예은 on 2021/09/12.
 //
 
+import Foundation
 import UIKit
+
 import KakaoSDKCommon
 import KakaoSDKAuth
 import AuthenticationServices
+import Hackle
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-        KakaoSDKCommon.initSDK(appKey: "1f1d9175f9c1e2682cf32d234475f94a") // initialize Kakao SDK
+        KakaoSDKCommon.initSDK(appKey:  Bundle.main.kakaoAPIKey) // initialize Kakao SDK
+        
         let appleIDProvider = ASAuthorizationAppleIDProvider()
         appleIDProvider.getCredentialState(forUserID: UserDefaults.standard.string(forKey: UserDefaultKey.appleID) ?? "", completion: { credentialState, error in
             switch credentialState {
@@ -36,7 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Log.debug("Revoked Notification")
             // 로그인 페이지 이동
         }
-
+        
+        Hackle.initialize(sdkKey: Bundle.main.hackleAPIKey)
         return true
     }
 

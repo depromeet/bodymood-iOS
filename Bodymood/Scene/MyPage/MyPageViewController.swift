@@ -23,6 +23,11 @@ class MyPageViewController: UIViewController {
         layout()
         bind()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        HackleTracker.track(key: "mypageView", pageName: .mypage, eventType: .viewWillAppear)
+    }
 
     init(viewModel: MypageViewModelType) {
         self.viewModel = viewModel

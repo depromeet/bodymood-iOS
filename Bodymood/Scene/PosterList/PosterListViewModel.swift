@@ -12,6 +12,8 @@ protocol PosterListViewModelType {
     var moveToTemplate: PassthroughSubject<Void, Never> { get }
     var moveToMypage: PassthroughSubject<Void, Never> { get }
     var showAlert: PassthroughSubject<String, Never> { get }
+    var buttonClickLabel: AnyPublisher<String, Never> { get }
+    var buttonClickEnglishLabel: AnyPublisher<String, Never> { get }
 
     // Inputs
     var numOfItemsPerRow: Int { get }
@@ -35,6 +37,8 @@ class PosterListViewModel: PosterListViewModelType {
     var title: AnyPublisher<String, Never> { Just("Bodymood").eraseToAnyPublisher() }
     var guideText: AnyPublisher<String, Never> { Just("나만의 바디무드 포스터를 만들어보세요.").eraseToAnyPublisher() }
     var guideEnglishText: AnyPublisher<String, Never> { Just("Create your own Bodymood poster.").eraseToAnyPublisher() }
+    var buttonClickLabel: AnyPublisher<String, Never> { Just("버튼을 눌러 포스터를 만들어주세요").eraseToAnyPublisher() }
+    var buttonClickEnglishLabel: AnyPublisher<String, Never> { Just("Click the Button").eraseToAnyPublisher() }
     let moveToMypage = PassthroughSubject<Void, Never>()
     let moveToDetail = PassthroughSubject<PosterPhotoResponseModel, Never>()
     let moveToTemplate = PassthroughSubject<Void, Never>()
@@ -82,6 +86,7 @@ class PosterListViewModel: PosterListViewModelType {
 
         posterSelected
             .sink { [weak self] index in
+                HackleTracker.track(key: "posterDetailButton", pageName: .posterDetail, eventType: .click, object: .posterDetailButton)
                 guard let poster = self?.postersSubject.value[safe: index] else { return }
                 self?.moveToDetail.send(poster)
             }.store(in: &subscriptions)
